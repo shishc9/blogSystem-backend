@@ -1,7 +1,9 @@
 package icu.shishc.service.serviceImpl;
 
 import icu.shishc.entity.User;
+import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,14 +14,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserMapper userMapper;
+
     @Override
     public User getUserById(Long userId) {
-        return null;
+        User user = userMapper.getUserById(userId);
+        return user;
     }
 
     @Override
     public User getUserByName(String username) {
-        return null;
+        User user = userMapper.getUserByName(username);
+        return user;
     }
 
     @Override

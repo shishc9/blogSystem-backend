@@ -51,21 +51,25 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlogByBID(Long bid) {
-        return null;
+        Blog blog = blogMapper.getBlogByBID(bid);
+        return blog;
     }
 
     @Override
     public List<Blog> getBlogByStatus(BlogStatus blogStatus) {
-        return null;
+        List<Blog> list = blogMapper.getBlogByStatus(blogStatus);
+        return list;
     }
 
     @Override
     public Integer getAllLike() {
-        return null;
+        Integer allLike = blogMapper.getAllLike();
+        return allLike;
     }
 
     @Override
     public Integer getAllReadNum() {
-        return null;
+        Integer allReadNum = blogMapper.getAllReadNum();
+        return allReadNum;
     }
 }

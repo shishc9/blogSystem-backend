@@ -27,11 +27,11 @@
     </delete>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
-
+        SELECT * FROM user WHERE user_id = ${userId}
     </select>
 
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
-
+        SELECT * FROM user WHERE username = '${username}'
     </select>
 
 </mapper>

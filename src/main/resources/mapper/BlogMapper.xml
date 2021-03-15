@@ -38,19 +38,19 @@
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap" parameterType="java.lang.Long">
-
+        SELECT * FROM blog WHERE blog_id = ${blogId}
     </select>
 
     <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="icu.shishc.enumeration.BlogStatus">
-
+        SELECT * FROM blog WHERE status = ${status}
     </select>
 
     <select id="getAllLike" resultType="java.lang.Integer" >
-
+        SELECT SUM(like_num) FROM blog
     </select>
 
     <select id="getAllReadNum" resultType="java.lang.Integer" >
-
+        SELECT SUM(read_num) FROM blog
     </select>
 
 </mapper>
