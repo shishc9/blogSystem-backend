@@ -2,6 +2,7 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
+import org.springframework.stereotype.Service;
 
 /**
  * @PackageName:icu.shishc.service.serviceImpl
@@ -9,6 +10,7 @@ import icu.shishc.service.UserService;
  * @Auther:ShiShc
  */
 
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
@@ -21,17 +23,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insert(User user) {
+    public Integer insert(User user) {
         return 0;
     }
 
     @Override
-    public int delete(int id) {
+    public Integer delete(int id) {
         return 0;
     }
 
     @Override
-    public int update(User user) {
+    public Integer update(User user) {
         return 0;
     }
 }

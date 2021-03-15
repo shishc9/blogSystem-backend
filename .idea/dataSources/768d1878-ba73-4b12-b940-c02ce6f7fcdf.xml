@@ -924,41 +924,49 @@ SELECT|sys.sys_config
     </column>
     <column id="288" parent="285" name="username">
       <Position>2</Position>
+      <Comment>发布博客的用户，目前只能是admin</Comment>
       <DataType>varchar(64)|0s</DataType>
       <DefaultExpression>&apos;admin&apos;</DefaultExpression>
     </column>
     <column id="289" parent="285" name="title">
       <Position>3</Position>
+      <Comment>标题</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="290" parent="285" name="content">
       <Position>4</Position>
+      <Comment>正文</Comment>
       <DataType>longtext|0s</DataType>
     </column>
     <column id="291" parent="285" name="status">
       <Position>5</Position>
+      <Comment>博客状态，只有0/1，0：公开，1：私有</Comment>
       <DataType>tinyint unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="292" parent="285" name="read_num">
       <Position>6</Position>
+      <Comment>博客阅读数</Comment>
       <DataType>int unsigned|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="293" parent="285" name="like_num">
       <Position>7</Position>
+      <Comment>博客点赞数</Comment>
       <DataType>int unsigned|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="294" parent="285" name="gmt_create">
       <Position>8</Position>
+      <Comment>博客创建时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
     <column id="295" parent="285" name="gmt_modified">
       <Position>9</Position>
+      <Comment>博客修改时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
@@ -980,47 +988,57 @@ title</ColNames>
     </key>
     <column id="299" parent="286" name="user_id">
       <Position>1</Position>
+      <Comment>博主和游客id, 数据库自增</Comment>
       <DataType>bigint unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="300" parent="286" name="username">
       <Position>2</Position>
+      <Comment>用户名</Comment>
       <DataType>varchar(64)|0s</DataType>
     </column>
     <column id="301" parent="286" name="password">
       <Position>3</Position>
+      <Comment>密码</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="302" parent="286" name="is_main_person">
+    <column id="302" parent="286" name="user_identity">
       <Position>4</Position>
-      <DataType>tinyint|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
+      <Comment>是不是博主</Comment>
+      <DataType>tinyint unsigned|0s</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="303" parent="286" name="age">
       <Position>5</Position>
+      <Comment>年龄</Comment>
       <DataType>int unsigned|0s</DataType>
     </column>
     <column id="304" parent="286" name="gender">
       <Position>6</Position>
+      <Comment>性别，默认男性</Comment>
       <DataType>char(6)|0s</DataType>
       <DefaultExpression>&apos;MALE&apos;</DefaultExpression>
     </column>
     <column id="305" parent="286" name="hobby">
       <Position>7</Position>
+      <Comment>爱好</Comment>
       <DataType>text|0s</DataType>
     </column>
     <column id="306" parent="286" name="email">
       <Position>8</Position>
+      <Comment>邮箱</Comment>
       <DataType>varchar(64)|0s</DataType>
     </column>
     <column id="307" parent="286" name="gmt_create">
       <Position>9</Position>
+      <Comment>用户创建时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
     <column id="308" parent="286" name="gmt_last_login">
       <Position>10</Position>
+      <Comment>用户上次登陆时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
@@ -1029,14 +1047,23 @@ title</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="310" parent="286" name="PRIMARY">
+    <index id="310" parent="286" name="email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="311" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="311" parent="286" name="username">
+    <key id="312" parent="286" name="username">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>username</UnderlyingIndexName>
+    </key>
+    <key id="313" parent="286" name="email">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

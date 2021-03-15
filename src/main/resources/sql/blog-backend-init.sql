@@ -27,4 +27,5 @@ INSERT INTO blog(title, content) values ('Java高级', '应该能正常发出去
 INSERT INTO blog(title, content) values ('JVM', '应该能正常发出去吧');
 INSERT INTO blog(title, content) values ('高并发', '应该能正常发出去吧');
 INSERT INTO blog(title, content) values ('分布式', '应该能正常发出去吧');
+INSERT INTO blog(title, content) values ('test', '应该能正常发出去吧');
 

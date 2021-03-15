@@ -11,9 +11,9 @@ public interface UserMapper {
 
     User getUserByName(@Param("username") String username);
 
-    int insert(@Param("user") User user);
+    Integer insert(@Param("user") User user);
 
-    int delete(@Param("id") int id);
+    Integer delete(@Param("id") int id);
 
-    int update(@Param("user") User user);
+    Integer update(@Param("user") User user);
 }

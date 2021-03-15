@@ -4,16 +4,18 @@ import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface BlogMapper {
-    int insert(@Param("blog") Blog blog);
+    Integer insert(@Param("blog") Blog blog);
 
-    int delete(@Param("id") int id);
+    Integer delete(@Param("id") int id);
 
-    int update(@Param("blog") Blog blog);
+    Integer update(@Param("blog") Blog blog);
 
     List<Blog> getAllBlog();
 

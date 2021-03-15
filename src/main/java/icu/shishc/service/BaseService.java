@@ -7,7 +7,7 @@ public interface BaseService<T> {
      * @param t
      * @return 受影响的行数
      */
-    int insert(T t);
+    Integer insert(T t);
 
 
     /**
@@ -15,7 +15,7 @@ public interface BaseService<T> {
      * @param id
      * @return 受影响的行数
      */
-    int delete(int id);
+    Integer delete(int id);
 
 
     /**
@@ -23,6 +23,6 @@ public interface BaseService<T> {
      * @param t
      * @return
      */
-    int update(T t);
+    Integer update(T t);
 
 }

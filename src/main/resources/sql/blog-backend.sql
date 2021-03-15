@@ -16,7 +16,7 @@ CREATE TABLE user(
                      gmt_last_login DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '用户上次登陆时间',
                      PRIMARY KEY (user_id) USING BTREE,
                      CONSTRAINT ck CHECK (gender = 'MALE' or gender = 'FEMALE')
-)ENGINE = InnoDB CHARACTER SET = UTF8MB3;
+)ENGINE = InnoDB CHARACTER SET = utf8mb4;
 
 # 保证数据库中用户名唯一
 # 一个邮箱只能绑定一个用户 虽然邮箱好像没啥用(目前来看)
@@ -36,7 +36,7 @@ CREATE TABLE blog(
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客创建时间',
                      gmt_modified DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客修改时间',
                      PRIMARY KEY (blog_id) USING BTREE
-)ENGINE = InnoDB CHARACTER SET = UTF8MB3 AUTO_INCREMENT = 1000;
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 1000;
 
 # 保证每个用户不能有两篇及以上相同标题的博客
 # 其实目前规划能写博客的只有admin

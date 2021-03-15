@@ -5,7 +5,7 @@
         <result column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
-        <result column="user_identity" property="userIdentity"/>
+        <result column="user_identity" property="userIdentity" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
         <result column="age" property="age"/>
         <result column="gender" property="gender"/>
         <result column="hobby" property="hobby"/>
@@ -14,6 +14,24 @@
         <result column="gmt_last_login" property="gmtLastLogin"/>
     </resultMap>
 
-    <select id="" resultMap="BaseResultMap" parameterType="java.lang.Integer"></select>
+    <insert id="insert">
+
+    </insert>
+
+    <update id="update">
+
+    </update>
+
+    <delete id="delete">
+
+    </delete>
+
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+
+    </select>
+
+    <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    </select>
 
 </mapper>

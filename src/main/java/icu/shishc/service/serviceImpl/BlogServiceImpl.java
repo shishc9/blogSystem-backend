@@ -2,7 +2,10 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
+import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,31 +15,38 @@ import java.util.List;
  * @Auther:ShiShc
  */
 
+@Service
 public class BlogServiceImpl implements BlogService {
 
+    @Autowired
+    BlogMapper blogMapper;
+
     @Override
-    public int insert(Blog blog) {
+    public Integer insert(Blog blog) {
+        Integer result = blogMapper.insert(blog);
+        return result;
+    }
+
+    @Override
+    public Integer delete(int id) {
         return 0;
     }
 
     @Override
-    public int delete(int id) {
-        return 0;
-    }
-
-    @Override
-    public int update(Blog blog) {
+    public Integer update(Blog blog) {
         return 0;
     }
 
     @Override
     public List<Blog> getAllBlog() {
-        return null;
+        List<Blog> blogList = blogMapper.getAllBlog();
+        return blogList;
     }
 
     @Override
     public Blog getBlogByTitle(String title) {
-        return null;
+        Blog blog = blogMapper.getBlogByTitle(title);
+        return blog;
     }
 
     @Override

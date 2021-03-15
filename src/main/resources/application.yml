@@ -11,3 +11,8 @@ spring:
   # 设置开发环境
   profiles:
     active: dev
+
+# Mybatis配置
+mybatis:
+  type-aliases-package: icu.shishc.entity
+  mapper-locations: classpath:mapper/*.xml
