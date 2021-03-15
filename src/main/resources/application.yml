@@ -11,6 +11,9 @@ spring:
   # 设置开发环境
   profiles:
     active: dev
+  banner:
+    location: banner.txt
+
 
 # Mybatis配置
 mybatis:
