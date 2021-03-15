@@ -1,5 +1,6 @@
 package icu.shishc.entity;
 
+import icu.shishc.enumeration.BlogStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -33,8 +34,7 @@ public class Blog implements Serializable {
     /**
      * 状态0：公开， 状态1：私有
      */
-    private boolean status;
-
+    private BlogStatus status;
     private Integer readNum;
     private Integer likeNum;
 

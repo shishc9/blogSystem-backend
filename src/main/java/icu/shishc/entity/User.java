@@ -1,5 +1,6 @@
 package icu.shishc.entity;
 
+import icu.shishc.enumeration.UserIdentity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -31,7 +32,7 @@ public class User implements Serializable {
 //    @Length(min = 8, max = 16)
     private String password;
 
-    private boolean isMainPerson;
+    private UserIdentity userIdentity;
     private Integer age;
     private String gender;
     private String hobby;
