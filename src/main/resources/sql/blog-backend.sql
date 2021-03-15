@@ -7,7 +7,7 @@ CREATE TABLE user(
                      user_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '博主和游客id, 数据库自增',
                      username VARCHAR(64) DEFAULT NULL COMMENT '用户名',
                      password VARCHAR(255) DEFAULT NULL COMMENT '密码',
-                     is_main_person TINYINT DEFAULT 0 COMMENT '是不是博主',
+                     user_identity TINYINT UNSIGNED DEFAULT 0 COMMENT '是不是博主',
                      age INT(2) UNSIGNED DEFAULT NULL COMMENT '年龄',
                      gender CHAR(6) NOT NULL NULL DEFAULT 'MALE' COMMENT '性别，默认男性',
                      hobby TEXT COMMENT '爱好',
