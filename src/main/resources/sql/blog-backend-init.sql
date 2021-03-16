@@ -1,6 +1,6 @@
 use blogsys;
 
-INSERT INTO user(username, password, is_main_person, age, gender, hobby, email)
+INSERT INTO user(username, password, user_identity, age, gender, hobby, email)
     VALUES('admin', '123456', 1, 20, 'MALE', 'coding', '123456789@126.com');
 INSERT INTO user(username, password, age, hobby, email)
     VALUES('A', '111111', 20, 'noHobby', '111111111@126.com');

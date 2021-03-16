@@ -16,9 +16,15 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(defaultWebSecurityManager);
         Map<String, String> filterMap = new LinkedHashMap<>();
+        // authc表示登录才能访问
         filterMap.put("/shiro/testIndex", "authc");
-        bean.setFilterChainDefinitionMap(filterMap);
+        // 登录跳转
         bean.setLoginUrl("/shiro/testLogin");
+        // 需要相应权限才能访问
+        filterMap.put("/shiro/testAuth", "perms[BLOGGER]");
+        // 未授权跳转
+        bean.setUnauthorizedUrl("/shiro/xx");
+        bean.setFilterChainDefinitionMap(filterMap);
         return bean;
     }
 

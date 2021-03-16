@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shiro")
 public class ShiroTestController {
     @GetMapping("/testLogin")
-    public String testLogin(@RequestParam String user, @RequestParam String pswd) {
+    public String testLogin(@RequestParam String userId, @RequestParam String password) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user, pswd);
+        UsernamePasswordToken token = new UsernamePasswordToken(userId, password);
         try {
             subject.login(token);
         } catch (UnknownAccountException e) {
