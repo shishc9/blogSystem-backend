@@ -49,4 +49,9 @@ public class MyTestController {
         }
         return allBlog;
     }
+
+    @PostMapping("/test")
+    public void test(@RequestParam String s) {
+        System.out.println(s);
+    }
 }
