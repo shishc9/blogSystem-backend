@@ -2,6 +2,7 @@ package icu.shishc.controller;
 
 import icu.shishc.entity.Blog;
 import icu.shishc.service.BlogService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import java.util.List;
  * @Auther:ShiShc
  */
 
+@Slf4j
 @RestController
 public class MyTestController {
 
@@ -51,7 +53,8 @@ public class MyTestController {
     }
 
     @PostMapping("/test")
-    public void test(@RequestParam String s) {
+    public String test(@RequestParam String s) {
         System.out.println(s);
+        return s;
     }
 }
