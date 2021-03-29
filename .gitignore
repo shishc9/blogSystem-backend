@@ -1,3 +1,4 @@
 .idea
 blogSystem-backend.iml
 target
+/log/

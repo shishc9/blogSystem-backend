@@ -40,6 +40,7 @@ public class MyTestController {
                            @RequestParam("title") String title,
                            @RequestParam("content") String content,
                            @RequestParam("status") BlogStatus status) {
+        log.info("【TestController】 INSERT : username = {}, title = {}, status = {}", username, title, status);
         blogMapper.insert(username, title, content, status.getKey());
         Blog blogReturn = blogService.getBlogByTitle(title);
         return blogReturn;
