@@ -3,7 +3,7 @@ package icu.shishc.service;
 import icu.shishc.entity.User;
 import org.springframework.stereotype.Service;
 
-public interface UserService extends BaseService<User>{
+public interface UserService{
 
 
     /**
@@ -20,4 +20,14 @@ public interface UserService extends BaseService<User>{
      * @return
      */
     User getUserByName(String username);
+
+
+
+    Integer insert(User user);
+
+
+    Integer delete(int id);
+
+
+    Integer update(User user);
 }

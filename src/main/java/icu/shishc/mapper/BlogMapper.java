@@ -11,11 +11,18 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BlogMapper {
-    Integer insert(@Param("blog") Blog blog);
+    Integer insert(@Param("username") String username,
+                   @Param("title") String title,
+                   @Param("content") String content,
+                   @Param("status") int status
+    );
 
-    Integer delete(@Param("id") int id);
+    Integer delete(@Param("id") Long bid);
 
-    Integer update(@Param("blog") Blog blog);
+    Integer update(@Param("title") String title,
+                   @Param("content") String content,
+                   @Param("status") BlogStatus status
+    );
 
     List<Blog> getAllBlog();
 

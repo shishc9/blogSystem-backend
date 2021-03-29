@@ -3,10 +3,7 @@ package icu.shishc.controller;
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.service.BlogService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,6 +57,13 @@ public class BlogController {
     public Integer getAllReadNum() {
         Integer allReadNum = blogService.getAllReadNum();
         return allReadNum;
+    }
+
+    @PostMapping("/add")
+    public Blog insertBlog(@RequestParam("blog") Blog blog) {
+        blogService.insert(blog);
+        Blog blogReturn = blogService.getBlogByTitle(blog.getTitle());
+        return blogReturn;
     }
 
 }

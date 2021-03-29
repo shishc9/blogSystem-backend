@@ -21,11 +21,15 @@
     </insert>
 
     <update id="update">
-
+        UPDATE blog SET title = '${title}',
+                        content = '${content}',
+                        status = ${status},
+                        gmt_modified = now()
+        where blog_id = ${blog_id};
     </update>
 
     <delete id="delete">
-
+        DELETE FROM blog WHERE blog_id = ${id};
     </delete>
 
     <!-- 注意ResultType 和 ResultMap -->

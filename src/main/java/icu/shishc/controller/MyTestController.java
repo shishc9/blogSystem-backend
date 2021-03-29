@@ -1,8 +1,11 @@
 package icu.shishc.controller;
 
 import icu.shishc.entity.Blog;
+import icu.shishc.enumeration.BlogStatus;
+import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
@@ -20,20 +23,26 @@ public class MyTestController {
 
     private BlogService blogService;
 
+    @Autowired
+    BlogMapper blogMapper;
+
     public MyTestController(BlogService blogService) {
         this.blogService = blogService;
     }
 
     /**
      * Insert好像有点问题，这个参数形式应该修改一下
-     * @param blog
+     * @param
      * @return
      */
-    @PostMapping("/addBlog")
-    public Integer foo(@RequestParam("blog") Blog blog) {
-        Integer result = blogService.insert(blog);
-        System.out.println(result);
-        return result;
+    @PostMapping("/add")
+    public Blog insertBlog(@RequestParam("username") String username,
+                           @RequestParam("title") String title,
+                           @RequestParam("content") String content,
+                           @RequestParam("status") BlogStatus status) {
+        blogMapper.insert(username, title, content, status.getKey());
+        Blog blogReturn = blogService.getBlogByTitle(title);
+        return blogReturn;
     }
 
     @PostMapping("/getbytitle")

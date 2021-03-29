@@ -4,6 +4,7 @@ import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
+import icu.shishc.util.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +22,33 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogMapper blogMapper;
 
-    @Override
-    public Integer insert(Blog blog) {
-        Integer result = blogMapper.insert(blog);
-        return result;
-    }
 
     @Override
-    public Integer delete(int id) {
-        return 0;
+    public Integer insert(Blog blog) {
+        Blog blogTemp = blogMapper.getBlogByTitle(blog.getTitle());
+        if(blogTemp != null) {
+            MyUtils.print("Can't create blogs with the same title!");
+            return -1;
+        }
+        blogMapper.insert(blog.getUsername(), blog.getTitle(), blog.getContent(), blog.getStatus().getKey());
+        MyUtils.print("Blog created successfully");
+        return 1;
     }
+
+
+    @Override
+    public Integer delete(Long id) {
+        Integer flag = blogMapper.delete(id);
+        return 1;
+    }
+
 
     @Override
     public Integer update(Blog blog) {
-        return 0;
+        blogMapper.update(blog.getTitle(), blog.getContent(), blog.getStatus());
+        return 1;
     }
+
 
     @Override
     public List<Blog> getAllBlog() {
@@ -43,11 +56,14 @@ public class BlogServiceImpl implements BlogService {
         return blogList;
     }
 
+
     @Override
     public Blog getBlogByTitle(String title) {
         Blog blog = blogMapper.getBlogByTitle(title);
+        MyUtils.print("Successfully found the blog by title");
         return blog;
     }
+
 
     @Override
     public Blog getBlogByBID(Long bid) {
@@ -55,17 +71,20 @@ public class BlogServiceImpl implements BlogService {
         return blog;
     }
 
+
     @Override
     public List<Blog> getBlogByStatus(BlogStatus blogStatus) {
         List<Blog> list = blogMapper.getBlogByStatus(blogStatus);
         return list;
     }
 
+
     @Override
     public Integer getAllLike() {
         Integer allLike = blogMapper.getAllLike();
         return allLike;
     }
+
 
     @Override
     public Integer getAllReadNum() {

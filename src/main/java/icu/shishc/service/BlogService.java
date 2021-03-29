@@ -2,11 +2,11 @@ package icu.shishc.service;
 
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
-public interface BlogService extends BaseService<Blog> {
+public interface BlogService{
 
 
     /**
@@ -52,4 +52,28 @@ public interface BlogService extends BaseService<Blog> {
      * @return
      */
     Integer getAllReadNum();
+
+
+    /**
+     * 新增一篇博客
+     * @param blog
+     * @return
+     */
+    Integer insert(Blog blog);
+
+
+    /**
+     * 删除一篇博客
+     * @param id
+     * @return
+     */
+    Integer delete(Long id);
+
+
+    /**
+     * 更新一篇博客
+     * @param blog
+     * @return
+     */
+    Integer update(Blog blog);
 }

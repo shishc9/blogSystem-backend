@@ -3,8 +3,6 @@ package icu.shishc.dto;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.util.Date;
-
 /**
  * @PackageName:icu.shishc.dto
  * @Date:2021/3/15, 23:15
