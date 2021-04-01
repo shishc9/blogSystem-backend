@@ -118,7 +118,7 @@ public class BlogController {
      */
     @PostMapping("/add")
     public MyDTO insertBlog(
-            @RequestParam("blog") Blog blog
+        @RequestBody Blog blog
     ) throws CustomException {
         log.info("【Controller】Blog::add：blog = {}", blog);
         blogService.insert(blog);
@@ -135,7 +135,7 @@ public class BlogController {
      */
     @PostMapping("/update")
     public MyDTO updateBlog(
-            @RequestParam("blog") Blog blog
+        @RequestBody Blog blog
     ) throws CustomException {
         log.info("【Controller】Blog::update：blog = {}", blog);
         blogService.update(blog);

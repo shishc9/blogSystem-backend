@@ -45,7 +45,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Integer update(Blog blog) {
-        blogMapper.update(blog.getTitle(), blog.getContent(), blog.getStatus());
+        blogMapper.update(blog.getTitle(), blog.getContent(), blog.getStatus().getKey(), blog.getBlogId());
         return 1;
     }
 

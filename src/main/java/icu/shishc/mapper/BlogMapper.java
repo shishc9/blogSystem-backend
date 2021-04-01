@@ -21,7 +21,8 @@ public interface BlogMapper {
 
     Integer update(@Param("title") String title,
                    @Param("content") String content,
-                   @Param("status") BlogStatus status
+                   @Param("status") int status,
+                   @Param("blog_id") Long blogId
     );
 
     List<Blog> getAllBlog();
