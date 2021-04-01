@@ -5,9 +5,9 @@ server:
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/blogsys?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
-    username: root
-    password: '000910'
+    url: jdbc:postgresql或mysql://数据库地址:端口/blogsys?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: 用户名
+    password: '密码'
   # 设置开发环境
   profiles:
     active: dev
