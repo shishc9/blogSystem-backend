@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<String> ExceptionHandler(HttpServletRequest httpServletRequest, Exception exception) {
         log.error("GlobalExceptionHandler::ExceptionHandler=> e=\"{}\". Stack is :\n", exception.getMessage(),exception);
-        return new ResponseEntity<String>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(CustomException.class)

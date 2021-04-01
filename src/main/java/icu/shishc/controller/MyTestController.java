@@ -1,70 +1,58 @@
 package icu.shishc.controller;
 
+import icu.shishc.Exception.CustomException;
+import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.Blog;
-import icu.shishc.enumeration.BlogStatus;
-import icu.shishc.mapper.BlogMapper;
-import icu.shishc.service.BlogService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
-import java.util.List;
 
 /**
+ * @author Closer
  * @PackageName:icu.shishc.controller
  * @Date:2021/3/15, 14:18
- * @Auther:ShiShc
  */
-
-@Slf4j
 @RestController
+@RequestMapping("/test")
 public class MyTestController {
 
-    private BlogService blogService;
 
-    @Autowired
-    BlogMapper blogMapper;
+    @ApiOperation("返回一个字符串")
+    @GetMapping("/returnString")
+    public String hello() { return "helloFuckingWorld!"; }
 
-    public MyTestController(BlogService blogService) {
-        this.blogService = blogService;
+
+    @ApiOperation("传入一个字符串测试参数接收")
+    @GetMapping("/testString")
+    public void hello(@RequestParam("s") String s) {
+        System.out.println(s);
     }
 
-    /**
-     * Insert好像有点问题，这个参数形式应该修改一下
-     * @param
-     * @return
-     */
-    @PostMapping("/add")
-    public Blog insertBlog(@RequestParam("username") String username,
-                           @RequestParam("title") String title,
-                           @RequestParam("content") String content,
-                           @RequestParam("status") BlogStatus status) {
-        log.info("【TestController】 INSERT : username = {}, title = {}, status = {}", username, title, status);
-        blogMapper.insert(username, title, content, status.getKey());
-        Blog blogReturn = blogService.getBlogByTitle(title);
-        return blogReturn;
-    }
 
-    @PostMapping("/getbytitle")
-    public Blog getByTitle(@RequestParam("title") String title) {
-        Blog blog = blogService.getBlogByTitle(title);
-        System.out.println(blog);
+    @ApiOperation("返回对象")
+    @GetMapping("/testBlog")
+    public Blog testBlog() {
+        Blog blog = new Blog();
         return blog;
     }
 
-    @GetMapping("/getAllblog")
-    public List<Blog> getAllBlog() {
-        List<Blog> allBlog = blogService.getAllBlog();
-        for(Iterator ite = allBlog.iterator(); ite.hasNext();) {
-            System.out.println(ite.next());
+
+    @ApiOperation("返回一个404")
+    @GetMapping("/test404")
+    public Blog test404() throws CustomException {
+        if(true) {
+            throw new CustomException(HttpStatus.NOT_FOUND, "hello404");
         }
-        return allBlog;
+        return new Blog();
     }
 
-    @PostMapping("/test")
-    public String test(@RequestParam String s) {
-        System.out.println(s);
-        return s;
+
+    @ApiOperation("返回一个DTO")
+    @GetMapping("/test-mydto")
+    public MyDTO testMyDTO() {
+        return MyDTO.successDTO(new Blog());
     }
+
+
 }

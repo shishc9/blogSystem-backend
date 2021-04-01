@@ -2,6 +2,7 @@ package icu.shishc.controller;
 
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @Auther:ShiShc
  */
 
+@Slf4j
 @RestController
-@RequestMapping("/blogbankend/user")
+@RequestMapping("/blogbackend/user")
 public class UserController {
 
     private UserService userService;
@@ -35,10 +37,6 @@ public class UserController {
         return user;
     }
 
-//
-//    public Integer insertUser(@RequestParam("user") User user) {
-//        Integer result = userService.insert(user);
-//        return result;
-//    }
+
 
 }
