@@ -23,6 +23,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
         <!-- Mysql Connection -->
         <dependency>
             <groupId>mysql</groupId>
