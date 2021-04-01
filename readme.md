@@ -17,6 +17,56 @@
 
 4. 在命令行输入以下命令
 
-```sh
-mvn spring-boot:run
-```
+    ```sh
+    mvn spring-boot:run
+    ```
+
+## API
+
+待补全。
+
+### `/` 下的API
+
+定义在 `src/main/java/icu/shishc/controller/MyTestController.java` 中。
+
+- `add`
+
+- `getbytitle`
+
+- `getAllblog`
+
+- `test`
+
+### `/blogbackend/blog/` 下的API
+
+定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
+
+- `getall`
+
+- `getbytitle`
+
+- `getbyid`
+
+- `getbystatus`
+
+- `getalllike`
+
+- `getallread`
+
+- `add`
+
+### `/blogbankend/user/` 下的API
+
+定义在 `src/main/java/icu/shishc/controller/UserController.java` 中。
+
+- `getbyid`
+
+- `getbyname`
+
+### `/shiro/` 下的API
+
+定义在 `src/main/java/icu/shishc/controller/ShiroTestController.java` 中。
+
+- `testLogin`
+
+- `testIndex`
