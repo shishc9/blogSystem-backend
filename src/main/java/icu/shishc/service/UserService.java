@@ -1,5 +1,6 @@
 package icu.shishc.service;
 
+import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public interface UserService{
      * @param userId
      * @return
      */
-    User getUserById(Long userId);
+    User getUserById(Long userId) throws CustomException;
 
 
     /**
@@ -19,15 +20,29 @@ public interface UserService{
      * @param username
      * @return
      */
-    User getUserByName(String username);
+    User getUserByName(String username) throws CustomException;
 
 
+    /**
+     * 新增一个用户
+     * @param user
+     * @return
+     */
+    User insert(User user) throws CustomException;
 
-    Integer insert(User user);
+
+    /**
+     * 删除一个用户
+     * @param id
+     * @return
+     */
+    Integer delete(int id) throws CustomException;
 
 
-    Integer delete(int id);
-
-
-    Integer update(User user);
+    /**
+     * 更新一个用户信息
+     * @param user
+     * @return
+     */
+    User update(User user) throws CustomException;
 }

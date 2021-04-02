@@ -3,6 +3,7 @@ package icu.shishc.config;
 import icu.shishc.entity.User;
 import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.service.UserService;
+import lombok.SneakyThrows;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -31,8 +32,15 @@ public class UserRealm extends AuthorizingRealm {
         return info;
     }
 
+    /**
+     * @SneakyThrows lombok注解：为了在tc下捕获异常
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
+    @SneakyThrows
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException{
         System.out.println("认证");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         User user = userService.getUserById(Long.parseLong(token.getUsername()));

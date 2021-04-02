@@ -25,18 +25,5 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getbyid")
-    public User getById(@RequestParam("userId") Long userId) {
-        User user = userService.getUserById(userId);
-        return user;
-    }
-
-    @GetMapping("/getbyname")
-    public User getByName(@RequestParam("username") String username) {
-        User user = userService.getUserByName(username);
-        return user;
-    }
-
-
 
 }

@@ -1,9 +1,12 @@
 package icu.shishc.service.serviceImpl;
 
+import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,36 +15,82 @@ import org.springframework.stereotype.Service;
  * @Auther:ShiShc
  */
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     UserMapper userMapper;
 
+
     @Override
-    public User getUserById(Long userId) {
+    public User getUserById(Long userId)
+            throws CustomException {
+        if(userId <= 0) {
+            log.warn("【Service】UserService::getUserById:Illegal param, userId <= 0");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
+        }
         User user = userMapper.getUserById(userId);
-        return user;
+        if(user == null) {
+            log.warn("【Service】UserService::getUserById:the user doesn't exists, userId = {}", userId);
+            return null;
+        } else {
+            log.info("【Service】UserService::getUserById:return the user, userId = {}", userId);
+            return user;
+        }
     }
+
 
     @Override
     public User getUserByName(String username) {
         User user = userMapper.getUserByName(username);
-        return user;
+        if(user == null) {
+            log.warn("【Service】UserService::getUserByName:the user doesn't exists, username = {}", username);
+            return null;
+        } else {
+            log.info("【Service】UserService::getUserByName:return the user, username = {}", username);
+            return user;
+        }
     }
 
-    @Override
-    public Integer insert(User user) {
-        return 0;
-    }
 
     @Override
-    public Integer delete(int id) {
-        return 0;
+    public User insert(User user) throws CustomException{
+        User user1 = userMapper.getUserByName(user.getUsername());
+        if(user1 != null) {
+            log.warn("【Service】UserService::insert:the user has exist, userId = {}", user.getUserId());
+            throw new CustomException(HttpStatus.BAD_REQUEST, "User has exist!");
+        }
+        userMapper.insert(user.getUsername(), user.getPassword(), user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
+        User user2 = userMapper.getUserByName(user.getUsername());
+        log.info("【Service】UserService::insert:add user successfully! userId = {}", user2.getUserId());
+        return user2;
     }
 
+
     @Override
-    public Integer update(User user) {
-        return 0;
+    public Integer delete(int id) throws CustomException {
+        if(id <= 0) {
+            log.warn("【Service】UserService::delete:Illegal param, userId <= 0");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
+        }
+        userMapper.delete(id);
+        log.info("【Service】UserService::delete: delete user successfully! userId = {}", id);
+        return 1;
+    }
+
+
+    @Override
+    public User update(User user) throws CustomException {
+        User user1 = userMapper.getUserByName(user.getUsername());
+        if(null == user1) {
+            log.warn("【Service】UserService::update: the user doesn't exist! userId = {}", user.getUserId());
+            throw new CustomException(HttpStatus.BAD_REQUEST, "user doesn't exist!");
+        }
+        userMapper.update(user.getUserId(), user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
+        log.info("【Service】UserService::update: update successfully! userId = {}", user.getUserId());
+        User user2 = userMapper.getUserById(user.getUserId());
+        return user2;
     }
 }

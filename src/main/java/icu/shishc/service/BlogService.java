@@ -1,5 +1,6 @@
 package icu.shishc.service;
 
+import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 
@@ -13,7 +14,7 @@ public interface BlogService{
      * 返回所有博文
      * @return
      */
-    List<Blog> getAllBlog();
+    List<Blog> getAllBlog() throws CustomException;
 
 
     /**
@@ -21,7 +22,7 @@ public interface BlogService{
      * @param title
      * @return
      */
-    Blog getBlogByTitle(String title);
+    Blog getBlogByTitle(String title) throws CustomException;
 
 
     /**
@@ -29,7 +30,7 @@ public interface BlogService{
      * @param bid
      * @return
      */
-    Blog getBlogByBID(Long bid);
+    Blog getBlogByBID(Long bid) throws CustomException;
 
 
     /**
@@ -37,21 +38,21 @@ public interface BlogService{
      * @param blogStatus
      * @return
      */
-    List<Blog> getBlogByStatus(BlogStatus blogStatus);
+    List<Blog> getBlogByStatus(BlogStatus blogStatus) throws CustomException;
 
 
     /**
      * 统计所有点赞
      * @return
      */
-    Integer getAllLike();
+    Integer getAllLike() throws CustomException;
 
 
     /**
      * 统计所有阅读数
      * @return
      */
-    Integer getAllReadNum();
+    Integer getAllReadNum() throws CustomException;
 
 
     /**
@@ -59,7 +60,7 @@ public interface BlogService{
      * @param blog
      * @return
      */
-    Integer insert(Blog blog);
+    Integer insert(Blog blog) throws CustomException;
 
 
     /**
@@ -67,7 +68,7 @@ public interface BlogService{
      * @param id
      * @return
      */
-    Integer delete(Long id);
+    Integer delete(Long id) throws CustomException;
 
 
     /**
@@ -75,5 +76,5 @@ public interface BlogService{
      * @param blog
      * @return
      */
-    Integer update(Blog blog);
+    Integer update(Blog blog) throws CustomException;
 }
