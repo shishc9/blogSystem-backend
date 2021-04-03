@@ -77,7 +77,7 @@ public interface BlogMapper {
      * @param blogStatus
      * @return
      */
-    List<Blog> getBlogByStatus(@Param("blogStatus") BlogStatus blogStatus);
+    List<Blog> getBlogByStatus(@Param("blogStatus") int blogStatus);
 
 
     /**

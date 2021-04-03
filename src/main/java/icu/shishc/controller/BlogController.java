@@ -121,10 +121,9 @@ public class BlogController {
         @RequestBody Blog blog
     ) throws CustomException {
         log.info("【Controller】Blog::add：blog = {}", blog);
-        blogService.insert(blog);
-        log.info("【Controller】Blog::after insert: get：title = {}", blog.getTitle());
-        Blog blog1 = blogService.getBlogByTitle(blog.getTitle());
-        return MyDTO.successDTO(blog1);
+        Blog blog2 = blogService.insert(blog);
+        log.info("【Controller】Blog::after insert: get：title = {}", blog2.getTitle());
+        return MyDTO.successDTO(blog2);
     }
 
 
@@ -138,10 +137,9 @@ public class BlogController {
         @RequestBody Blog blog
     ) throws CustomException {
         log.info("【Controller】Blog::update：blog = {}", blog);
-        blogService.update(blog);
-        log.info("【Controller】Blog::after update: get：bid = {}", blog.getBlogId());
-        Blog blog1 = blogService.getBlogByBID(blog.getBlogId());
-        return MyDTO.successDTO(blog1);
+        Blog blog2 = blogService.update(blog);
+        log.info("【Controller】Blog::after update: get：bid = {}", blog2.getBlogId());
+        return MyDTO.successDTO(blog2);
     }
 
 
@@ -152,7 +150,7 @@ public class BlogController {
      */
     @GetMapping("/delete")
     public MyDTO deleteBlog(
-            @RequestParam("big") Long bid
+            @RequestParam("bid") Long bid
     ) throws CustomException {
         log.info("【Controller】Blog::delete：bid = {}", bid);
         Integer status = blogService.delete(bid);

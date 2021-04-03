@@ -50,7 +50,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    Integer delete(@Param("id") int id);
+    Integer delete(@Param("id") Long id);
 
 
     /**

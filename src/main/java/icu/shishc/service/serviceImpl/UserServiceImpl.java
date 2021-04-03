@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Integer delete(int id) throws CustomException {
+    public Integer delete(Long id) throws CustomException {
         if(id <= 0) {
             log.warn("【Service】UserService::delete:Illegal param, userId <= 0");
             throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.update(user.getUserId(), user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", user.getUserId());
-        User user2 = userMapper.getUserById(user.getUserId());
-        return user2;
+        return userMapper.getUserById(user.getUserId());
     }
 }

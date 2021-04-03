@@ -60,7 +60,7 @@ public interface BlogService{
      * @param blog
      * @return
      */
-    Integer insert(Blog blog) throws CustomException;
+    Blog insert(Blog blog) throws CustomException;
 
 
     /**
@@ -76,5 +76,5 @@ public interface BlogService{
      * @param blog
      * @return
      */
-    Integer update(Blog blog) throws CustomException;
+    Blog update(Blog blog) throws CustomException;
 }
