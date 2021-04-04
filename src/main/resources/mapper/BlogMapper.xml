@@ -45,7 +45,7 @@
         SELECT * FROM blog WHERE blog_id = ${bid}
     </select>
 
-    <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="icu.shishc.enumeration.BlogStatus">
+    <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT * FROM blog WHERE status = ${status}
     </select>
 

@@ -75,6 +75,11 @@ public class UserServiceImpl implements UserService {
             log.warn("【Service】UserService::delete:Illegal param, userId <= 0");
             throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
         }
+        User user = userMapper.getUserById(id);
+        if(null == user) {
+            log.warn("【Service】UserService::delete: the user doesn't exist, uid = {}", id);
+            return null;
+        }
         userMapper.delete(id);
         log.info("【Service】UserService::delete: delete user successfully! userId = {}", id);
         return 1;
@@ -83,13 +88,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws CustomException {
-        User user1 = userMapper.getUserByName(user.getUsername());
+        Long userId = user.getUserId();
+        User user1 = userMapper.getUserById(userId);
         if(null == user1) {
-            log.warn("【Service】UserService::update: the user doesn't exist! userId = {}", user.getUserId());
+            log.warn("【Service】UserService::update: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "user doesn't exist!");
         }
-        userMapper.update(user.getUserId(), user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
-        log.info("【Service】UserService::update: update successfully! userId = {}", user.getUserId());
-        return userMapper.getUserById(user.getUserId());
+        userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
+        log.info("【Service】UserService::update: update successfully! userId = {}", userId);
+        return userMapper.getUserById(userId);
     }
 }

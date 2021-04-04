@@ -74,10 +74,10 @@ public interface BlogMapper {
 
     /**
      * 博客状态查找
-     * @param blogStatus
+     * @param status
      * @return
      */
-    List<Blog> getBlogByStatus(@Param("blogStatus") int blogStatus);
+    List<Blog> getBlogByStatus(@Param("status") int status);
 
 
     /**

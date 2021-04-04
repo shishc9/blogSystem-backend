@@ -23,7 +23,7 @@
         UPDATE user SET username = '${username}',
                         password = '${password}',
                         age = ${age},
-                        gender = ${gender},
+                        gender = '${gender}',
                         hobby = '${hobby}',
                         email = '${email}'
         WHERE user_id = ${userId}
