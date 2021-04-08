@@ -8,7 +8,7 @@
 
 3. 安装数据库，MySQL或PostgreSQL
     - 如果使用MySQL，执行 `src/main/resources/sql/` 里的 `blog-backend.sql` 和 `blog-backend-init.sql` 脚本（大概）
-    - 如果使用PostgreSQL，在命令行输入 `psql -h 你的数据库地址 -U 数据库用户名 -d postgres` ，并执行一下命令
+    - 如果使用PostgreSQL，在命令行输入 `psql -h 你的数据库地址 -U 数据库用户名 -d postgres` ，并执行以下命令
 
         ```psql
         \i src/main/resources/sql/pg-backend.sql
@@ -25,48 +25,60 @@
 
 待补全。
 
-### `/` 下的API
+### `/test` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/MyTestController.java` 中。
 
-- `add`
+- `returnString`
 
-- `getbytitle`
+- `testString(s: string)`
 
-- `getAllblog`
+- `testBlog`
 
-- `test`
+- `test404`
+
+- `test-mydto`
 
 ### `/blogbackend/blog/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
 
-- `getall`
+- `get/all`
 
-- `getbytitle`
+- `get/by-title(title: string)`
 
-- `getbyid`
+- `get/by-id(bid: number)`
 
-- `getbystatus`
+- `get/by-status(blogStatus: "PUBLIC" | "PRIVATE")`
 
-- `getalllike`
+- `get/all-like`
 
-- `getallread`
+- `get/all-read`
 
-- `add`
+- `add{username: string, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
+
+- `update{blogId: number, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
+
+- `delete(bid: number)`
 
 ### `/blogbankend/user/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/UserController.java` 中。
 
-- `getbyid`
+- `get-by-id(userId: number)`
 
-- `getbyname`
+- `get-by-username(username: string)`
+
+- `insert{username: string, password: string, userIdentity: "TOURIST" | "BLOGGER", age: number, gender: string, hobby: string, email: string}`
+
+- `update{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
+
+- `delete(uid: number)`
 
 ### `/shiro/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/ShiroTestController.java` 中。
 
-- `testLogin`
+- `testLogin(userId: string, password: string)`
 
 - `testIndex`

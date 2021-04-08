@@ -15,7 +15,7 @@ public enum UserIdentity {
 
     private final int key;
 
-    private static Map map = new HashMap<>();
+    private static Map<Integer, UserIdentity> map = new HashMap<>();
     static {
         for(UserIdentity userIdentity : UserIdentity.values()) {
             map.put(userIdentity.key, userIdentity);

@@ -1,7 +1,6 @@
 package icu.shishc.mapper;
 
 import icu.shishc.entity.Blog;
-import icu.shishc.enumeration.BlogStatus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

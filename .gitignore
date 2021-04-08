@@ -1,5 +1,10 @@
 .idea
-blogSystem-backend.iml
-target
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/
 /log/
+/target/
+blogSystem-backend.iml
 application.yml

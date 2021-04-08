@@ -13,7 +13,7 @@ public enum BlogStatus {
 
     private final int key;
 
-    private static Map map = new HashMap<>();
+    private static Map<Integer, BlogStatus> map = new HashMap<>();
     static {
         for(BlogStatus blogStatus : BlogStatus.values()) {
             map.put(blogStatus.key, blogStatus);
