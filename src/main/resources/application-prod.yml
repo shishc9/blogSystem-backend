@@ -1,0 +1,7 @@
+# 设置开发环境
+spring:
+  profiles:
+    active: prod
+
+# 数据库连接配置
+# ...

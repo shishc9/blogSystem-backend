@@ -72,6 +72,22 @@ public interface BlogMapper {
 
 
     /**
+     * 当前博客的上一篇博客
+     * @param bid
+     * @return
+     */
+    Blog getPrevious(@Param("bid") Long bid);
+
+
+    /**
+     * 当前博客的下一篇博客
+     * @param bid
+     * @return
+     */
+    Blog getNext(@Param("bid") Long bid);
+
+
+    /**
      * 博客状态查找
      * @param status
      * @return

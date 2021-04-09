@@ -163,4 +163,24 @@ public class BlogController {
         }
     }
 
+
+    @GetMapping("/get-previous")
+    public MyDTO getPrevious(
+            @RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
+        Blog blog = blogService.getPrevious(bid);
+        return MyDTO.successDTO(blog);
+    }
+
+
+    @GetMapping("/get-next")
+    public MyDTO getNext(
+            @RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
+        Blog blog = blogService.getNext(bid);
+        return MyDTO.successDTO(blog);
+    }
+
 }

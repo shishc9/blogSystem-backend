@@ -66,12 +66,33 @@ public class BlogServiceImpl implements BlogService {
         return blog2;
     }
 
+    @Override
+    public Blog getPrevious(Long bid) throws CustomException {
+        Blog blog = blogMapper.getPrevious(bid);
+        if(null == blog) {
+            log.info("【Service】BlogService::getPrevious: no previous blog");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no previous blog");
+        }
+        log.info("【Service】BlogService::getPrevious: get previous blog successfully! bid = {}", blog.getBlogId());
+        return blog;
+    }
+
+    @Override
+    public Blog getNext(Long bid) throws CustomException {
+        Blog blog = blogMapper.getNext(bid);
+        if(null == blog) {
+            log.info("【Service】BlogService::getNext: no next blog");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no next blog");
+        }
+        log.info("【Service】BlogService::getNext: get next successfully!");
+        return blog;
+    }
+
 
     @Override
     public List<Blog> getAllBlog() {
         log.info("【Service】BlogService::getAllBlog");
-        List<Blog> blogList = blogMapper.getAllBlog();
-        return blogList;
+        return blogMapper.getAllBlog();
     }
 
 
@@ -114,4 +135,6 @@ public class BlogServiceImpl implements BlogService {
         log.info("【Service】BlogService::getAllReadNum");
         return blogMapper.getAllReadNum();
     }
+
+
 }

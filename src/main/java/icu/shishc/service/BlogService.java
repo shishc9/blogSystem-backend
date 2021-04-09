@@ -77,4 +77,22 @@ public interface BlogService{
      * @return
      */
     Blog update(Blog blog) throws CustomException;
+
+
+    /**
+     * 获取上一篇博客
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    Blog getPrevious(Long bid) throws CustomException;
+
+
+    /**
+     * 获取下一篇博客
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    Blog getNext(Long bid) throws CustomException;
 }
