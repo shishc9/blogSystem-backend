@@ -5,6 +5,7 @@ import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,6 +36,11 @@ public class UserController {
 
     @GetMapping("/get-by-username")
     public MyDTO getUserByName(@RequestParam("username") String username) throws CustomException {
+        username = username.trim();
+        if(username.equals("")) {
+            log.warn("【Controller】UserController::getUserByName: bad username");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "username can't be null");
+        }
         User user = userService.getUserByName(username);
         log.info("【Controller】UserController::getUserByName: return user, uID = {}", user == null ? 0 : user.getUserId());
         return MyDTO.successDTO(user);
@@ -43,6 +49,10 @@ public class UserController {
 
     @PostMapping("/insert")
     public MyDTO insert(@RequestBody User user) throws CustomException {
+        if(!userService.userCheck(user)) {
+            log.warn("【Controller】UserController::insert: bad user entity");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
+        }
         User user1 = userService.insert(user);
         log.info("【Controller】UserController::insert: insert successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
         return MyDTO.successDTO(user1);
@@ -51,6 +61,10 @@ public class UserController {
 
     @PostMapping("/update")
     public MyDTO update(@RequestBody User user) throws CustomException {
+        if(!userService.userCheck(user)) {
+            log.warn("【Controller】UserController::update: bad user entity");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
+        }
         log.info("【Controller】UserController::update: before update, uid = {}", user.getUserId());
         User user1 = userService.update(user);
         log.info("【Controller】UserController::update: after update, uid = {}, username = {}", user1.getUserId(), user1.getUsername());

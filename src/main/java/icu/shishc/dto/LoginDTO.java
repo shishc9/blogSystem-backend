@@ -2,7 +2,6 @@ package icu.shishc.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -13,11 +12,7 @@ import java.io.Serializable;
 
 @Data
 public class LoginDTO implements Serializable {
-
-    @NotBlank(message = "username can't be null")
     private String username;
-
-    @NotBlank(message = "password can't be null")
     private String password;
 
 }

@@ -49,4 +49,20 @@ public interface UserService{
      * @throws CustomException
      */
     User update(User user) throws CustomException;
+
+
+    /**
+     * user Identity check.
+     * @param user
+     * @return
+     */
+    boolean userCheck(User user);
+
+
+    /**
+     * email format check
+     * @param email
+     * @return
+     */
+    boolean regexMatch(String email);
 }

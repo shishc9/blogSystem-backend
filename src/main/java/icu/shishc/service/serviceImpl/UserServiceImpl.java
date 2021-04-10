@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
  * @Date:2021/3/15, 9:40
  * @Auther:ShiShc
  */
-
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -98,4 +97,26 @@ public class UserServiceImpl implements UserService {
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
     }
+
+    @Override
+    public boolean userCheck(User user) {
+        String username = user.getUsername().trim();
+        String password = user.getPassword().trim();
+        String email = user.getEmail().trim();
+        if(username.equals("") || password.contains(" ") || !regexMatch(email)) {
+            log.info("【Service】UserService::userCheck: bad user entity");
+            return false;
+        }
+        log.info("【Service】UserService::userCheck: correct user entity");
+        return true;
+    }
+
+    @Override
+    public boolean regexMatch(String email) {
+        String pattern = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}";
+        log.info("【Service】UserService::regexMatch: email format check");
+        return email.matches(pattern);
+    }
+
+
 }

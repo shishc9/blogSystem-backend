@@ -4,7 +4,6 @@ import icu.shishc.enumeration.BlogStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,14 +20,8 @@ public class Blog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long blogId;
-
-    @NotNull
     private String username;
-
-    @NotNull(message = "blog's title can't be null")
     private String title;
-
-    @NotNull
     private String content;
 
     /**
