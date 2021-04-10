@@ -51,6 +51,9 @@ public class BlogController {
     public MyDTO getByTitle(
             @RequestParam("title") String title
     ) throws CustomException {
+        if(title.trim().equals("")) {
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "title is null");
+        }
         log.info("【Controller】Blog::get-by-title：title = {}", title);
         Blog blog = blogService.getBlogByTitle(title);
         return MyDTO.successDTO(blog);
@@ -120,6 +123,9 @@ public class BlogController {
     public MyDTO insertBlog(
         @RequestBody Blog blog
     ) throws CustomException {
+        if(!blogService.checkBlog(blog)) {
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad blog entity");
+        }
         log.info("【Controller】Blog::add：blog = {}", blog);
         Blog blog2 = blogService.insert(blog);
         log.info("【Controller】Blog::after insert: get：title = {}", blog2.getTitle());
@@ -136,6 +142,9 @@ public class BlogController {
     public MyDTO updateBlog(
         @RequestBody Blog blog
     ) throws CustomException {
+        if(!blogService.checkBlog(blog)) {
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad blog entity");
+        }
         log.info("【Controller】Blog::update：blog = {}", blog);
         Blog blog2 = blogService.update(blog);
         log.info("【Controller】Blog::after update: get：bid = {}", blog2.getBlogId());

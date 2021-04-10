@@ -68,6 +68,10 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getPrevious(Long bid) throws CustomException {
+        if(bid <= 0) {
+            log.warn("【Service】BlogService::getPrevious:Illegal param, bid = {}", bid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad param");
+        }
         Blog blog = blogMapper.getPrevious(bid);
         if(null == blog) {
             log.info("【Service】BlogService::getPrevious: no previous blog");
@@ -79,6 +83,10 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getNext(Long bid) throws CustomException {
+        if(bid <= 0) {
+            log.warn("【Service】BlogService::getNext:Illegal param, bid = {}", bid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad param");
+        }
         Blog blog = blogMapper.getNext(bid);
         if(null == blog) {
             log.info("【Service】BlogService::getNext: no next blog");
@@ -86,6 +94,19 @@ public class BlogServiceImpl implements BlogService {
         }
         log.info("【Service】BlogService::getNext: get next successfully!");
         return blog;
+    }
+
+    @Override
+    public Boolean checkBlog(Blog blog) {
+        String title = blog.getTitle().trim();
+        String content = blog.getContent().trim();
+        String username = blog.getUsername();
+        if(title == null || title.equals("") || content == null || content.equals("") || !username.equals("Admin")) {
+            log.warn("【Service】BlogService::checkBlog: bad blog entity!");
+            return false;
+        }
+        log.info("【Service】BlogService::checkBlog: correct blog entity");
+        return true;
     }
 
 

@@ -95,4 +95,13 @@ public interface BlogService{
      * @throws CustomException
      */
     Blog getNext(Long bid) throws CustomException;
+
+
+    /**
+     * 博客完整性检查
+     * @param blog
+     * @return
+     * @throws CustomException
+     */
+    Boolean checkBlog(Blog blog) throws CustomException;
 }
