@@ -65,4 +65,12 @@ public interface UserService{
      * @return
      */
     boolean regexMatch(String email);
+
+
+    /**
+     * 获取用户角色
+     * @param username
+     * @return
+     */
+    String getRole(String username);
 }

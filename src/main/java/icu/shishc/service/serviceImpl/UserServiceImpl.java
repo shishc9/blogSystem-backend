@@ -2,6 +2,7 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
+import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -116,6 +117,12 @@ public class UserServiceImpl implements UserService {
         String pattern = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}";
         log.info("【Service】UserService::regexMatch: email format check");
         return email.matches(pattern);
+    }
+
+    @Override
+    public String getRole(String username) {
+        log.info("【Service】UserService::getRole, username = {}", username);
+        return userMapper.getUserByName(username).getUserIdentity().toString();
     }
 
 
