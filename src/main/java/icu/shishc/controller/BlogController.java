@@ -173,7 +173,7 @@ public class BlogController {
     }
 
 
-    @GetMapping("/get-previous")
+    @GetMapping("/get/previous")
     public MyDTO getPrevious(
             @RequestParam("bid") Long bid
     ) throws CustomException {
@@ -183,7 +183,7 @@ public class BlogController {
     }
 
 
-    @GetMapping("/get-next")
+    @GetMapping("/get/next")
     public MyDTO getNext(
             @RequestParam("bid") Long bid
     ) throws CustomException {

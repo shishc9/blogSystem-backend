@@ -3,11 +3,16 @@ package icu.shishc;
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -55,6 +60,16 @@ public class ServiceTest {
             throw new CustomException(HttpStatus.BAD_REQUEST, "pwd error!");
         }
         System.out.println("身份认证，登陆成功 username = " + username + " pwd = " + user.getPassword());
+        System.out.println(SecurityUtils.getSubject().toString());
+//        String temp = (String) SecurityUtils.getSubject().getPrincipal();
+//        System.out.println("temp = " + temp);
+//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+//        String role = userService.getRole(temp);
+//        Set<String> set = new HashSet<>();
+//        set.add(role);
+//        info.setRoles(set);
+//        System.out.println("set = " + set.toString());
+//        System.out.println("info = " + info.toString());
     }
 
 }

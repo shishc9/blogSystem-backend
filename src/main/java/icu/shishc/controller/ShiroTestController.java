@@ -11,12 +11,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shiro")
+@RequestMapping("/blogbackend")
 public class ShiroTestController {
-    @GetMapping("/testLogin")
-    public String testLogin(@RequestParam String userId, @RequestParam String password) {
+//    @GetMapping("/testLogin")
+//    public String testLogin(@RequestParam String userId, @RequestParam String password) {
+//        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(userId, password);
+//        try {
+//            subject.login(token);
+//        } catch (UnknownAccountException e) {
+//            return "UnknownAccountException";
+//        } catch (IncorrectCredentialsException e) {
+//            return "IncorrectCredentialsException";
+//        }
+//        return "login";
+//    }
+//
+//    @GetMapping("/testIndex")
+//    public String Index() {
+//        return "index";
+//    }
+
+    @GetMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(userId, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
         } catch (UnknownAccountException e) {
@@ -24,11 +43,13 @@ public class ShiroTestController {
         } catch (IncorrectCredentialsException e) {
             return "IncorrectCredentialsException";
         }
+        System.out.println("login successfully");
         return "login";
     }
 
-    @GetMapping("/testIndex")
-    public String Index() {
+    @GetMapping("/index")
+    public String index() {
+        System.out.println("index");
         return "index";
     }
 }
