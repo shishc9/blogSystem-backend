@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/blogbackend/blog")
+@RequestMapping("/blog")
 public class BlogController {
 
     private BlogService blogService;

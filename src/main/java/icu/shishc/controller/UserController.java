@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/blogbackend/user")
+@RequestMapping("/user")
 public class UserController {
 
     private UserService userService;
@@ -26,7 +26,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-by-id")
+    @GetMapping("/get/by-id")
     public MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
         User user = userService.getUserById(userId);
         log.info("【Controller】UserController::getById: return user, uID = {}", userId);
@@ -34,7 +34,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-by-username")
+    @GetMapping("/get/by-username")
     public MyDTO getUserByName(@RequestParam("username") String username) throws CustomException {
         username = username.trim();
         if(username.equals("")) {

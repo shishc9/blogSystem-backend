@@ -14,34 +14,24 @@ import java.util.Map;
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
-        //ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-//
-//        bean.setSecurityManager(defaultWebSecurityManager);
-//        Map<String, String> filterMap = new LinkedHashMap<>();
-//        // authc表示登录才能访问
-//        filterMap.put("/shiro/testIndex", "authc");
-//        // 登录跳转
-//        bean.setLoginUrl("/shiro/testLogin");
-//        // 需要相应权限才能访问
-//        filterMap.put("/shiro/testAuth", "perms[BLOGGER]");
-//        // 未授权跳转
-//        bean.setUnauthorizedUrl("/shiro/xx");
-//        bean.setFilterChainDefinitionMap(filterMap);
-//        return bean;
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         // 设置shiro内置过滤器
-        //Map<String, Filter> filters = new LinkedHashMap<>();
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/index");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/blog/get/**", "anon");
+        filterChainDefinitionMap.put("/user/get/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/index", "anon");
+        filterChainDefinitionMap.put("/noAuth", "anon");
+        filterChainDefinitionMap.put("/logout", "authc");
+        filterChainDefinitionMap.put("/blog/**", "roles[BLOGGER]");
+        filterChainDefinitionMap.put("/user/**", "roles[BLOGGER]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

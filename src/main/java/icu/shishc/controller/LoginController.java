@@ -24,16 +24,14 @@ public class LoginController {
     private LoginService loginService;
 
     @GetMapping(value = "/login")
-    //@RequestParam String username, @RequestParam String pwd
-    public String authLogin() throws CustomException {
-//        boolean flag = loginService.authLogin(username, pwd);
-//        if(flag) {
-//            log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, successfully!", username, pwd);
-//            return MyDTO.successDTO("Login success");
-//        }
-//        log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, failed", username, pwd);
-//        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Login failed!");
-        return "login";
+    public MyDTO authLogin(@RequestParam String username, @RequestParam String pwd) throws CustomException {
+        boolean flag = loginService.authLogin(username, pwd);
+        if(flag) {
+            log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, successfully!", username, pwd);
+            return MyDTO.successDTO("Login success");
+        }
+        log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, failed", username, pwd);
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Login failed!");
     }
 
     @GetMapping(value = "/index")
@@ -49,6 +47,11 @@ public class LoginController {
             return MyDTO.successDTO("Logout success");
         }
         return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Logout failed!");
+    }
+
+    @GetMapping("/noAuth")
+    public MyDTO noAuth() {
+        return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "无访问权限...");
     }
 
 }
