@@ -30,8 +30,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/index", "anon");
         filterChainDefinitionMap.put("/noAuth", "anon");
         filterChainDefinitionMap.put("/logout", "authc");
-        filterChainDefinitionMap.put("/blog/**", "roles[BLOGGER]");
-        filterChainDefinitionMap.put("/user/**", "roles[BLOGGER]");
+        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
+        filterChainDefinitionMap.put("/user/**", "perms[BLOGGER]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
