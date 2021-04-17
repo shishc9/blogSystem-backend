@@ -34,7 +34,7 @@
 
     <!-- 注意ResultType 和 ResultMap -->
     <select id="getAllBlog" resultMap="BaseResultMap">
-        SELECT * FROM blog
+        SELECT * FROM blog LIMIT ${page}, ${size}
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -46,7 +46,7 @@
     </select>
 
     <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * FROM blog WHERE status = ${status}
+        SELECT * FROM blog WHERE status = ${status} LIMIT ${page}, ${size}
     </select>
 
     <select id="getAllLike" resultType="java.lang.Integer" >

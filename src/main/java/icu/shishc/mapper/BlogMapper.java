@@ -52,7 +52,9 @@ public interface BlogMapper {
      * 获取所有博客
      * @return
      */
-    List<Blog> getAllBlog();
+    List<Blog> getAllBlog(@Param("page") int page,
+                          @Param("size") int size
+    );
 
 
     /**
@@ -92,7 +94,10 @@ public interface BlogMapper {
      * @param status
      * @return
      */
-    List<Blog> getBlogByStatus(@Param("status") int status);
+    List<Blog> getBlogByStatus(@Param("page") int page,
+                               @Param("size") int size,
+                               @Param("status") int status
+    );
 
 
     /**

@@ -2,6 +2,7 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.Blog;
+import icu.shishc.entity.Pager;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
@@ -111,9 +112,14 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public List<Blog> getAllBlog() {
+    public Pager<Blog> getAllBlog(int page, int size) {
         log.info("【Service】BlogService::getAllBlog");
-        return blogMapper.getAllBlog();
+        List<Blog> list = blogMapper.getAllBlog(page, size);
+        Pager<Blog> pager = new Pager<>();
+        pager.setRows(list);
+        pager.setTotal(list.size());
+        System.out.println("pager : " +pager.toString());
+        return pager;
     }
 
 
@@ -138,9 +144,13 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public List<Blog> getBlogByStatus(BlogStatus blogStatus) {
+    public Pager<Blog> getBlogByStatus(int page, int size, BlogStatus blogStatus) {
         log.info("【Service】BlogService::getByStatus");
-        return blogMapper.getBlogByStatus(blogStatus.getKey());
+        List<Blog> list = blogMapper.getBlogByStatus(page, size, blogStatus.getKey());
+        Pager<Blog> pager = new Pager<>();
+        pager.setRows(list);
+        pager.setTotal(list.size());
+        return pager;
     }
 
 

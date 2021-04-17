@@ -2,10 +2,9 @@ package icu.shishc.service;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.Blog;
+import icu.shishc.entity.Pager;
 import icu.shishc.enumeration.BlogStatus;
 
-
-import java.util.List;
 
 public interface BlogService{
 
@@ -14,7 +13,7 @@ public interface BlogService{
      * 返回所有博文
      * @return
      */
-    List<Blog> getAllBlog() throws CustomException;
+    Pager<Blog> getAllBlog(int page, int size) throws CustomException;
 
 
     /**
@@ -38,7 +37,7 @@ public interface BlogService{
      * @param blogStatus
      * @return
      */
-    List<Blog> getBlogByStatus(BlogStatus blogStatus) throws CustomException;
+    Pager<Blog> getBlogByStatus(int page, int size, BlogStatus blogStatus) throws CustomException;
 
 
     /**
