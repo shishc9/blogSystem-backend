@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Auther:ShiShc
  */
 
+/**
+ * 跨域配置，允许任何情况下跨域
+ */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override

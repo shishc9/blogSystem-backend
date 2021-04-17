@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
+    /**
+     * 用户接口
+     */
     private UserService userService;
 
     public UserController(UserService userService) {

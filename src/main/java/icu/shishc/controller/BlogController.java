@@ -21,7 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/blog")
 public class BlogController {
-
+    /**
+     * 博客接口
+     */
     private BlogService blogService;
 
     public BlogController(BlogService blogService) {
