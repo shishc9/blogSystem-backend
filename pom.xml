@@ -22,6 +22,7 @@
     </properties>
 
     <dependencies>
+        <!--  prod-pgsql   -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -53,19 +54,18 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Mybatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.0</version>
+        </dependency>
+
+        <!--  Mybatis PaegHelper分页插件  -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
         </dependency>
 
         <!-- lombok -->
@@ -99,14 +99,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!--  JSONUtil   -->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.75</version>
         </dependency>
 
         <dependency>
@@ -144,7 +136,6 @@
         -->
     </dependencies>
 
-
     <build>
         <resources>
             <resource>
@@ -166,6 +157,7 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+        <!--  maven package plugin   -->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -112,14 +112,9 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public Pager<Blog> getAllBlog(int page, int size) {
+    public List<Blog> getAllBlog() {
         log.info("【Service】BlogService::getAllBlog");
-        List<Blog> list = blogMapper.getAllBlog(page, size);
-        Pager<Blog> pager = new Pager<>();
-        pager.setRows(list);
-        pager.setTotal(list.size());
-        System.out.println("pager : " +pager.toString());
-        return pager;
+        return blogMapper.getAllBlog();
     }
 
 
@@ -144,13 +139,9 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public Pager<Blog> getBlogByStatus(int page, int size, BlogStatus blogStatus) {
+    public List<Blog> getBlogByStatus(BlogStatus blogStatus) {
         log.info("【Service】BlogService::getByStatus");
-        List<Blog> list = blogMapper.getBlogByStatus(page, size, blogStatus.getKey());
-        Pager<Blog> pager = new Pager<>();
-        pager.setRows(list);
-        pager.setTotal(list.size());
-        return pager;
+        return blogMapper.getBlogByStatus(blogStatus.getKey());
     }
 
 

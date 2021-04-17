@@ -11,21 +11,25 @@ import java.util.List;
 
 
 @Data
-public class Pager<T> {
+public class Pager {
     /**
      * 分页起始页
      */
-    private int page;
+    private int pageNum;
     /**
      * 每页记录数
      */
-    private int size;
+    private int pageSize;
     /**
      * 返回的记录集合
      */
-    private List<T> rows;
+    private List<?> content;
     /**
      * 总记录条数
      */
-    private long total;
+    private long totalSize;
+    /**
+     * 页码总数
+     */
+    private long totalPages;
 }

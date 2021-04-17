@@ -1,14 +1,19 @@
 package icu.shishc.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.Blog;
 import icu.shishc.entity.Pager;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.service.BlogService;
+import icu.shishc.util.PagerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -41,7 +46,9 @@ public class BlogController {
             @RequestParam(value = "size", defaultValue = "5") int size
     ) throws CustomException {
         log.info("【Controller】Blog::get-all");
-        Pager<Blog> pager = blogService.getAllBlog(page, size);
+        PageHelper.startPage(page, size);
+        List<Blog> list = blogService.getAllBlog();
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
         return MyDTO.successDTO(pager);
     }
 
@@ -90,7 +97,9 @@ public class BlogController {
             @RequestParam("blogStatus")BlogStatus blogStatus
     ) throws CustomException {
         log.info("【Controller】Blog::get-by-status：blogStatus = {}", blogStatus);
-        Pager<Blog> pager = blogService.getBlogByStatus(page, size, blogStatus);
+        PageHelper.startPage(page, size);
+        List<Blog> list = blogService.getBlogByStatus(blogStatus);
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
         return MyDTO.successDTO(pager);
     }
 
