@@ -2,7 +2,6 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
-import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
