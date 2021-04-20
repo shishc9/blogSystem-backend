@@ -53,7 +53,7 @@ public class ShiroConfig {
      * 注入自定义身份认证
      * @return
      */
-    @Bean
+    @Bean(name = "userRealm")
     public UserRealm userRealm() {
         return new UserRealm();
     }

@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class RedisUtil {
+public class RedisUtils {
 
     private RedisTemplate<String, Object> redisTemplate;
 
-    RedisUtil(RedisTemplate<String, Object> redisTemplate) { this.redisTemplate = redisTemplate; }
-
-
+    RedisUtils(RedisTemplate<String, Object> redisTemplate) { this.redisTemplate = redisTemplate; }
 
 }
