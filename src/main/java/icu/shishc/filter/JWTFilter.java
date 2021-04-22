@@ -3,6 +3,7 @@ package icu.shishc.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.JWTToken;
+import icu.shishc.util.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -18,8 +19,8 @@ import java.io.IOException;
 /**
  * @date: 2021-4-22, 20:31
  * @author: ShiShc
+ * @description: 自定义jwt过滤器，对token进行处理
  */
-
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -50,7 +51,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * @param mappedValue
      * @return
      */
-
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         log.info("【JWTFilter】isAccessAllowed");
@@ -64,9 +64,20 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
     }
 
+
+    /**
+     * isAccessAllowed失败的时候调用
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        return super.onAccessDenied(request, response);
+        log.info("【JWTFilter】onAccessDenied");
+        this.sendChallenge(request, response);
+        responseError(response, "token verify failed");
+        return false;
     }
 
 
@@ -88,10 +99,34 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return false;
     }
 
+
+    /**
+     * Shiro验证成功使用
+     * @param token
+     * @param subject
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-        return super.onLoginSuccess(token, subject, request, response);
+        log.info("【JWTFilter】onLoginSuccess");
+        String jwtToken = ((String) token.getPrincipal());
+        if(jwtToken != null) {
+            try {
+                if(TokenUtils.verify(jwtToken)) {
+                    String account = TokenUtils.getAccount(jwtToken);
+                    Long currentTime = TokenUtils.getCurrentTime(jwtToken);
+                    // Redis是否存在所对应的RefreshToken
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        return true;
     }
+
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
