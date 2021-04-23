@@ -1,5 +1,6 @@
 package icu.shishc.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +12,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisUtils {
 
-    private RedisTemplate<String, Object> redisTemplate;
+    private static RedisTemplate<String, Object> redisTemplate;
 
-    RedisUtils(RedisTemplate<String, Object> redisTemplate) { this.redisTemplate = redisTemplate; }
+    @Autowired
+    public RedisUtils(RedisTemplate<String, Object> redisTemplate) { RedisUtils.redisTemplate = redisTemplate; }
+
+    public static boolean hasKey(String key) {
+        try {
+            return redisTemplate.hasKey(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * pu tong huan cun huo qu
+     * @param key
+     * @return
+     */
+    public static Object get(String key) {
+        return key == null ? null : redisTemplate.opsForValue().get(key);
+    }
 
 }

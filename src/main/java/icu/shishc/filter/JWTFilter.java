@@ -1,8 +1,10 @@
 package icu.shishc.filter;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.JWTToken;
+import icu.shishc.util.RedisUtils;
 import icu.shishc.util.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -119,15 +121,32 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                     String account = TokenUtils.getAccount(jwtToken);
                     Long currentTime = TokenUtils.getCurrentTime(jwtToken);
                     // Redis是否存在所对应的RefreshToken
+                    if(RedisUtils.hasKey(account)) {
+                        Long currentTimeMillisRedis = (Long) RedisUtils.get(account);
+                        if(currentTimeMillisRedis.equals(currentTime)) {
+                            return true;
+                        }
+                    }
                 }
             } catch (Exception e) {
-
+                Throwable throwable = e.getCause();
+                log.warn("【JWTFilter】onLoginSuccess:token access : {}", e.getClass());
+                if(e instanceof TokenExpiredException) {
+                    log.warn("【JWTFilter】onLoginSuccess: tokenExpiredException");
+                    return refreshToken(response, request);
+                }
             }
         }
         return true;
     }
 
-
+    /**
+     * TODO
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         return super.preHandle(request, response);
@@ -145,5 +164,17 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             log.warn("【JWTFilter】responseError::UNAUTHORIZED");
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * TODO
+     * @param response
+     * @param request
+     * @return
+     */
+    private boolean refreshToken(ServletResponse response, ServletRequest request) {
+        String token = ((HttpServletRequest) request).getHeader("token");
+        return true;
     }
 }
