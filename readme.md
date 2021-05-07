@@ -25,6 +25,18 @@
 
 待补全。
 
+### `/` 下的API
+
+定义在 `src/main/java/icu/shishc/controller/LoginController.java` 中。
+
+- `login(username: string, pwd: string)`
+
+- `index`
+
+- `logout`
+
+- `noAuth`
+
 ### `/test` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/MyTestController.java` 中。
@@ -39,7 +51,7 @@
 
 - `test-mydto`
 
-### `/blogbackend/blog/` 下的API
+### `/blog/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
 
@@ -61,24 +73,20 @@
 
 - `delete(bid: number)`
 
-### `/blogbankend/user/` 下的API
+- `get/previous(bid: number)`
+
+- `get/next(bid: number)`
+
+### `/user/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/UserController.java` 中。
 
-- `get-by-id(userId: number)`
+- `get/by-id(userId: number)`
 
-- `get-by-username(username: string)`
+- `get/by-username(username: string)`
 
 - `insert{username: string, password: string, userIdentity: "TOURIST" | "BLOGGER", age: number, gender: string, hobby: string, email: string}`
 
 - `update{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
 
 - `delete(uid: number)`
-
-### `/shiro/` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/ShiroTestController.java` 中。
-
-- `testLogin(userId: string, password: string)`
-
-- `testIndex`
