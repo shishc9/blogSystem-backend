@@ -57,8 +57,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean logout() {
+    public boolean logout() throws CustomException{
         Subject currentUser = SecurityUtils.getSubject();
+//        预留，处理没有登录但请求登出的情况
+//        if(currentUser == null) {
+//            log.warn("【Service】LoginService::logout, please log in first");
+//            throw new CustomException(HttpStatus.OK, "please log in first");
+//        }
         currentUser.logout();
         log.info("【Service】LoginService::logout");
         return true;

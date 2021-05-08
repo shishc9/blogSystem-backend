@@ -43,8 +43,8 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/logout")
-    public MyDTO logout() {
+    @PostMapping("/logout")
+    public MyDTO logout() throws CustomException{
         boolean flag = loginService.logout();
         if(flag) {
             log.info("【Controller】LoginController::Logout, successfully");
