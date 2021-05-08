@@ -63,10 +63,15 @@ public class BlogController {
             @RequestParam("title") String title
     ) throws CustomException {
         if(title.trim().equals("")) {
+            log.warn("【Controller】Blog::get-by-title: title is null");
             return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "title is null");
         }
-        log.info("【Controller】Blog::get-by-title：title = {}", title);
         Blog blog = blogService.getBlogByTitle(title);
+        if(blog == null) {
+            log.warn("【Controller】Blog::get-by-title: the blog doesn't exist");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "the blog does not exist");
+        }
+        log.info("【Controller】Blog::get-by-title, title = {}", title);
         return MyDTO.successDTO(blog);
     }
 
@@ -97,6 +102,9 @@ public class BlogController {
             @RequestParam("blogStatus")BlogStatus blogStatus
     ) throws CustomException {
         log.info("【Controller】Blog::get-by-status：blogStatus = {}", blogStatus);
+        if(blogStatus.getKey() != 0 && blogStatus.getKey() != 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad blogStatus");
+        }
         PageHelper.startPage(page, size);
         List<Blog> list = blogService.getBlogByStatus(blogStatus);
         Pager pager = PagerUtils.getPager(new PageInfo<>(list));

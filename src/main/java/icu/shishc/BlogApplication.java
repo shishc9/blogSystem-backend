@@ -24,4 +24,5 @@ public class BlogApplication {
     public String hello() {
         return "HelloFuckingWorld";
     }
+
 }

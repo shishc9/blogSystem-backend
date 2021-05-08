@@ -70,8 +70,8 @@ public class LoginController {
         return MyDTO.successDTO(user1);
     }
 
-    @GetMapping("/error")
-    public MyDTO wrongPage() {
-        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Page not found");
-    }
+//    @GetMapping("/error")
+//    public MyDTO wrongPage() {
+//        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Page not found");
+//    }
 }
