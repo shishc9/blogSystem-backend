@@ -2,6 +2,7 @@ package icu.shishc.service;
 
 
 import icu.shishc.Exception.CustomException;
+import icu.shishc.entity.User;
 
 public interface LoginService {
 
@@ -26,5 +27,14 @@ public interface LoginService {
      * @return
      */
     boolean logout();
+
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     * @throws CustomException
+     */
+    User register(User user) throws CustomException;
 
 }

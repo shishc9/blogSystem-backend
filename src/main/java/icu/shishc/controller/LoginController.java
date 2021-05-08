@@ -2,13 +2,13 @@ package icu.shishc.controller;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
+import icu.shishc.entity.User;
 import icu.shishc.service.LoginService;
+import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @date:2021-4-15, 21:26
@@ -24,8 +24,10 @@ public class LoginController {
      */
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserService userService;
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public MyDTO authLogin(@RequestParam String username, @RequestParam String pwd) throws CustomException {
         boolean flag = loginService.authLogin(username, pwd);
         if(flag) {
@@ -42,7 +44,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public MyDTO Logout() {
+    public MyDTO logout() {
         boolean flag = loginService.logout();
         if(flag) {
             log.info("【Controller】LoginController::Logout, successfully");
@@ -56,4 +58,20 @@ public class LoginController {
         return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "无访问权限...");
     }
 
+
+    @PostMapping("/register")
+    public MyDTO register(@RequestBody User user) throws CustomException{
+        if(!userService.userCheck(user)) {
+            log.warn("【Controller】LoginController::register: bad user entity");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
+        }
+        User user1 = loginService.register(user);
+        log.info("【Controller】LoginController::register: register successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
+        return MyDTO.successDTO(user1);
+    }
+
+    @GetMapping("/error")
+    public MyDTO wrongPage() {
+        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Page not found");
+    }
 }

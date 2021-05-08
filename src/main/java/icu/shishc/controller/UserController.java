@@ -50,16 +50,15 @@ public class UserController {
     }
 
 
-    @PostMapping("/insert")
-    public MyDTO insert(@RequestBody User user) throws CustomException {
-        if(!userService.userCheck(user)) {
-            log.warn("【Controller】UserController::insert: bad user entity");
-            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
-        }
-        User user1 = userService.insert(user);
-        log.info("【Controller】UserController::insert: insert successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
-        return MyDTO.successDTO(user1);
-    }
+//    private MyDTO insert(@RequestBody User user) throws CustomException {
+//        if(!userService.userCheck(user)) {
+//            log.warn("【Controller】UserController::insert: bad user entity");
+//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
+//        }
+//        User user1 = userService.insert(user);
+//        log.info("【Controller】UserController::insert: insert successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
+//        return MyDTO.successDTO(user1);
+//    }
 
 
     @PostMapping("/update")

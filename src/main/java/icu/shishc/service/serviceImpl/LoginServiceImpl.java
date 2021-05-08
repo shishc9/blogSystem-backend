@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +45,11 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
+
+    /**
+     * 目前先不用这个, 预留方法
+     * @return
+     */
     @Override
     public String getInfo() {
         //Session session = SecurityUtils.getSubject().getSession();
@@ -58,5 +62,11 @@ public class LoginServiceImpl implements LoginService {
         currentUser.logout();
         log.info("【Service】LoginService::logout");
         return true;
+    }
+
+    @Override
+    public User register(User user) throws CustomException {
+        log.info("【Service】LoginService::register");
+        return userService.insert(user);
     }
 }
