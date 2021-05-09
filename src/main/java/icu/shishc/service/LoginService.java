@@ -25,6 +25,7 @@ public interface LoginService {
     /**
      * 退出登录
      * @return
+     * @throws CustomException
      */
     boolean logout() throws CustomException;
 

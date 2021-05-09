@@ -181,7 +181,7 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public MyDTO deleteBlog(
             @RequestParam("bid") Long bid
     ) throws CustomException {
@@ -192,7 +192,7 @@ public class BlogController {
             return MyDTO.successDTO(status);
         } else {
             log.info("【Controller】Blog::delete failed! bid = {}", bid);
-            return MyDTO.wrongDTO(HttpStatus.INTERNAL_SERVER_ERROR, "bLOG::delete failed!");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bLOG::delete failed!");
         }
     }
 

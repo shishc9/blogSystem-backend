@@ -2,6 +2,7 @@ package icu.shishc.controller;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
+import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.LoginService;
 import icu.shishc.service.UserService;
@@ -67,7 +68,7 @@ public class LoginController {
         }
         User user1 = loginService.register(user);
         log.info("【Controller】LoginController::register: register successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
-        return MyDTO.successDTO(user1);
+        return MyDTO.successDTO(new UserDTO(user1));
     }
 
 //    @GetMapping("/error")

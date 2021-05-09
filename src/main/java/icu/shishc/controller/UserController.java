@@ -2,6 +2,7 @@ package icu.shishc.controller;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
+import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class UserController {
     public MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
         User user = userService.getUserById(userId);
         log.info("【Controller】UserController::getById: return user, uID = {}", userId);
-        return MyDTO.successDTO(user);
+        return MyDTO.successDTO(new UserDTO(user));
     }
 
 
@@ -46,7 +47,7 @@ public class UserController {
         }
         User user = userService.getUserByName(username);
         log.info("【Controller】UserController::getUserByName: return user, uID = {}", user == null ? 0 : user.getUserId());
-        return MyDTO.successDTO(user);
+        return MyDTO.successDTO(new UserDTO(user));
     }
 
 
@@ -70,11 +71,11 @@ public class UserController {
         log.info("【Controller】UserController::update: before update, uid = {}", user.getUserId());
         User user1 = userService.update(user);
         log.info("【Controller】UserController::update: after update, uid = {}, username = {}", user1.getUserId(), user1.getUsername());
-        return MyDTO.successDTO(user1);
+        return MyDTO.successDTO(new UserDTO(user1));
     }
 
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public MyDTO delete(@RequestParam("uid") Long uid) throws CustomException {
         Integer status = userService.delete(uid);
         log.info("【Controller】UserController::delete: delete uid = {}", uid);

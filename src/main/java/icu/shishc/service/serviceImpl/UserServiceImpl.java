@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserById(id);
         if(null == user) {
             log.warn("【Service】UserService::delete: the user doesn't exist, uid = {}", id);
-            return null;
+            throw new CustomException(HttpStatus.BAD_REQUEST, "delete failed!");
         }
         userMapper.delete(id);
         log.info("【Service】UserService::delete: delete user successfully! userId = {}", id);
