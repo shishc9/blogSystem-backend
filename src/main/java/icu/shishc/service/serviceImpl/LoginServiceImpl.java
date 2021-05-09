@@ -2,6 +2,7 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
+import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.service.LoginService;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -76,6 +77,10 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public User register(User user) throws CustomException {
         log.info("【Service】LoginService::register");
+        if(user.getUserIdentity().equals(UserIdentity.BLOGGER)) {
+            log.warn("【Service】LoginService::register, you can't be BLOGGER");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "u can't be BLOGGER");
+        }
         return userService.insert(user);
     }
 }
