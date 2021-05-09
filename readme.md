@@ -31,41 +31,51 @@
 
 - `login(username: string, pwd: string)`
 
-- `index`
+- `GET index`
 
 - `logout`
 
-- `noAuth`
+- `GET noAuth`
 
-### `/test` 下的API
+- `register{username: string, password: string, userIdentity: "TOURIST" | "BLOGGER", age: number, gender: string, hobby: string, email: string}`
+
+定义在 `src/main/java/icu/shishc/controller/MyErrorController.java` 中。
+
+- `error`
+
+### `/test/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/MyTestController.java` 中。
 
-- `returnString`
+- `GET returnString`
 
-- `testString(s: string)`
+- `GET testString(s: string)`
 
-- `testBlog`
+- `GET testBlog`
 
-- `test404`
+- `GET test404`
 
-- `test-mydto`
+- `GET test-mydto`
 
 ### `/blog/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
 
-- `get/all`
+- `GET get/all`
 
-- `get/by-title(title: string)`
+- `GET get/by-title(title: string)`
 
-- `get/by-id(bid: number)`
+- `GET get/by-id(bid: number)`
 
-- `get/by-status(blogStatus: "PUBLIC" | "PRIVATE")`
+- `GET get/by-status(blogStatus: "PUBLIC" | "PRIVATE")`
 
-- `get/all-like`
+- `GET get/all-like`
 
-- `get/all-read`
+- `GET get/all-read`
+
+- `GET get/previous(bid: number)`
+
+- `GET get/next(bid: number)`
 
 - `add{username: string, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
 
@@ -73,19 +83,11 @@
 
 - `delete(bid: number)`
 
-- `get/previous(bid: number)`
-
-- `get/next(bid: number)`
-
 ### `/user/` 下的API
 
 定义在 `src/main/java/icu/shishc/controller/UserController.java` 中。
 
-- `get/by-id(userId: number)`
-
-- `get/by-username(username: string)`
-
-- `insert{username: string, password: string, userIdentity: "TOURIST" | "BLOGGER", age: number, gender: string, hobby: string, email: string}`
+- `GET get/by-username(username: string)`
 
 - `update{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
 

@@ -8,4 +8,6 @@
 /target/
 blogSystem-backend.iml
 application.yml
+application-dev.yml
+application-prod.yml
 src/main/resources/mapper/UserMapper.xml
