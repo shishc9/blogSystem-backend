@@ -59,6 +59,10 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean logout() throws CustomException{
         Subject currentUser = SecurityUtils.getSubject();
+        if(!currentUser.isAuthenticated()) {
+            log.warn("【Service】LoginService::logout, Not logged in, unable to log out");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Not logged in, unable to log out");
+        }
 //        预留，处理没有登录但请求登出的情况
 //        if(currentUser == null) {
 //            log.warn("【Service】LoginService::logout, please log in first");

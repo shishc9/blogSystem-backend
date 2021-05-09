@@ -30,8 +30,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/get/by-id")
-    public MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
+    //@GetMapping("/get/by-id")
+    private MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
         User user = userService.getUserById(userId);
         log.info("【Controller】UserController::getById: return user, uID = {}", userId);
         return MyDTO.successDTO(new UserDTO(user));
