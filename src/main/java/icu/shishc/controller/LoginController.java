@@ -28,7 +28,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public MyDTO authLogin(@RequestParam String username, @RequestParam String pwd) throws CustomException {
         boolean flag = loginService.authLogin(username, pwd);
         if(flag) {
@@ -44,7 +44,7 @@ public class LoginController {
         return "index";
     }
 
-    @PostMapping("/logout")
+    @RequestMapping("/logout")
     public MyDTO logout() throws CustomException{
         boolean flag = loginService.logout();
         if(flag) {
@@ -60,7 +60,7 @@ public class LoginController {
     }
 
 
-    @PostMapping("/register")
+    @RequestMapping("/register")
     public MyDTO register(@RequestBody User user) throws CustomException{
         if(!userService.userCheck(user)) {
             log.warn("【Controller】LoginController::register: bad user entity");

@@ -138,12 +138,32 @@ public class BlogController {
     }
 
 
+    @GetMapping("/get/previous")
+    public MyDTO getPrevious(
+            @RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
+        Blog blog = blogService.getPrevious(bid);
+        return MyDTO.successDTO(blog);
+    }
+
+
+    @GetMapping("/get/next")
+    public MyDTO getNext(
+            @RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
+        Blog blog = blogService.getNext(bid);
+        return MyDTO.successDTO(blog);
+    }
+
+
     /**
      * 添加博客
      * @param blog
      * @return
      */
-    @PostMapping("/add")
+    @RequestMapping("/add")
     public MyDTO insertBlog(
         @RequestBody Blog blog
     ) throws CustomException {
@@ -162,7 +182,7 @@ public class BlogController {
      * @param blog
      * @return
      */
-    @PostMapping("/update")
+    @RequestMapping("/update")
     public MyDTO updateBlog(
         @RequestBody Blog blog
     ) throws CustomException {
@@ -181,7 +201,7 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @PostMapping("/delete")
+    @RequestMapping("/delete")
     public MyDTO deleteBlog(
             @RequestParam("bid") Long bid
     ) throws CustomException {
@@ -194,26 +214,6 @@ public class BlogController {
             log.info("【Controller】Blog::delete failed! bid = {}", bid);
             return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bLOG::delete failed!");
         }
-    }
-
-
-    @GetMapping("/get/previous")
-    public MyDTO getPrevious(
-            @RequestParam("bid") Long bid
-    ) throws CustomException {
-        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
-        Blog blog = blogService.getPrevious(bid);
-        return MyDTO.successDTO(blog);
-    }
-
-
-    @GetMapping("/get/next")
-    public MyDTO getNext(
-            @RequestParam("bid") Long bid
-    ) throws CustomException {
-        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
-        Blog blog = blogService.getNext(bid);
-        return MyDTO.successDTO(blog);
     }
 
 }

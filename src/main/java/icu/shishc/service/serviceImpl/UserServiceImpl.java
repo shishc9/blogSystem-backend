@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserById(userId);
         if(user == null) {
             log.warn("【Service】UserService::getUserById:the user doesn't exists, userId = {}", userId);
-            return null;
+            throw new CustomException(HttpStatus.OK, "Bad request");
         } else {
             log.info("【Service】UserService::getUserById:return the user, userId = {}", userId);
             return user;
@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getUserByName(String username) {
+    public User getUserByName(String username) throws CustomException{
         User user = userMapper.getUserByName(username);
         if(user == null) {
             log.warn("【Service】UserService::getUserByName:the user doesn't exists, username = {}", username);
-            return null;
+            throw new CustomException(HttpStatus.OK, "Bad request");
         } else {
             log.info("【Service】UserService::getUserByName:return the user, username = {}", username);
             return user;
