@@ -9,10 +9,34 @@
         <result column="content" property="content"/>
         <result column="gmt_create" property="gmtCreate"/>
         <result column="parent_comment_id" property="parentCommentId"/>
+<!--        <result column="parent_username" property="parentUsername"/>-->
     </resultMap>
-    <insert id="saveComment"></insert>
-    <select id="findByParentIdNull" resultType="icu.shishc.entity.Comment"></select>
-    <select id="findByParentIdNotNull" resultType="icu.shishc.entity.Comment"></select>
-    <select id="findByReplyId" resultType="icu.shishc.entity.Comment"></select>
+
+
+    <insert id="saveComment">
+        INSERT INTO comment(blog_id, username, email, content, gmt_create, parent_comment_id)
+            VALUES (${blogId}, '${username}', '${email}', '${content}', NOW(), ${parentCommentId})
+    </insert>
+
+
+    <select id="findByParentIdNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT * FROM comment c
+            WHERE parent_comment_id = ${parentId}
+            ORDER BY c.gmt_create DESC
+    </select>
+
+
+    <select id="findByParentIdNotNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT * FROM comment c
+            WHERE parent_comment_id = ${id}
+            ORDER BY c.gmt_create DESC
+    </select>
+
+
+    <select id="findByReplyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT * FROM comment c
+            WHERE parent_comment_id = ${childId}
+            ORDER BY c.gmt_create DESC
+    </select>
 
 </mapper>

@@ -5,7 +5,7 @@ use blogsys;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user(
                      user_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '博主和游客id, 数据库自增',
-                     username VARCHAR(64) DEFAULT NULL COMMENT '用户名',
+                     username VARCHAR(64) NOT NULL COMMENT '用户名',
                      password VARCHAR(255) DEFAULT NULL COMMENT '密码',
                      user_identity TINYINT UNSIGNED DEFAULT 0 COMMENT '是不是博主',
                      age INT(2) UNSIGNED DEFAULT NULL COMMENT '年龄',
@@ -46,12 +46,13 @@ ALTER TABLE blog ADD UNIQUE KEY (username, title);
 DROP TABLE IF EXISTS comment;
 CREATE TABLE comment (
     comment_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    blog_id BIGINT UNSIGNED NOT NULL COMMENT '',
+    blog_id BIGINT UNSIGNED DEFAULT NULL COMMENT '',
     username VARCHAR(64) NOT NULL COMMENT '',
     email VARCHAR(64) DEFAULT NULL COMMENT '',
     content VARCHAR(255) NOT NULL COMMENT '',
     gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '',
-    parent_comment_id BIGINT UNSIGNED DEFAULT NULL,
+    parent_comment_id BIGINT UNSIGNED DEFAULT 0,
+#    parent_username VARCHAR(64) DEFAULT NULL,
     PRIMARY KEY (comment_id) USING BTREE,
     FOREIGN KEY (blog_id) REFERENCES blog(blog_id),
     FOREIGN KEY (username) REFERENCES user(username)

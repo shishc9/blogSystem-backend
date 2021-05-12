@@ -29,3 +29,13 @@ INSERT INTO blog(title, content) values ('高并发', '应该能正常发出去�
 INSERT INTO blog(title, content) values ('分布式', '应该能正常发出去吧');
 INSERT INTO blog(title, content) values ('test', '应该能正常发出去吧');
 
+
+INSERT INTO comment(username, email, content, gmt_create, parent_comment_id)
+    VALUES('admin', '123456789@126.com', 'first comment', NOW(), 0);
+INSERT INTO comment(username, email, content, gmt_create, parent_comment_id)
+    VALUES('A','111111111@126.com', 'second comment', NOW(), 0);
+INSERT INTO comment(username, email, content, gmt_create, parent_comment_id)
+    VALUES('B','121111111@126.com', 'reply A', NOW(), 5001);
+INSERT INTO comment(username, email, content, gmt_create, parent_comment_id)
+    VALUES('A','111111111@126.com', 'reply B', NOW(), 5002);
+

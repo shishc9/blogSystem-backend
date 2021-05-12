@@ -18,6 +18,8 @@ public interface CommentService {
     List<Comment> findCommentsByBlogId(Long bid);
 
 
+    List<Comment> listComment();
+
     /**
      * 保存评论
      * @param comment
