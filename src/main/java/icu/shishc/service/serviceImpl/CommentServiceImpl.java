@@ -25,21 +25,24 @@ public class CommentServiceImpl implements CommentService {
 
     private List<Comment> tempRelies = new ArrayList<>();
 
+
+    /**
+     * 通过博客id列出所有评论
+     * @param bid
+     * @return
+     */
     @Override
     public List<Comment> findCommentsByBlogId(Long bid) {
-        return null;
-    }
-
-
-    @Override
-    public List<Comment> listComment() {
-        List<Comment> comments = commentMapper.findByParentIdNull(Long.parseLong("0"));
+        // 查找评论
+        List<Comment> comments = commentMapper.findCommentByParentIdNull((long) 0);
         for(Comment comment : comments) {
             Long id = comment.getCommentId();
             String parentUsername = comment.getParentUsername();
             List<Comment> childComments = commentMapper.findByParentIdNotNull(id);
             combineChildren(childComments, parentUsername);
             comment.setReplyComments(tempRelies);
+            // 这里找到了一个评论/留言极其所有子属性，讲tempRelies清零
+            //tempRelies.clear();
             tempRelies = new ArrayList<>();
         }
         return comments;
@@ -47,7 +50,30 @@ public class CommentServiceImpl implements CommentService {
 
 
     /**
-     * 查询出子评论
+     * 列出所有评论
+     * ps: 把这个当做留言来做，所以comment.blogId = 0; 如果是非零的话就说明是博客的评论，因为博客的id是从1000开始自增的。
+     * @return
+     */
+    @Override
+    public List<Comment> listComment() {
+        // 查找留言
+        List<Comment> comments = commentMapper.findMessageByParentIdNull((long) 0);
+        for(Comment comment : comments) {
+            Long id = comment.getCommentId();
+            String parentUsername = comment.getParentUsername();
+            List<Comment> childComments = commentMapper.findByParentIdNotNull(id);
+            combineChildren(childComments, parentUsername);
+            comment.setReplyComments(tempRelies);
+            // 这里找到了一个评论/留言极其所有子属性，讲tempRelies清零
+            //tempRelies.clear();
+            tempRelies = new ArrayList<>();
+        }
+        return comments;
+    }
+
+
+    /**
+     * 查询出子评论/子留言
      * @param childComments
      * @param parentUsername1
      */
@@ -84,6 +110,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
+    /**
+     * 保存评论
+     * @param comment
+     * @return
+     */
     @Override
     public int saveComment(Comment comment) {
         log.info("【Service】CommentService::saveComment");

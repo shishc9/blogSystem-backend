@@ -28,7 +28,15 @@ public interface CommentMapper {
      * @param parentId
      * @return
      */
-    List<Comment> findByParentIdNull(@Param("parentId") Long parentId);
+    List<Comment> findCommentByParentIdNull(@Param("parentId") Long parentId);
+
+
+    /**
+     * 查询父级留言
+     * @param parentId
+     * @return
+     */
+    List<Comment> findMessageByParentIdNull(@Param("parentId") Long parentId);
 
 
     /**
