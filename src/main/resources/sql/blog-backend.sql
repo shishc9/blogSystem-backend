@@ -45,14 +45,13 @@ ALTER TABLE blog ADD UNIQUE KEY (username, title);
 
 DROP TABLE IF EXISTS comment;
 CREATE TABLE comment (
-    comment_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    blog_id BIGINT UNSIGNED DEFAULT NULL COMMENT '',
-    username VARCHAR(64) NOT NULL COMMENT '',
-    email VARCHAR(64) DEFAULT NULL COMMENT '',
-    content VARCHAR(255) NOT NULL COMMENT '',
-    gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '',
-    parent_comment_id BIGINT UNSIGNED DEFAULT 0,
-#    parent_username VARCHAR(64) DEFAULT NULL,
+    comment_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论自增id',
+    blog_id BIGINT UNSIGNED DEFAULT NULL COMMENT '所属博客id',
+    username VARCHAR(64) NOT NULL COMMENT '评论者用户名',
+    email VARCHAR(64) DEFAULT NULL COMMENT '评论者邮箱',
+    content VARCHAR(255) NOT NULL COMMENT '评论内容',
+    gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '评论发布时间',
+    parent_comment_id BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
     PRIMARY KEY (comment_id) USING BTREE,
     FOREIGN KEY (blog_id) REFERENCES blog(blog_id),
     FOREIGN KEY (username) REFERENCES user(username)
