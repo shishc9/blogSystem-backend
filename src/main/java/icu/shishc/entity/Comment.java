@@ -3,7 +3,9 @@ package icu.shishc.entity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @date: 2021-5-12, 13:47
@@ -19,6 +21,12 @@ public class Comment {
     private String username;
     private String email;
     private String content;
-    private Date createTime;
+    private Date gmtCreate;
     private Long parentCommentId;
+
+
+    // reply comment
+    private List<Comment> replyComments = new ArrayList<>();
+    private Comment parentComment;
+    private String parentUsername;
 }

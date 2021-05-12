@@ -42,3 +42,19 @@ CREATE TABLE blog(
 # 其实目前规划能写博客的只有admin
 ALTER TABLE blog ADD UNIQUE KEY (username, title);
 
+
+DROP TABLE IF EXISTS comment;
+CREATE TABLE comment (
+    comment_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    blog_id BIGINT UNSIGNED NOT NULL COMMENT '',
+    username VARCHAR(64) NOT NULL COMMENT '',
+    email VARCHAR(64) DEFAULT NULL COMMENT '',
+    content VARCHAR(255) NOT NULL COMMENT '',
+    gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '',
+    parent_comment_id BIGINT UNSIGNED DEFAULT NULL,
+    PRIMARY KEY (comment_id) USING BTREE,
+    FOREIGN KEY (blog_id) REFERENCES blog(blog_id),
+    FOREIGN KEY (username) REFERENCES user(username)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 5000;
+
+
