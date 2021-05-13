@@ -26,7 +26,13 @@ public class MyTestController {
 
     @ApiOperation("传入一个字符串测试参数接收")
     @GetMapping("/testString")
-    public void hello(@RequestParam("s") String s) {
+    public void hello1(@RequestParam("s") String s) {
+        System.out.println(s);
+    }
+
+
+    @PostMapping("/testBody")
+    public void hello2(@RequestBody String s) {
         System.out.println(s);
     }
 

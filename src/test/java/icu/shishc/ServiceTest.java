@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -70,6 +72,12 @@ public class ServiceTest {
 //        info.setRoles(set);
 //        System.out.println("set = " + set.toString());
 //        System.out.println("info = " + info.toString());
+    }
+
+
+    @Test
+    public void testString(String s) throws Exception {
+        System.out.println(s);
     }
 
 }

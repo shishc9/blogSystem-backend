@@ -165,9 +165,12 @@ public class BlogController {
      */
     @RequestMapping("/add")
     public MyDTO insertBlog(
-        @RequestBody Blog blog
+            @RequestBody Blog blog
     ) throws CustomException {
-        if(!blogService.checkBlog(blog)) {
+
+        // 这里blog的content字段不能有换行，Json Parse Error.
+        // 但是这个在 prod 版本中不会出现
+        if (!blogService.checkBlog(blog)) {
             return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad blog entity");
         }
         log.info("【Controller】Blog::add：blog = {}", blog);
