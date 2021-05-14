@@ -113,6 +113,31 @@ public class BlogController {
 
 
     /**
+     * 点赞
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    @GetMapping("/add/like")
+    public MyDTO addLike(@RequestParam Long bid) throws CustomException {
+        log.info("【Controller】Blog::addLike, bid = {}", bid);
+        return MyDTO.successDTO(blogService.addLike(bid));
+    }
+
+
+    /**
+     * 取消点赞
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    @GetMapping("/delete/like")
+    public MyDTO cancelLike(@RequestParam Long bid) throws CustomException {
+        log.info("【Controller】Blog::cancelLike, bid = {}", bid);
+        return MyDTO.successDTO(blogService.cancelLike(bid));
+    }
+
+    /**
      * 获取所有点赞
      * @return
      */
@@ -163,11 +188,10 @@ public class BlogController {
      * @param blog
      * @return
      */
-    @RequestMapping("/add")
+    @RequestMapping("/add/blog")
     public MyDTO insertBlog(
             @RequestBody Blog blog
     ) throws CustomException {
-
         // 这里blog的content字段不能有换行，Json Parse Error.
         // 但是这个在 prod 版本中不会出现
         if (!blogService.checkBlog(blog)) {
@@ -185,7 +209,7 @@ public class BlogController {
      * @param blog
      * @return
      */
-    @RequestMapping("/update")
+    @RequestMapping("/update/blog")
     public MyDTO updateBlog(
         @RequestBody Blog blog
     ) throws CustomException {
@@ -204,7 +228,7 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping("/delete/blog")
     public MyDTO deleteBlog(
             @RequestParam("bid") Long bid
     ) throws CustomException {
