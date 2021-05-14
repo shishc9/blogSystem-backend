@@ -28,9 +28,21 @@
         where blog_id = ${blog_id};
     </update>
 
-    <delete id="delete">
+    <update id="addLike" parameterType="java.lang.Long">
+        UPDATE blog SET like_num = like_num + 1
+            WHERE blog_id = ${bid}
+    </update>
+
+
+    <delete id="delete" parameterType="java.lang.Long">
         DELETE FROM blog WHERE blog_id = ${id};
     </delete>
+
+
+    <update id="cancelLike">
+        UPDATE blog SET like_num = like_num - 1
+            WHERE blog_id = ${bid}
+    </update>
 
     <!-- 注意ResultType 和 ResultMap -->
     <select id="getAllBlog" resultMap="BaseResultMap">

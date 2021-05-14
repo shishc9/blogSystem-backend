@@ -2,7 +2,6 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.Blog;
-import icu.shishc.entity.Pager;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
@@ -142,6 +141,28 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> getBlogByStatus(BlogStatus blogStatus) {
         log.info("【Service】BlogService::getByStatus");
         return blogMapper.getBlogByStatus(blogStatus.getKey());
+    }
+
+
+    @Override
+    public Integer addLike(Long bid) throws CustomException {
+        if(bid <= 0) {
+            log.warn("【Service】BlogService::addLike: bad bid = {}", bid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad bid");
+        }
+        log.info("【Service】BlogService::addLike: bid = {}", bid);
+        return blogMapper.addLike(bid);
+    }
+
+
+    @Override
+    public Integer cancelLike(Long bid) throws CustomException {
+        if(bid <= 0) {
+            log.warn("【Service】BlogService::cancelLike: bad bid = {}", bid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad bid");
+        }
+        log.info("【Service】BlogService::cancelLike: bid = {}", bid);
+        return blogMapper.cancelLike(bid);
     }
 
 

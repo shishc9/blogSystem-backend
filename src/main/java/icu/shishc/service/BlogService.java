@@ -42,6 +42,24 @@ public interface BlogService{
 
 
     /**
+     * 点赞
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    Integer addLike(Long bid) throws CustomException;
+
+
+    /**
+     * 取消点赞
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
+    Integer cancelLike(Long bid) throws CustomException;
+
+
+    /**
      * 统计所有点赞
      * @return
      */
@@ -104,4 +122,6 @@ public interface BlogService{
      * @throws CustomException
      */
     Boolean checkBlog(Blog blog) throws CustomException;
+
+
 }

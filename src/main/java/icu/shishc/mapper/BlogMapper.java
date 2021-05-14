@@ -107,4 +107,20 @@ public interface BlogMapper {
      * @return
      */
     Integer getAllReadNum();
+
+
+    /**
+     * 点赞
+     * @param bid
+     * @return
+     */
+    Integer addLike(@Param("bid") Long bid);
+
+
+    /**
+     * 取消点赞
+     * @param bid
+     * @return
+     */
+    Integer cancelLike(@Param("bid") Long bid);
 }
