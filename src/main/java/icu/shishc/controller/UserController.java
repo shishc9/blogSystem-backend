@@ -62,6 +62,12 @@ public class UserController {
 //    }
 
 
+    /**
+     * 更新用户信息， 等级开放 -> Blogger + User
+     * @param user
+     * @return
+     * @throws CustomException
+     */
     @RequestMapping("/update/user")
     public MyDTO update(@RequestBody User user) throws CustomException {
         if(!userService.userCheck(user)) {
@@ -75,6 +81,12 @@ public class UserController {
     }
 
 
+    /**
+     * 删除/注销用户, 等级开放 -> blogger + user
+     * @param uid
+     * @return
+     * @throws CustomException
+     */
     @RequestMapping("/delete/user")
     public MyDTO delete(@RequestParam("uid") Long uid) throws CustomException {
         Integer status = userService.delete(uid);

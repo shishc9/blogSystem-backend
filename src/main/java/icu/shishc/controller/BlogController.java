@@ -58,9 +58,9 @@ public class BlogController {
      * @param title
      * @return
      */
-    @GetMapping("/get/by-title")
+    @GetMapping("/get/{title}")
     public MyDTO getByTitle(
-            @RequestParam("title") String title
+            @RequestParam("title")@PathVariable String title
     ) throws CustomException {
         if(title.trim().equals("")) {
             log.warn("【Controller】Blog::get-by-title: title is null");

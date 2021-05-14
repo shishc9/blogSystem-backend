@@ -39,10 +39,10 @@ public class LoginController {
         return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Login failed!");
     }
 
-    @GetMapping(value = "/index")
-    public String index() {
-        return "index";
-    }
+//    @GetMapping(value = "/index")
+//    public String index() {
+//        return "index";
+//    }
 
     @RequestMapping("/logout")
     public MyDTO logout() throws CustomException{

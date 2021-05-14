@@ -174,12 +174,11 @@ public class CommentServiceImpl implements CommentService {
             log.warn("【Service】CommentService::commentCheck, bad username");
             return false;
         }
-        if(getCommentById(parentCommentId) == null) {
+        if(parentCommentId != 0 && getCommentById(parentCommentId) == null) {
             log.warn("【Service】CommentService::commentCheck, bad parentCommentId");
             return false;
         }
         log.info("【Service】CommentService::commentCheck, good entity");
         return true;
-
     }
 }
