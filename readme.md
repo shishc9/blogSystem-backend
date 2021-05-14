@@ -53,6 +53,8 @@
 
 - `GET testBlog`
 
+- `POST testBody(s: string)`
+
 - `GET test404`
 
 - `GET test-mydto`
@@ -71,17 +73,21 @@
 
 - `GET get/all-like`
 
+- `GET add/like(bid: number)`
+
+- `GET delete/like(bid: number)`
+
 - `GET get/all-read`
 
 - `GET get/previous(bid: number)`
 
 - `GET get/next(bid: number)`
 
-- `add{username: string, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
+- `add/blog{username: string, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
 
-- `update{blogId: number, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
+- `update/blog{blogId: number, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
 
-- `delete(bid: number)`
+- `delete/blog(bid: number)`
 
 ### `/user/` 下的API
 
@@ -89,6 +95,11 @@
 
 - `GET get/by-username(username: string)`
 
-- `update{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
+- `update/user{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
 
-- `delete(uid: number)`
+- `delete/user(uid: number)`
+
+### `/comment` 下的API
+定义在 `src/main/java/icu/shishc/controller/CommentController.java` 中。
+
+- `Get message`

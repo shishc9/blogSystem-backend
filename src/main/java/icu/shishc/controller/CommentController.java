@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 
-@RestController
 @Slf4j
+@RestController("/comment")
 public class CommentController {
 
     private CommentService commentService;
@@ -22,7 +22,7 @@ public class CommentController {
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
 
-    @GetMapping("/comment/all")
+    @GetMapping("/message")
     public MyDTO commentTest() {
         return MyDTO.successDTO(commentService.listComment());
     }

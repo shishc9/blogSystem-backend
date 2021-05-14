@@ -62,7 +62,7 @@ public class UserController {
 //    }
 
 
-    @RequestMapping("/update")
+    @RequestMapping("/update/user")
     public MyDTO update(@RequestBody User user) throws CustomException {
         if(!userService.userCheck(user)) {
             log.warn("【Controller】UserController::update: bad user entity");
@@ -75,7 +75,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("/delete")
+    @RequestMapping("/delete/user")
     public MyDTO delete(@RequestParam("uid") Long uid) throws CustomException {
         Integer status = userService.delete(uid);
         log.info("【Controller】UserController::delete: delete uid = {}", uid);
