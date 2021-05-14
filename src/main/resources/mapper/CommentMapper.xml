@@ -15,8 +15,9 @@
 
     <insert id="saveComment">
         INSERT INTO comment(blog_id, username, email, content, gmt_create, parent_comment_id)
-            VALUES (${blogId}, '${username}', '${email}', '${content}', NOW(), ${parentCommentId})
+            VALUES (${bid}, '${username}', '${email}', '${content}', NOW(), ${parentCommentId})
     </insert>
+
 
     <select id="findCommentByParentIdNull" resultMap="BaseResultMap">
         SELECT * FROM comment c
@@ -43,6 +44,11 @@
         SELECT * FROM comment c
             WHERE parent_comment_id = ${childId}
             ORDER BY c.gmt_create DESC
+    </select>
+
+    <select id="findCommentById" resultType="icu.shishc.entity.Comment">
+        SELECT * FROM comment c
+            WHERE comment_id = ${commentId}
     </select>
 
 </mapper>

@@ -15,12 +15,22 @@ import java.util.List;
 @Repository
 public interface CommentMapper {
 
+
     /**
-     * 保存评论
-     * @param comment
+     *  保存评论
+     * @param bid
+     * @param username
+     * @param email
+     * @param content
+     * @param pid
      * @return
      */
-    int saveComment(Comment comment);
+    int saveComment(@Param("bid") Long bid,
+                    @Param("username") String username,
+                    @Param("email") String email,
+                    @Param("content") String content,
+                    @Param("parentCommentId") Long pid
+    );
 
 
     /**
@@ -54,4 +64,11 @@ public interface CommentMapper {
      */
     List<Comment> findByReplyId(@Param("childId") Long childId);
 
+
+    /**
+     * 通过id查找评论
+     * @param commentId
+     * @return
+     */
+    Comment findCommentById(@Param("commentId")Long commentId);
 }

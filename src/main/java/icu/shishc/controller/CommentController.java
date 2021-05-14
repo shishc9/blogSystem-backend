@@ -1,11 +1,11 @@
 package icu.shishc.controller;
 
+import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
+import icu.shishc.entity.Comment;
 import icu.shishc.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @date: 2021-5-12, 16:34
@@ -22,8 +22,23 @@ public class CommentController {
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
 
-    @GetMapping("/message")
-    public MyDTO commentTest() {
-        return MyDTO.successDTO(commentService.listComment());
+    @GetMapping("/get/message")
+    public MyDTO getLeaveMessage()
+            throws CustomException {
+        return MyDTO.successDTO(commentService.listMessage());
+    }
+
+
+    @GetMapping("/get/{bid}")
+    public MyDTO getCommentByBid(@RequestParam("bid")@PathVariable Long bid)
+            throws CustomException {
+        return MyDTO.successDTO(commentService.findCommentsByBlogId(bid));
+    }
+
+
+    @PostMapping("/add")
+    public MyDTO saveComment(@RequestBody Comment comment)
+            throws CustomException {
+        return MyDTO.successDTO(commentService.saveComment(comment));
     }
 }
