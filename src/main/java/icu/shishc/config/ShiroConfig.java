@@ -1,8 +1,12 @@
 package icu.shishc.config;
 
+import javax.servlet.Filter;
+
+import icu.shishc.filter.LoginFilter;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,14 +18,17 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+
     @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
+    @ConditionalOnClass(value = {LoginFilter.class, DefaultWebSecurityManager.class})
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager, @Qualifier("loginFilter") LoginFilter loginFilter) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
+
         // 设置shiro内置过滤器
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //shiroFilterFactoryBean.setLoginUrl("/login");
+        //shiroFilterFactoryBean.setSuccessUrl("/index");
         shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
         // 设置拦截器
         // 注意拦截顺序
@@ -56,6 +63,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/comment/get/**", "anon");
         filterChainDefinitionMap.put("/comment/add", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+
+        // 设置默认拦截器
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("loginFilter", loginFilter);
+        shiroFilterFactoryBean.setFilters(filterMap);
         return shiroFilterFactoryBean;
     }
 
@@ -64,11 +77,16 @@ public class ShiroConfig {
      * @param userRealm Shiro userRealm
      * @return wsm
      */
-    @Bean(name = "securityManager")
+    @Bean(name = "defaultWebSecurityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
         return securityManager;
+    }
+
+    @Bean(name = "loginFilter")
+    public LoginFilter loginFilter() {
+        return new LoginFilter();
     }
 
 

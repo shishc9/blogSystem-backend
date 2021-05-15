@@ -20,6 +20,10 @@ public class MyErrorController implements ErrorController {
     public MyDTO handleError (HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         switch (statusCode) {
+            case 400: {
+                return return400();
+            }
+
             case 401: {
                 return return401();
             }
@@ -46,12 +50,16 @@ public class MyErrorController implements ErrorController {
         return "/error";
     }
 
+    private MyDTO return400() {
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Bad request");
+    }
+
     private MyDTO return401() {
         return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "Unauthorized");
     }
 
     private MyDTO return404() {
-        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Bad request");
+        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Not Fount");
     }
 
     private MyDTO return403() {
