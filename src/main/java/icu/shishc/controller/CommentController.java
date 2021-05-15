@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
-@RestController("/comment")
+@RestController
+@RequestMapping("/comment")
 public class CommentController {
 
     private CommentService commentService;

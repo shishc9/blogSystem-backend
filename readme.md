@@ -63,7 +63,7 @@
 
 定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
 
-- `GET get/all`
+- `GET get/all(page: number = 1, size: number = 5)`
 
 - `GET get/by-title(title: string)`
 
@@ -100,6 +100,11 @@
 - `delete/user(uid: number)`
 
 ### `/comment` 下的API
+
 定义在 `src/main/java/icu/shishc/controller/CommentController.java` 中。
 
-- `Get message`
+- `GET get/message`
+
+- `GET get/by-id(bid: number)`
+
+- `POST add{blogId: number, username: string, email: string, content: string, parentCommentId: number}`
