@@ -133,7 +133,7 @@ public class CommentServiceImpl implements CommentService {
         }
         log.info("【Service】CommentService::saveComment");
         return commentMapper.saveComment(comment.getBlogId(),
-                comment.getUsername(), comment.getEmail(),
+                comment.getUsername(),
                 comment.getContent(), comment.getParentCommentId()
         );
     }
@@ -158,10 +158,9 @@ public class CommentServiceImpl implements CommentService {
     private boolean commentCheck(Comment comment) throws CustomException {
         Long blogId = comment.getBlogId();
         String username = comment.getUsername();
-        String email = comment.getEmail();
         String content = comment.getContent();
         Long parentCommentId = comment.getParentCommentId();
-        if(blogId < 0 || "".equals(username.trim()) || !userService.regexMatch(email)
+        if(blogId < 0 || "".equals(username.trim())
             || "".equals(content.trim()) || parentCommentId < 0) {
             log.warn("【Service】CommentService::commentCheck, bad param");
             return false;

@@ -5,7 +5,6 @@
         <result column="comment_id" property="commentId"/>
         <result column="blog_id" property="blogId"/>
         <result column="username" property="username"/>
-        <result column="email" property="email"/>
         <result column="content" property="content"/>
         <result column="gmt_create" property="gmtCreate"/>
         <result column="parent_comment_id" property="parentCommentId"/>
@@ -14,8 +13,8 @@
 
 
     <insert id="saveComment">
-        INSERT INTO comment(blog_id, username, email, content, gmt_create, parent_comment_id)
-            VALUES (${bid}, '${username}', '${email}', '${content}', NOW(), ${parentCommentId})
+        INSERT INTO comment(blog_id, username, content, gmt_create, parent_comment_id)
+            VALUES (${bid}, '${username}', '${content}', NOW(), ${parentCommentId})
     </insert>
 
 

@@ -19,7 +19,6 @@ public class Comment {
     private Long commentId;
     private Long blogId;
     private String username;
-    private String email;
     private String content;
     private Date gmtCreate;
     private Long parentCommentId;

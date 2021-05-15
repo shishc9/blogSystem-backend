@@ -27,7 +27,6 @@ public interface CommentMapper {
      */
     int saveComment(@Param("bid") Long bid,
                     @Param("username") String username,
-                    @Param("email") String email,
                     @Param("content") String content,
                     @Param("parentCommentId") Long pid
     );
