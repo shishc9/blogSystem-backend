@@ -13,6 +13,7 @@
         ```psql
         \i src/main/resources/sql/pg-backend.sql
         \i src/main/resources/sql/pg-backend-test.sql
+        \i src/main/resources/sql/pg-comment.sql
         ```
 
 4. 在命令行输入以下命令
@@ -21,90 +22,6 @@
     mvn spring-boot:run
     ```
 
-## API
+## 文档
 
-待补全。
-
-### `/` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/LoginController.java` 中。
-
-- `login(username: string, pwd: string)`
-
-- `GET index`
-
-- `logout`
-
-- `GET noAuth`
-
-- `register{username: string, password: string, userIdentity: "TOURIST" | "BLOGGER", age: number, gender: string, hobby: string, email: string}`
-
-定义在 `src/main/java/icu/shishc/controller/MyErrorController.java` 中。
-
-- `error`
-
-### `/test/` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/MyTestController.java` 中。
-
-- `GET returnString`
-
-- `GET testString(s: string)`
-
-- `GET testBlog`
-
-- `POST testBody(s: string)`
-
-- `GET test404`
-
-- `GET test-mydto`
-
-### `/blog/` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/BlogController.java` 中。
-
-- `GET get/all(page: number = 1, size: number = 5)`
-
-- `GET get/by-title(title: string)`
-
-- `GET get/by-id(bid: number)`
-
-- `GET get/by-status(blogStatus: "PUBLIC" | "PRIVATE")`
-
-- `GET get/all-like`
-
-- `GET add/like(bid: number)`
-
-- `GET delete/like(bid: number)`
-
-- `GET get/all-read`
-
-- `GET get/previous(bid: number)`
-
-- `GET get/next(bid: number)`
-
-- `add/blog{username: string, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
-
-- `update/blog{blogId: number, title: string, content: stirng, status?: "PUBLIC" | "PRIVATE"}`
-
-- `delete/blog(bid: number)`
-
-### `/user/` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/UserController.java` 中。
-
-- `GET get/by-username(username: string)`
-
-- `update/user{userId: number, username: string, password: string, age: number, gender: string, hobby: string, email: string}`
-
-- `delete/user(uid: number)`
-
-### `/comment` 下的API
-
-定义在 `src/main/java/icu/shishc/controller/CommentController.java` 中。
-
-- `GET get/message`
-
-- `GET get/by-id(bid: number)`
-
-- `POST add{blogId: number, username: string, email: string, content: string, parentCommentId: number}`
+<https://github.com/shishc9/blogSystem-backend/wiki>
