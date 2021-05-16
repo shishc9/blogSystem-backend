@@ -33,12 +33,11 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 获取当前用户
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        System.out.println("程序员的进步就是 查屎山 -> 读屎山 -> 改屎山");
         //System.out.println("currentUser: "+user.toString());
         // 将BLOGGER / TOURIST 保存为字符串
         String role = user.getUserIdentity().toString();
         log.info("【UserRealm】doGetAuthorization:身份授权, 当前用户name = {}, 身份role = {}", user.getUsername(), role);
-        // 将BlOGGER / USER 进行授权
+        // 将BlOGGER / TOURIST 进行授权
         info.addStringPermission(role);
         log.info("【UserRealm】doGetAuthorization:身份授权, user[{}]授权完成, 身份是{}", user.getUsername(), user.getUserIdentity().toString());
         return info;
