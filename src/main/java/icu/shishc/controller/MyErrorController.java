@@ -59,7 +59,7 @@ public class MyErrorController implements ErrorController {
     }
 
     private MyDTO return404() {
-        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Not Fount");
+        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Not Found");
     }
 
     private MyDTO return403() {

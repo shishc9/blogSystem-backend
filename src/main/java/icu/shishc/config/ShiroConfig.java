@@ -29,7 +29,8 @@ public class ShiroConfig {
         // 设置shiro内置过滤器
         //shiroFilterFactoryBean.setLoginUrl("/login");
         //shiroFilterFactoryBean.setSuccessUrl("/index");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
+
         // 设置拦截器
         // 注意拦截顺序
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
