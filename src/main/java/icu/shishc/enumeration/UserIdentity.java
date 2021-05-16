@@ -10,7 +10,7 @@ import java.util.Map;
  */
 
 public enum UserIdentity {
-    USER(0),
+    TOURIST(0),
     BLOGGER(1);
 
     private final int key;
