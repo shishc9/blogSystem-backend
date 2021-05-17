@@ -1,5 +1,6 @@
 package icu.shishc.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * @author:ShiShc
  */
 
-
+@ApiModel("分页实体")
 @Data
 public class Pager {
     /**

@@ -20,7 +20,7 @@ public class Blog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long blogId;
-    private String username;
+    private Long userId;
     private String title;
     private String content;
 

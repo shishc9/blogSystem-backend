@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * @author ShiShc
  * @PackageName:icu.shishc.entity
  * @Date:2021/3/14, 22:20
- * @Auther:ShiShc
  */
 
 @Data
@@ -25,9 +25,7 @@ public class User implements Serializable {
     private UserIdentity userIdentity;
     private Integer age;
     private String gender;
-    private String hobby;
     private String email;
     private Date gmtCreate;
     private Date gmtLastLogin;
-
 }

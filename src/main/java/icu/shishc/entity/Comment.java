@@ -26,6 +26,6 @@ public class Comment {
 
     // reply comment
     private List<Comment> replyComments = new ArrayList<>();
-    private Comment parentComment;
-    private String parentUsername;
+    //private Comment parentComment;
+    //private String parentUsername;
 }
