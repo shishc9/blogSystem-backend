@@ -3,6 +3,9 @@ package icu.shishc.service;
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
 
+/**
+ * @author ShiShc
+ */
 public interface UserService{
 
 
@@ -67,11 +70,18 @@ public interface UserService{
     boolean regexMatch(String email);
 
 
+//    /**
+//     * 获取用户角色
+//     * @param username 用户名
+//     * @return 角色名
+//     */
+//    String getRole(String username);
+
     /**
-     * 获取用户角色
-     * @param username 用户名
-     * @return 角色名
+     * 检查userid
+     * @param userId 用户ID
+     * @return T/F
      */
-    String getRole(String username);
+    Boolean checkUserId(Long userId);
 
 }

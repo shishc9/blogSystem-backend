@@ -33,7 +33,7 @@
     </delete>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
-        SELECT * FROM blog ORDER BY like_num
+        SELECT * FROM blog ORDER BY read_num
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">

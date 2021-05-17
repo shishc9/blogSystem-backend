@@ -2,8 +2,11 @@ package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.User;
+import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,151 +17,115 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserMapper userMapper;
+
+
     @Override
     public User getUserById(Long userId) throws CustomException {
-        return null;
+        if(!checkUserId(userId)) {
+            log.warn("【UserService】getUserById::bad userid, userid = {}", userId);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_ENTITY");
+        }
+        log.info("【UserService】getUserById::return user");
+        return userMapper.getUserById(userId);
     }
+
 
     @Override
     public User getUserByName(String username) throws CustomException {
-        return null;
+        if("".equals(username.trim())) {
+            log.warn("【UserService】getUserByName::bad username, username = {}", username);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USERNAME");
+        }
+        log.info("【UserService】getUserByName::return user");
+        return userMapper.getUserByName(username);
     }
+
 
     @Override
     public User insert(User user) throws CustomException {
-        return null;
+        if(!userCheck(user)) {
+            log.warn("【UserService】insert::bad user entity");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USER_ENTITY");
+        }
+        String username = user.getUsername();
+        User user1 = userMapper.getUserByName(username);
+        if(user1 != null) {
+            log.warn("【UserService】insert::the user has exist, username = {}", username);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_EXIST");
+        }
+        userMapper.insert(username, user.getPassword(), user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getEmail());
+        User user2 = userMapper.getUserByName(user.getUsername());
+        log.info("【UserService】insert::add user successfully! userId = {}", user2.getUserId());
+        return user2;
     }
 
+
     @Override
-    public Integer delete(Long id) throws CustomException {
-        return null;
+    public Integer delete(Long userId) throws CustomException {
+        if(!checkUserId(userId)) {
+            log.warn("【UserService】delete::bad userid, userid = {}", userId);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_UID");
+        }
+        User user = userMapper.getUserById(userId);
+        if(null == user) {
+            log.warn("【Service】UserService::delete: the user doesn't exist, uid = {}", userId);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+        }
+        userMapper.delete(userId);
+        log.info("【Service】UserService::delete: delete user successfully! userId = {}", userId);
+        return 1;
     }
+
 
     @Override
     public User update(User user) throws CustomException {
-        return null;
+        if(!userCheck(user)) {
+            log.warn("【UserService】update::bad user entity");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USER_ENTITY");
+        }
+        Long userId = user.getUserId();
+        User user1 = userMapper.getUserById(userId);
+        if(null == user1) {
+            log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+        }
+        userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
+        log.info("【Service】UserService::update: update successfully! userId = {}", userId);
+        return userMapper.getUserById(userId);
     }
+
 
     @Override
     public boolean userCheck(User user) {
+        Long userId = user.getUserId();
+        String password = user.getPassword();
+        String username = user.getUsername();
+        String email = user.getEmail();
+        String gender = user.getGender();
+        if(!checkUserId(userId) || "".equals(username) || "".equals(password) || !regexMatch(email) || (!"MALE".equals(gender) && !"FEMALE".equals(gender))) {
+            log.warn("【UserService】userCheck::bad user entity");
+            return false;
+        }
         return true;
     }
 
+
     @Override
     public boolean regexMatch(String email) {
-        return false;
+        String pattern = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}";
+        return email.matches(pattern);
     }
+
 
     @Override
-    public String getRole(String username) {
-        return null;
+    public Boolean checkUserId(Long userId) {
+        if(userId <= 0) {
+            log.warn("【UserService】checkUserId::userId <= 0, userId = {}", userId);
+            return false;
+        }
+        return true;
     }
-
-
-//    @Autowired
-//    UserMapper userMapper;
-//
-//
-//    @Override
-//    public User getUserById(Long userId)
-//            throws CustomException {
-//        if(userId <= 0) {
-//            log.warn("【Service】UserService::getUserById:Illegal param, userId <= 0");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
-//        }
-//        User user = userMapper.getUserById(userId);
-//        if(user == null) {
-//            log.warn("【Service】UserService::getUserById:the user doesn't exists, userId = {}", userId);
-//            throw new CustomException(HttpStatus.OK, "Bad request");
-//        } else {
-//            log.info("【Service】UserService::getUserById:return the user, userId = {}", userId);
-//            return user;
-//        }
-//    }
-//
-//
-//    @Override
-//    public User getUserByName(String username) throws CustomException{
-//        User user = userMapper.getUserByName(username);
-//        if(user == null) {
-//            log.warn("【Service】UserService::getUserByName:the user doesn't exists, username = {}", username);
-//            throw new CustomException(HttpStatus.OK, "Bad request");
-//        } else {
-//            log.info("【Service】UserService::getUserByName:return the user, username = {}", username);
-//            return user;
-//        }
-//    }
-//
-//
-//    @Override
-//    public User insert(User user) throws CustomException{
-//        User user1 = userMapper.getUserByName(user.getUsername());
-//        if(user1 != null) {
-//            log.warn("【Service】UserService::insert:the user has exist, userId = {}", user.getUserId());
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "User has exist!");
-//        }
-//        userMapper.insert(user.getUsername(), user.getPassword(), user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getHobby(), user.getEmail());
-//        User user2 = userMapper.getUserByName(user.getUsername());
-//        log.info("【Service】UserService::insert:add user successfully! userId = {}", user2.getUserId());
-//        return user2;
-//    }
-//
-//
-//    @Override
-//    public Integer delete(Long id) throws CustomException {
-//        if(id <= 0) {
-//            log.warn("【Service】UserService::delete:Illegal param, userId <= 0");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "Bad param");
-//        }
-//        User user = userMapper.getUserById(id);
-//        if(null == user) {
-//            log.warn("【Service】UserService::delete: the user doesn't exist, uid = {}", id);
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "delete failed!");
-//        }
-//        userMapper.delete(id);
-//        log.info("【Service】UserService::delete: delete user successfully! userId = {}", id);
-//        return 1;
-//    }
-//
-//
-//    @Override
-//    public User update(User user) throws CustomException {
-//        Long userId = user.getUserId();
-//        User user1 = userMapper.getUserById(userId);
-//        if(null == user1) {
-//            log.warn("【Service】UserService::update: the user doesn't exist! userId = {}", userId);
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "user doesn't exist!");
-//        }
-//        userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
-//        log.info("【Service】UserService::update: update successfully! userId = {}", userId);
-//        return userMapper.getUserById(userId);
-//    }
-//
-//    @Override
-//    public boolean userCheck(User user) {
-//        String username = user.getUsername().trim();
-//        String password = user.getPassword().trim();
-//        String email = user.getEmail().trim();
-//        if(username.equals("") || password.contains(" ") || !regexMatch(email)) {
-//            log.info("【Service】UserService::userCheck: bad user entity");
-//            return false;
-//        }
-//        log.info("【Service】UserService::userCheck: correct user entity");
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean regexMatch(String email) {
-//        String pattern = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}";
-//        log.info("【Service】UserService::regexMatch: email format check");
-//        return email.matches(pattern);
-//    }
-//
-//    @Override
-//    public String getRole(String username) {
-//        log.info("【Service】UserService::getRole, username = {}", username);
-//        return userMapper.getUserByName(username).getUserIdentity().toString();
-//    }
-
-
 }

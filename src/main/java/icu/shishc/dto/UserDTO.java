@@ -27,7 +27,6 @@ public class UserDTO {
         this.userIdentity = user.getUserIdentity();
         this.age = user.getAge();
         this.gender = user.getGender();
-        this.hobby = user.getHobby();
         this.email = user.getEmail();
     }
 }

@@ -5,15 +5,17 @@ import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import java.util.List;
 
+/**
+ * @author ShiShc
+ */
 public interface BlogService{
 
 
     /**
      * 博客广场，默认博客页面的展示内容
      * @return list
-     * @throws CustomException .
      */
-    List<Blog> getBlogSquare() throws CustomException;
+    List<Blog> getBlogSquare();
 
 
     /**
@@ -88,11 +90,10 @@ public interface BlogService{
     /**
      * 某个用户新增一篇博客
      * @param blog 博客实体
-     * @param userId 用户ID
      * @return 插入成功的博客实体
      * @throws CustomException .
      */
-    Blog insert(Blog blog, Long userId) throws CustomException;
+    Blog insert(Blog blog) throws CustomException;
 
 
     /**
@@ -107,11 +108,10 @@ public interface BlogService{
     /**
      * 某个用户更新一篇自己博客
      * @param blog 博客实体
-     * @param userId 用户ID
      * @return 更新后的博客实体
      * @throws CustomException .
      */
-    Blog update(Blog blog, Long userId) throws CustomException;
+    Blog update(Blog blog) throws CustomException;
 
 
     /**
@@ -143,4 +143,9 @@ public interface BlogService{
     Boolean checkBlog(Blog blog) throws CustomException;
 
 
+    /**
+     * bid检查方法
+     * @return
+     */
+    Boolean checkBid(Long bid);
 }

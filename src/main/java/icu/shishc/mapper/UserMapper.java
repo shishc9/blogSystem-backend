@@ -33,7 +33,6 @@ public interface UserMapper {
      * @param identity
      * @param age
      * @param gender
-     * @param hobby
      * @param email
      * @return
      */
@@ -42,7 +41,6 @@ public interface UserMapper {
                    @Param("identity") int identity,
                    @Param("age") int age,
                    @Param("gender") String gender,
-                   @Param("hobby") String hobby,
                    @Param("email") String email
     );
 
@@ -61,7 +59,6 @@ public interface UserMapper {
      * @param password
      * @param age
      * @param gender
-     * @param hobby
      * @param email
      * @return
      */
@@ -70,6 +67,5 @@ public interface UserMapper {
                    @Param("password") String password,
                    @Param("age") int age,
                    @Param("gender") String gender,
-                   @Param("hobby") String hobby,
                    @Param("email") String email);
 }

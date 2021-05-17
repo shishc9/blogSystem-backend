@@ -47,15 +47,15 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-    /**
-     * 目前先不用这个, 预留方法
-     * @return
-     */
-    @Override
-    public String getInfo() {
-        //Session session = SecurityUtils.getSubject().getSession();
-        return null;
-    }
+//    /**
+//     * 目前先不用这个, 预留方法
+//     * @return
+//     */
+//    @Override
+//    public String getInfo() {
+//        //Session session = SecurityUtils.getSubject().getSession();
+//        return null;
+//    }
 
     @Override
     public boolean logout() throws CustomException{
