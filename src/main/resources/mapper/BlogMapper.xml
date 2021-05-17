@@ -3,7 +3,7 @@
 <mapper namespace="icu.shishc.mapper.BlogMapper">
     <resultMap id="BaseResultMap" type="icu.shishc.entity.Blog">
         <result column="blog_id" property="blogId"/>
-        <result column="username" property="username"/>
+        <result column="user_id" property="userId"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <!-- 对应枚举字段加上TypeHandler -->
@@ -16,65 +16,79 @@
 
 
     <insert id="insert">
-        INSERT INTO blog(username, title, content, status, gmt_create, gmt_modified)
-            VALUES ('${username}', '${title}', '${content}', ${status}, now(), now())
+        INSERT INTO blog(user_id, title, content, status, gmt_create, gmt_modified)
+            VALUES (${userId}, '${title}', '${content}', ${status}, now(), now())
     </insert>
 
     <update id="update">
         UPDATE blog SET title = '${title}',
-                        content = '${content}',
-                        status = ${status},
-                        gmt_modified = now()
-        where blog_id = ${blog_id};
+                content = '${content}',
+                status = ${status},
+                gmt_modified = now()
+        where blog_id = ${blog_id}
     </update>
 
-    <update id="addLike" parameterType="java.lang.Long">
-        UPDATE blog SET like_num = like_num + 1
-            WHERE blog_id = ${bid}
-    </update>
-
-
-    <delete id="delete" parameterType="java.lang.Long">
-        DELETE FROM blog WHERE blog_id = ${id};
+    <delete id="delete">
+        DELETE FROM blog WHERE blog_id = ${bid}
     </delete>
 
-
-    <update id="cancelLike">
-        UPDATE blog SET like_num = like_num - 1
-            WHERE blog_id = ${bid}
-    </update>
-
-    <!-- 注意ResultType 和 ResultMap -->
-    <select id="getAllBlog" resultMap="BaseResultMap">
-        SELECT * FROM blog
+    <select id="getBlogSquare" resultMap="BaseResultMap">
+        SELECT * FROM blog ORDER BY like_num
     </select>
 
-    <select id="getBlogByTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="getBlogByUserId" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE user_id = ${userId} ORDER BY gmt_modified DESC
+    </select>
+
+    <select id="getBlogByTitle" resultMap="BaseResultMap">
         SELECT * FROM blog WHERE title = '${title}'
     </select>
 
-    <select id="getBlogByBID" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="getBlogByBID" resultMap="BaseResultMap">
         SELECT * FROM blog WHERE blog_id = ${bid}
     </select>
 
-    <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * FROM blog WHERE status = ${status}
+    <select id="getPrevious" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE user_id = ${userId} AND blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
     </select>
 
-    <select id="getAllLike" resultType="java.lang.Integer" >
-        SELECT SUM(like_num) FROM blog
+    <select id="getNext" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE user_id = ${userId} AND blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
     </select>
 
-    <select id="getAllReadNum" resultType="java.lang.Integer" >
-        SELECT SUM(read_num) FROM blog
+    <select id="getBlogByStatus" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE user_id = ${userId} AND status = ${status}
     </select>
 
-    <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
-    </select>
+<!--    <update id="addLike" parameterType="java.lang.Long">-->
+<!--        UPDATE blog SET like_num = like_num + 1-->
+<!--            WHERE blog_id = ${bid}-->
+<!--    </update>-->
 
-    <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
-    </select>
+<!--    <update id="cancelLike">-->
+<!--        UPDATE blog SET like_num = like_num - 1-->
+<!--            WHERE blog_id = ${bid}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 注意ResultType 和 ResultMap &ndash;&gt;-->
+<!--    <select id="getBlogByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">-->
+<!--        SELECT * FROM blog WHERE status = ${status}-->
+<!--    </select>-->
+
+<!--    <select id="getAllLike" resultType="java.lang.Integer" >-->
+<!--        SELECT SUM(like_num) FROM blog-->
+<!--    </select>-->
+
+<!--    <select id="getAllReadNum" resultType="java.lang.Integer" >-->
+<!--        SELECT SUM(read_num) FROM blog-->
+<!--    </select>-->
+
+<!--    <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">-->
+<!--        SELECT * FROM blog WHERE blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1-->
+<!--    </select>-->
+
+<!--    <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">-->
+<!--        SELECT * FROM blog WHERE blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1-->
+<!--    </select>-->
 
 </mapper>

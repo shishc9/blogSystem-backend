@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * @author ShiShc
  * @PackageName:icu.shishc
  * @Date:2021/3/14, 10:36
- * @Auther:ShiShc
  */
-
 @SpringBootApplication
 @MapperScan("icu.shishc.mapper")
 @RestController

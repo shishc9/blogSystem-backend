@@ -23,6 +23,7 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getBlogSquare() throws CustomException {
+
         return null;
     }
 

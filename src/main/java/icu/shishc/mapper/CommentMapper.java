@@ -1,9 +1,8 @@
 package icu.shishc.mapper;
 
-
 import icu.shishc.entity.Comment;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
