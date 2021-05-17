@@ -49,7 +49,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlogByTitle(String title) throws CustomException {
-        if("".equals(title.trim())) {
+        title = title.trim();
+        if("".equals(title)) {
             log.warn("【BlogService】getBlogByTitle::bad title, title = {}", title);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_TITLE");
         }
@@ -75,7 +76,11 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException {
         if(userService.getUserById(userId) == null) {
             log.warn("【BlogService】getBlogByStatus::user == null");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.OK, "USER_NOT_EXIST");
+        }
+        if(blogStatus.getKey() != 0 && blogStatus.getKey() != 1) {
+            log.warn("【BlogService】getBlogByStatus::bad blog status");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_STATUS");
         }
         List<Blog> list = blogMapper.getBlogByStatus(blogStatus.getKey(), userId);
         log.info("【BlogService】getBlogByStatus::return list");
@@ -166,9 +171,8 @@ public class BlogServiceImpl implements BlogService {
             log.warn("【BlogService】delete::bad bid, bid = {}", bid);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_BID");
         }
-        blogMapper.delete(bid);
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
-        return 1;
+        return blogMapper.delete(bid);
     }
 
 

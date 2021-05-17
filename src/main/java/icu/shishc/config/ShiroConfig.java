@@ -26,43 +26,38 @@ public class ShiroConfig {
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
 
-        // 设置shiro内置过滤器
-        //shiroFilterFactoryBean.setLoginUrl("/login");
-        //shiroFilterFactoryBean.setSuccessUrl("/index");
-        //shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
-
         // 设置拦截器
         // 注意拦截顺序
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         // one api in Application. default response.
-        filterChainDefinitionMap.put("/", "anon");
-
-        // four Api in LoginController
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/register", "anon");
-        filterChainDefinitionMap.put("/noAuth", "anon");
-        filterChainDefinitionMap.put("/logout", "authc");
-
-        // one api in MyErrorController
-        filterChainDefinitionMap.put("/error", "anon");
-
-        // one api in MyTestController
-        filterChainDefinitionMap.put("/test/**", "anon");
-
-        // thirteen api in BlogController
-        filterChainDefinitionMap.put("/blog/get/**", "anon");
-        filterChainDefinitionMap.put("/blog/add/like", "authc");
-        filterChainDefinitionMap.put("/blog/delete/like", "authc");
-        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
-
-        //three api in UserController
-        filterChainDefinitionMap.put("/user/get/**", "anon");
-        filterChainDefinitionMap.put("/user/**", "authc");
-
-        //three api in CommentController
-        filterChainDefinitionMap.put("/comment/get/**", "anon");
-        filterChainDefinitionMap.put("/comment/add", "authc");
+//        filterChainDefinitionMap.put("/", "anon");
+//
+//        // four Api in LoginController
+//        filterChainDefinitionMap.put("/login", "anon");
+//        filterChainDefinitionMap.put("/register", "anon");
+//        filterChainDefinitionMap.put("/noAuth", "anon");
+//        filterChainDefinitionMap.put("/logout", "authc");
+//
+//        // one api in MyErrorController
+//        filterChainDefinitionMap.put("/error", "anon");
+//
+//        // one api in MyTestController
+//        filterChainDefinitionMap.put("/test/**", "anon");
+//
+//        // thirteen api in BlogController
+//        filterChainDefinitionMap.put("/blog/get/**", "anon");
+//        filterChainDefinitionMap.put("/blog/add/like", "authc");
+//        filterChainDefinitionMap.put("/blog/delete/like", "authc");
+//        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
+//
+//        //three api in UserController
+//        filterChainDefinitionMap.put("/user/get/**", "anon");
+//        filterChainDefinitionMap.put("/user/**", "authc");
+//
+//        //three api in CommentController
+//        filterChainDefinitionMap.put("/comment/get/**", "anon");
+//        filterChainDefinitionMap.put("/comment/add", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
 

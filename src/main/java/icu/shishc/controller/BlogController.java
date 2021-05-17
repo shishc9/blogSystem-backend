@@ -33,51 +33,44 @@ public class BlogController {
     }
 
 
+    /**
+     * 列出某个用户的所有博客
+     * @param page
+     * @param size
+     * @return
+     * @throws CustomException
+     */
+    @GetMapping("/u/{userId}")
+    public MyDTO getUserBlogs(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @PathVariable("userId") Long userId
+    ) throws CustomException {
+        log.info("【BlogController】getUserBlogs::userId = {}", userId);
+        PageHelper.startPage(page, size);
+        List<Blog> list = blogService.getBlogByUserId(userId);
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
+        return MyDTO.successDTO(pager);
+    }
+//
+//
+    /**
+     * 通过标题查找博客
+     * @param title
+     * @return
+     */
+    @GetMapping("/{title}")
+    public MyDTO getByTitle(
+            @PathVariable("title") String title
+    ) throws CustomException {
+        Blog blog = blogService.getBlogByTitle(title);
+        log.info("【Controller】Blog::get-by-title, title = {}", title);
+        return MyDTO.successDTO(blog);
+    }
+
+
 //    /**
-//     * 列出某个用户的所有博客
-//     * @param page
-//     * @param size
-//     * @return
-//     * @throws CustomException
-//     */
-//    @GetMapping("/get/list")
-//    public MyDTO getAll(
-//            @RequestParam(value = "page", defaultValue = "1") int page,
-//            @RequestParam(value = "size", defaultValue = "10") int size,
-//            @RequestParam(value = "userId") Long userId
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::get-all");
-//        PageHelper.startPage(page, size);
-//        List<Blog> list = blogService.getAllBlog();
-//        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
-//        return MyDTO.successDTO(pager);
-//    }
-//
-//
-//    /**
-//     * 通过标题查找博客
-//     * @param title
-//     * @return
-//     */
-//    @GetMapping("/get/{title}")
-//    public MyDTO getByTitle(
-//            @RequestParam("title")@PathVariable String title
-//    ) throws CustomException {
-//        if(title.trim().equals("")) {
-//            log.warn("【Controller】Blog::get-by-title: title is null");
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "title is null");
-//        }
-//        Blog blog = blogService.getBlogByTitle(title);
-//        if(blog == null) {
-//            log.warn("【Controller】Blog::get-by-title: the blog doesn't exist");
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "the blog does not exist");
-//        }
-//        log.info("【Controller】Blog::get-by-title, title = {}", title);
-//        return MyDTO.successDTO(blog);
-//    }
-//
-//
-//    /**
+//     * 废弃的方法
 //     * 通过bid查找博客
 //     * @param bid
 //     * @return
@@ -91,26 +84,28 @@ public class BlogController {
 //    }
 //
 //
-//    /**
-//     * 通过状态查找博客
-//     * @param blogStatus
-//     * @return
-//     */
-//    @GetMapping("/get/by-status")
-//    public MyDTO getByStatus(
-//            @RequestParam(value = "page", defaultValue = "1") int page,
-//            @RequestParam(value = "size", defaultValue = "10") int size,
-//            @RequestParam("blogStatus")BlogStatus blogStatus
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::get-by-status：blogStatus = {}", blogStatus);
-//        if(blogStatus.getKey() != 0 && blogStatus.getKey() != 1) {
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "bad blogStatus");
-//        }
-//        PageHelper.startPage(page, size);
-//        List<Blog> list = blogService.getBlogByStatus(blogStatus);
-//        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
-//        return MyDTO.successDTO(pager);
-//    }
+    /**
+     * 通过状态查找博客
+     * @return MyDTO
+     */
+    @GetMapping("/u/{userId}/{status}")
+    public MyDTO getByStatus(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @PathVariable("userId") Long userId,
+            @PathVariable("status") int status
+    ) throws CustomException {
+        BlogStatus blogStatus = BlogStatus.ValueOf(status);
+        if(blogStatus == null) {
+            log.warn("【BlogController】getByStatus::bad status, status = {}", status);
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "");
+        }
+        log.info("【BlogController】getByStatus::blogStatus = {}, userId = {}", blogStatus, userId);
+        PageHelper.startPage(page, size);
+        List<Blog> list = blogService.getBlogByStatus(blogStatus, userId);
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
+        return MyDTO.successDTO(pager);
+    }
 //
 //
 //    /**
@@ -164,84 +159,86 @@ public class BlogController {
 //    }
 //
 //
-//    @GetMapping("/get/previous")
-//    public MyDTO getPrevious(
-//            @RequestParam("bid") Long bid
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
-//        Blog blog = blogService.getPrevious(bid);
-//        return MyDTO.successDTO(blog);
-//    }
+
+    /**
+     * 用户当前博客的上一篇博客
+     * @param bid 当前博客id
+     * @param userId 用户id
+     * @return MyDTO
+     * @throws CustomException .
+     */
+    @GetMapping("/u/{userId}/{bid}/previous")
+    public MyDTO getPrevious(
+            @PathVariable("bid") Long bid,
+            @PathVariable("userId") Long userId
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {},userid = {}", bid, userId);
+        Blog blog = blogService.getPrevious(bid, userId);
+        return MyDTO.successDTO(blog);
+    }
+
+
+    /**
+     * 获取当前博客的下一篇博客
+     * @param bid 当前博客id
+     * @param userId 当前用户id
+     * @return MyDTO
+     * @throws CustomException .
+     */
+    @GetMapping("/u/{userId}/{bid}/next")
+    public MyDTO getNext(
+            @PathVariable("bid") Long bid,
+            @PathVariable("userId") Long userId
+    ) throws CustomException {
+        log.info("【Controller】Blog::getPrevious: bid = {}, user = {}", bid, userId);
+        Blog blog = blogService.getNext(bid, userId);
+        return MyDTO.successDTO(blog);
+    }
 //
 //
-//    @GetMapping("/get/next")
-//    public MyDTO getNext(
-//            @RequestParam("bid") Long bid
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::getPrevious: bid = {}", bid);
-//        Blog blog = blogService.getNext(bid);
-//        return MyDTO.successDTO(blog);
-//    }
-//
-//
-//    /**
-//     * 添加博客
-//     * @param blog
-//     * @return
-//     */
-//    @RequestMapping("/add/blog")
-//    public MyDTO insertBlog(
-//            @RequestBody Blog blog
-//    ) throws CustomException {
-//        // 这里blog的content字段不能有换行，Json Parse Error.
-//        // 但是这个在 prod 版本中不会出现
-//        if (!blogService.checkBlog(blog)) {
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad blog entity");
-//        }
-//        log.info("【Controller】Blog::add：blog = {}", blog);
-//        Blog blog2 = blogService.insert(blog);
-//        log.info("【Controller】Blog::after insert: get：title = {}", blog2.getTitle());
-//        return MyDTO.successDTO(blog2);
-//    }
-//
-//
-//    /**
-//     * 更新博客
-//     * @param blog
-//     * @return
-//     */
-//    @RequestMapping("/update/blog")
-//    public MyDTO updateBlog(
-//        @RequestBody Blog blog
-//    ) throws CustomException {
-//        if(!blogService.checkBlog(blog)) {
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad blog entity");
-//        }
-//        log.info("【Controller】Blog::update：blog = {}", blog);
-//        Blog blog2 = blogService.update(blog);
-//        log.info("【Controller】Blog::after update: get：bid = {}", blog2.getBlogId());
-//        return MyDTO.successDTO(blog2);
-//    }
-//
-//
-//    /**
-//     * 删除博客
-//     * @param bid
-//     * @return
-//     */
-//    @RequestMapping("/delete/blog")
-//    public MyDTO deleteBlog(
-//            @RequestParam("bid") Long bid
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::delete：bid = {}", bid);
-//        Integer status = blogService.delete(bid);
-//        if(null == blogService.getBlogByBID(bid)) {
-//            log.info("【Controller】Blog::delete success");
-//            return MyDTO.successDTO(status);
-//        } else {
-//            log.info("【Controller】Blog::delete failed! bid = {}", bid);
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bLOG::delete failed!");
-//        }
-//    }
+    /**
+     * 添加博客
+     * @param blog 博客实体
+     * @return MyDTO
+     */
+    @RequestMapping("/add")
+    public MyDTO insertBlog(
+            @RequestBody Blog blog
+    ) throws CustomException {
+        Blog blog1 = blogService.insert(blog);
+        log.info("【BlogController】insertBlog::insert blog：title = {}", blog1.getTitle());
+        return MyDTO.successDTO(blog1);
+    }
+
+
+    /**
+     * 更新博客
+     * @param blog 博客实体
+     * @return MyDTO
+     */
+    @RequestMapping("/update")
+    public MyDTO updateBlog(
+        @RequestBody Blog blog
+    ) throws CustomException {
+        log.info("【BlogController】updateBlog::before blog = {}", blog);
+        Blog blog2 = blogService.update(blog);
+        log.info("【BlogController】updateBlog::after blog = {}", blog2);
+        return MyDTO.successDTO(blog2);
+    }
+
+
+    /**
+     * 删除博客
+     * @param bid 博客id
+     * @return MyDTO
+     */
+    @GetMapping("/delete")
+    public MyDTO deleteBlog(
+            @RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("【Controller】Blog::delete：bid = {}", bid);
+        Integer status = blogService.delete(bid);
+        return status == 1 ? MyDTO.successDTO("DELETE_SUCCESS") : MyDTO.successDTO("BAD_PARAM");
+    }
 
 }

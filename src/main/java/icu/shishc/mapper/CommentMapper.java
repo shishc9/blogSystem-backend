@@ -19,7 +19,6 @@ public interface CommentMapper {
      *  保存评论
      * @param bid
      * @param username
-     * @param email
      * @param content
      * @param pid
      * @return
