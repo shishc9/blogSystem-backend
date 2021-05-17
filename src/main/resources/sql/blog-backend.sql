@@ -42,14 +42,30 @@ ALTER TABLE blog ADD UNIQUE KEY (title);
 DROP TABLE IF EXISTS comment;
 CREATE TABLE comment (
     comment_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论自增id',
-    blog_id BIGINT UNSIGNED DEFAULT 0 COMMENT '所属博客id',
+    blog_id BIGINT UNSIGNED NOT NULL COMMENT '所属博客id',
     username VARCHAR(64) NOT NULL COMMENT '评论者用户名',
     content VARCHAR(255) NOT NULL COMMENT '评论内容',
     gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '评论发布时间',
     parent_comment_id BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
     PRIMARY KEY (comment_id) USING BTREE,
-    FOREIGN KEY (username) REFERENCES user(username)
+    FOREIGN KEY (username) REFERENCES user(username),
+    FOREIGN KEY (blog_id) REFERENCES blog(blog_id)
 )ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 50000;
+
+
+
+DROP TABLE IF EXISTS message;
+CREATE TABLE message (
+    message_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论自增id',
+    user_id BIGINT UNSIGNED NOT NULL COMMENT '',
+    username VARCHAR(64) NOT NULL COMMENT '',
+    content VARCHAR(255) NOT NULL COMMENT '',
+    gmt_create BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
+    parent_comment_id BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
+    PRIMARY KEY (message_id) USING BTREE,
+    FOREIGN KEY (username) REFERENCES user(username),
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 100000;
 
 
 

@@ -62,7 +62,7 @@ public class LoginController {
 
     @RequestMapping("/register")
     public MyDTO register(@RequestBody User user) throws CustomException{
-        if(!userService.userCheck(user)) {
+        if(userService.userCheck(user)) {
             log.warn("【Controller】LoginController::register: bad user entity");
             return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
         }

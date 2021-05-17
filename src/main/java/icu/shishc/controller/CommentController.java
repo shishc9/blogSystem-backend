@@ -23,11 +23,11 @@ public class CommentController {
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
 
-    @GetMapping("/get/message")
-    public MyDTO getLeaveMessage()
-            throws CustomException {
-        return MyDTO.successDTO(commentService.listMessage());
-    }
+//    @GetMapping("/get/message")
+//    public MyDTO getLeaveMessage()
+//            throws CustomException {
+//        return MyDTO.successDTO(commentService.listMessage());
+//    }
 
 
     @GetMapping("/get/by-id")
@@ -37,9 +37,9 @@ public class CommentController {
     }
 
 
-    @PostMapping("/add")
-    public MyDTO saveComment(@RequestBody Comment comment)
-            throws CustomException {
-        return MyDTO.successDTO(commentService.saveComment(comment));
-    }
+//    @PostMapping("/add")
+//    public MyDTO saveComment(@RequestBody Comment comment)
+//            throws CustomException {
+//        return MyDTO.successDTO(commentService.saveComment(comment));
+//    }
 }

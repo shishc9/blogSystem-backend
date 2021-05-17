@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @author ShiShc
  * @PackageName:icu.shishc.enumeration
  * @Date:2021/3/15, 9:20
- * @Auther:ShiShc
  */
 
 public enum UserIdentity {
-    TOURIST(0),
-    BLOGGER(1);
+    BLOGGER(0),
+    ADMIN(1);
 
     private final int key;
 

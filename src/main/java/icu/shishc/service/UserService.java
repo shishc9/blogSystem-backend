@@ -8,72 +8,70 @@ public interface UserService{
 
     /**
      * 根据UID查找用户
-     * @param userId
-     * @return
-     * @throws CustomException
+     * @param userId 用户id
+     * @return 用户实体
+     * @throws CustomException .
      */
     User getUserById(Long userId) throws CustomException;
 
 
     /**
      * 根据用户名查找用户
-     * @param username
-     * @return
-     * @throws CustomException
+     * @param username 用户名
+     * @return 用户实体
+     * @throws CustomException .
      */
     User getUserByName(String username) throws CustomException;
 
 
     /**
      * 新增一个用户
-     * @param user
-     * @return
-     * @throws CustomException
+     * @param user 用户实体
+     * @return 新增用户实体
+     * @throws CustomException .
      */
     User insert(User user) throws CustomException;
 
 
     /**
      * 删除一个用户
-     * @param id
-     * @return
-     * @throws CustomException
+     * @param id 用户id
+     * @return 1 0
+     * @throws CustomException .
      */
     Integer delete(Long id) throws CustomException;
 
 
     /**
      * 更新一个用户
-     * @param user
-     * @return
-     * @throws CustomException
+     * @param user 用户实体
+     * @return 更新后的用户
+     * @throws CustomException .
      */
     User update(User user) throws CustomException;
 
 
     /**
      * user Identity check.
-     * @param user
-     * @return
+     * @param user 用户实体
+     * @return T / F
      */
     boolean userCheck(User user);
 
 
     /**
-     * email format check
-     * @param email
-     * @return
+     * 用户邮箱正则表达式检验
+     * @param email 用户邮箱
+     * @return T / F
      */
     boolean regexMatch(String email);
 
 
     /**
      * 获取用户角色
-     * @param username
-     * @return
+     * @param username 用户名
+     * @return 角色名
      */
     String getRole(String username);
-
-
 
 }

@@ -70,7 +70,7 @@ public class UserController {
      */
     @RequestMapping("/update/user")
     public MyDTO update(@RequestBody User user) throws CustomException {
-        if(!userService.userCheck(user)) {
+        if(userService.userCheck(user)) {
             log.warn("【Controller】UserController::update: bad user entity");
             return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
         }

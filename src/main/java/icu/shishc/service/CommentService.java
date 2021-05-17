@@ -11,32 +11,39 @@ import java.util.List;
  */
 public interface CommentService {
 
+
     /**
-     * return blog's comments;
-     * @param bid
-     * @return
+     * 返回某一博客的评论
+     * @param bid 博客id
+     * @return list
+     * @throws CustomException .
      */
     List<Comment> findCommentsByBlogId(Long bid) throws CustomException;
 
 
+//    /**
+//     * 显示某一用户的留言
+//     * @param userId 用户ID
+//     * @return list
+//     * @throws CustomException .
+//     */
+//    List<Comment> listMessage(Long userId) throws CustomException;
+
+
     /**
-     * 显示博客留言
-     * @return
+     * 发布评论
+     * @param comment 评论实体
+     * @return 0 1
+     * @throws CustomException .
      */
-    List<Comment> listMessage() throws CustomException;
-
-    /**
-     * 保存评论
-     * @param comment
-     * @return
-     */
-    int saveComment(Comment comment) throws CustomException;
+    int saveComment(Comment comment, Long bid) throws CustomException;
 
 
     /**
-     * 通过id判断评论是否存在
-     * @param commentId
-     * @return
+     * 通过id查找评论是否存在
+     * @param commentId 评论id
+     * @return 评论实体
      */
     Comment getCommentById(Long commentId);
+
 }
