@@ -33,6 +33,19 @@ public class BlogController {
     }
 
 
+    @GetMapping("/square")
+    public MyDTO getSquare(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size
+    ) {
+        PageHelper.startPage(page, size);
+        List<Blog> blogSquare = blogService.getBlogSquare();
+        Pager pager = PagerUtils.getPager(new PageInfo<>(blogSquare));
+        log.info("【BlogController】getSquare::return square");
+        return MyDTO.successDTO(pager);
+    }
+
+
     /**
      * 列出某个用户的所有博客
      * @param page
@@ -43,7 +56,7 @@ public class BlogController {
     @GetMapping("/u/{userId}")
     public MyDTO getUserBlogs(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "size", defaultValue = "5") int size,
             @PathVariable("userId") Long userId
     ) throws CustomException {
         log.info("【BlogController】getUserBlogs::userId = {}", userId);
