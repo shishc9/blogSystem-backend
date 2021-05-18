@@ -71,12 +71,16 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.getUserById(userId);
         if(null == user) {
-            log.warn("【Service】UserService::delete: the user doesn't exist, uid = {}", userId);
+            log.warn("【UserService】delete::the user doesn't exist, uid = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
         }
-        userMapper.delete(userId);
-        log.info("【Service】UserService::delete: delete user successfully! userId = {}", userId);
-        return 1;
+        int flag = userMapper.delete(userId);
+        if(flag == 1) {
+            log.info("【UserService】delete::delete user successfully! userId = {}", userId);
+        } else {
+            log.info("【UserService】delete::delete user failed! userId = {}", userId);
+        }
+        return flag;
     }
 
 
@@ -90,7 +94,7 @@ public class UserServiceImpl implements UserService {
         User user1 = userMapper.getUserById(userId);
         if(null == user1) {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.OK, "USER_NOT_EXIST");
         }
         userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);

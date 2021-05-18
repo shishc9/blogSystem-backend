@@ -18,7 +18,6 @@ public class UserDTO {
     UserIdentity userIdentity;
     Integer age;
     String gender;
-    String hobby;
     String email;
 
 

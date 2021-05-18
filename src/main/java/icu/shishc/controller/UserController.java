@@ -6,15 +6,13 @@ import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * @author ShiShc
  * @PackageName:icu.shishc.controller
  * @Date:2021/3/15, 15:56
- * @Auther:ShiShc
  */
-
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -23,31 +21,32 @@ public class UserController {
     /**
      * 用户接口
      */
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
 
-    //@GetMapping("/get/by-id")
-    private MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
-        User user = userService.getUserById(userId);
-        log.info("【Controller】UserController::getById: return user, uID = {}", userId);
-        return MyDTO.successDTO(new UserDTO(user));
-    }
+//    //@GetMapping("/get/by-id")
+//    private MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
+//        User user = userService.getUserById(userId);
+//        log.info("【Controller】UserController::getById: return user, uID = {}", userId);
+//        return MyDTO.successDTO(new UserDTO(user));
+//    }
 
 
-    @GetMapping("/get/by-username")
-    public MyDTO getUserByName(@RequestParam("username") String username) throws CustomException {
-        username = username.trim();
-        if(username.equals("")) {
-            log.warn("【Controller】UserController::getUserByName: bad username");
-            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "username can't be null");
-        }
+    /**
+     * 通过用户名查找用户
+     * @param username 用户名
+     * @return UserDTO
+     * @throws CustomException .
+     */
+    @GetMapping("/{username}}")
+    public MyDTO getUserByName(@PathVariable("username") String username) throws CustomException {
         User user = userService.getUserByName(username);
-        log.info("【Controller】UserController::getUserByName: return user, uID = {}", user == null ? 0 : user.getUserId());
-        return MyDTO.successDTO(new UserDTO(user));
+        log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
+        return user == null ? MyDTO.successDTO(null) : MyDTO.successDTO(new UserDTO(user));
     }
 
 
@@ -64,33 +63,30 @@ public class UserController {
 
     /**
      * 更新用户信息， 等级开放 -> Blogger + User
-     * @param user
-     * @return
-     * @throws CustomException
+     * @param user user实体
+     * @return MyDTO
+     * @throws CustomException .
      */
-    @RequestMapping("/update/user")
+    @RequestMapping("/update")
     public MyDTO update(@RequestBody User user) throws CustomException {
-        if(userService.userCheck(user)) {
-            log.warn("【Controller】UserController::update: bad user entity");
-            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
-        }
-        log.info("【Controller】UserController::update: before update, uid = {}", user.getUserId());
+        log.info("【UserController】update:: before update, user = {}", user.toString());
         User user1 = userService.update(user);
-        log.info("【Controller】UserController::update: after update, uid = {}, username = {}", user1.getUserId(), user1.getUsername());
+        log.info("【UserController】update:: after update, user = {}", user1.toString());
         return MyDTO.successDTO(new UserDTO(user1));
     }
 
 
     /**
      * 删除/注销用户, 等级开放 -> blogger + user
-     * @param uid
-     * @return
-     * @throws CustomException
+     * @param uid 用户id
+     * @return MyDTO
+     * @throws CustomException .
      */
-    @RequestMapping("/delete/user")
-    public MyDTO delete(@RequestParam("uid") Long uid) throws CustomException {
-        Integer status = userService.delete(uid);
-        log.info("【Controller】UserController::delete: delete uid = {}", uid);
+    @RequestMapping("/delete")
+    public MyDTO delete(@RequestParam("uid") String uid) throws CustomException {
+        long param = Long.parseLong(uid);
+        Integer status = userService.delete(param);
+        log.info("【UserController】delete:: delete uid = {}", uid);
         return MyDTO.successDTO(status);
     }
 }

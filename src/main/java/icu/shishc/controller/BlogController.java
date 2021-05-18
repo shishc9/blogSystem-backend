@@ -26,13 +26,19 @@ import java.util.List;
 @RequestMapping("/blog")
 public class BlogController {
 
-    private BlogService blogService;
+    private final BlogService blogService;
 
     public BlogController(BlogService blogService) {
         this.blogService = blogService;
     }
 
 
+    /**
+     * 获取博客广场
+     * @param page page
+     * @param size size
+     * @return MyDTO
+     */
     @GetMapping("/square")
     public MyDTO getSquare(
             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -48,10 +54,10 @@ public class BlogController {
 
     /**
      * 列出某个用户的所有博客
-     * @param page
-     * @param size
-     * @return
-     * @throws CustomException
+     * @param page page
+     * @param size size
+     * @return MyDTO
+     * @throws CustomException .
      */
     @GetMapping("/u/{userId}")
     public MyDTO getUserBlogs(
@@ -69,8 +75,8 @@ public class BlogController {
 //
     /**
      * 通过标题查找博客
-     * @param title
-     * @return
+     * @param title 博客标题
+     * @return MyDTO
      */
     @GetMapping("/{title}")
     public MyDTO getByTitle(

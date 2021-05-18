@@ -40,7 +40,7 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> getBlogByUserId(Long userId) throws CustomException {
         if(userService.getUserById(userId) == null) {
             log.warn("【BlogService】getBlogByUserId::user == null");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.OK, "USER_NOT_EXIST");
         }
         log.info("【BlogService】getBlogByUserId, userid = {}", userId);
         return blogMapper.getBlogByUserId(userId);
@@ -52,7 +52,7 @@ public class BlogServiceImpl implements BlogService {
         title = title.trim();
         if("".equals(title)) {
             log.warn("【BlogService】getBlogByTitle::bad title, title = {}", title);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_TITLE");
+            throw new CustomException(HttpStatus.OK, "BAD_TITLE");
         }
         Blog blog = blogMapper.getBlogByTitle(title);
         log.info("【BlogService】getBlogByTitle::bid = {}", blog == null ? 0 : blog.getBlogId());
