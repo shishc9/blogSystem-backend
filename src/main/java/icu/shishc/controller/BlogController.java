@@ -220,7 +220,7 @@ public class BlogController {
      * @param blog 博客实体
      * @return MyDTO
      */
-    @RequestMapping("/add")
+    @RequestMapping(method = RequestMethod.POST)
     public MyDTO insertBlog(
             @RequestBody Blog blog
     ) throws CustomException {
@@ -235,7 +235,7 @@ public class BlogController {
      * @param blog 博客实体
      * @return MyDTO
      */
-    @RequestMapping("/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public MyDTO updateBlog(
         @RequestBody Blog blog
     ) throws CustomException {
@@ -251,7 +251,7 @@ public class BlogController {
      * @param bid 博客id
      * @return MyDTO
      */
-    @GetMapping("/delete")
+    @RequestMapping(method = RequestMethod.DELETE)
     public MyDTO deleteBlog(
             @RequestParam("bid") Long bid
     ) throws CustomException {

@@ -14,8 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @PackageName:icu.shishc.config
  * @Date:2021/3/14, 21:26
  * @Auther:ShiShc
+ * @DESC: 后端接口文档
  */
-
 @Configuration
 @EnableSwagger2
 public class SwaggerUIConfig extends WebMvcConfigurationSupport {

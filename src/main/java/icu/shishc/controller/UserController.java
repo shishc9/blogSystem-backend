@@ -42,7 +42,7 @@ public class UserController {
      * @return UserDTO
      * @throws CustomException .
      */
-    @GetMapping("/{username}}")
+    @GetMapping("/{username}")
     public MyDTO getUserByName(@PathVariable("username") String username) throws CustomException {
         User user = userService.getUserByName(username);
         log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
@@ -67,7 +67,7 @@ public class UserController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @RequestMapping("/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public MyDTO update(@RequestBody User user) throws CustomException {
         log.info("【UserController】update:: before update, user = {}", user.toString());
         User user1 = userService.update(user);
@@ -82,7 +82,7 @@ public class UserController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @RequestMapping("/delete")
+    @RequestMapping(method = RequestMethod.DELETE)
     public MyDTO delete(@RequestParam("uid") String uid) throws CustomException {
         long param = Long.parseLong(uid);
         Integer status = userService.delete(param);
