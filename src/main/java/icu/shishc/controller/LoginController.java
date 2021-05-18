@@ -25,18 +25,17 @@ public class LoginController {
      */
     @Autowired
     private LoginService loginService;
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping(value = "/login")
-    public MyDTO authLogin(@RequestParam String username, @RequestParam String pwd) throws CustomException {
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public MyDTO login(@RequestParam String username, @RequestParam String pwd) throws CustomException {
         boolean flag = loginService.authLogin(username, pwd);
         if(flag) {
-            log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, successfully!", username, pwd);
-            return MyDTO.successDTO("Login success");
+            log.info("【LoginController】authLogin, username = {}, pwd = {}, successfully!", username, pwd);
+            return MyDTO.successDTO("LOGIN_SUCCESS");
         }
-        log.info("【Controller】LoginController::authLogin, username = {}, pwd = {}, failed", username, pwd);
-        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Login failed!");
+        log.info("【LoginController】authLogin, username = {}, pwd = {}, failed", username, pwd);
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "LOGIN_FAILED");
     }
 
 //    @GetMapping(value = "/index")
@@ -44,35 +43,37 @@ public class LoginController {
 //        return "index";
 //    }
 
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public MyDTO logout() throws CustomException{
         boolean flag = loginService.logout();
         if(flag) {
-            log.info("【Controller】LoginController::Logout, successfully");
-            return MyDTO.successDTO("Logout success");
+            log.info("【LoginController】Logout, successfully");
+            return MyDTO.successDTO("LOGOUT_SUCCESS");
         }
-        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Logout failed!");
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "LOGOUT_FAILED");
     }
 
-    @GetMapping("/noAuth")
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/noauth")
     public MyDTO noAuth() {
-        return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "无访问权限...");
+        return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED");
     }
 
 
-    @RequestMapping("/register")
+    /**
+     * 注册用户
+     * @param user user
+     * @return MyDTO
+     * @throws CustomException MyDTO
+     */
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
     public MyDTO register(@RequestBody User user) throws CustomException{
-        if(userService.userCheck(user)) {
-            log.warn("【Controller】LoginController::register: bad user entity");
-            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
-        }
         User user1 = loginService.register(user);
-        log.info("【Controller】LoginController::register: register successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
+        log.info("【LoginController】register::register successfully! username = {}", user.getUsername().equals(user1.getUsername()) ?user.getUsername() : null);
         return MyDTO.successDTO(new UserDTO(user1));
     }
-
-//    @GetMapping("/error")
-//    public MyDTO wrongPage() {
-//        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Page not found");
-//    }
 }

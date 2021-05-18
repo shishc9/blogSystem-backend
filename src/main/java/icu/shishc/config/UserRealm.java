@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 
+/**
+ * @author Closer
+ * @DESC: UserRealm
+ */
 @Slf4j
 public class UserRealm extends AuthorizingRealm {
 
@@ -24,8 +28,8 @@ public class UserRealm extends AuthorizingRealm {
 
     /**
      * 权限认证
-     * @param principalCollection
-     * @return
+     * @param principalCollection 权限集合
+     * @return AuthorizationInfo
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -33,22 +37,20 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 获取当前用户
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        //System.out.println("currentUser: "+user.toString());
-        // 将BLOGGER / TOURIST 保存为字符串
+        // 将BLOGGER / ADMIN 保存为字符串
         String role = user.getUserIdentity().toString();
         log.info("【UserRealm】doGetAuthorization:身份授权, 当前用户name = {}, 身份role = {}", user.getUsername(), role);
-        // 将BlOGGER / TOURIST 进行授权
+        // 将BlOGGER / ADMIN 进行授权
         info.addStringPermission(role);
         log.info("【UserRealm】doGetAuthorization:身份授权, user[{}]授权完成, 身份是{}", user.getUsername(), user.getUserIdentity().toString());
         return info;
     }
 
     /**
-     * @SneakyThrows lombok注解：为了在tc下捕获异常
      * 身份认证
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
+     * @param authenticationToken token
+     * @return AuthenticationInfo
+     * @throws AuthenticationException AuthenticationException
      */
     @SneakyThrows
     @Override
@@ -60,11 +62,11 @@ public class UserRealm extends AuthorizingRealm {
         User user = userService.getUserByName(username);
         if(user == null) {
             log.warn("【UserReal】doGetAuthenticationInfo:身份认证 username error! username = {}",username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "the user doesn't exist!");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
         } else if(!user.getPassword().equals(new String(token.getPassword()))) {
             // 这里密码验证可以不用写  下面SimpleAuthenticationInfo第二个参数也会进行密码校验
             log.warn("【UserReal】doGetAuthenticationInfo:身份认证 pwd error! username = {}, pwd = {}", username, user.getPassword());
-            throw new CustomException(HttpStatus.BAD_REQUEST, "pwd error!");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "PWD_ERROR");
         }
         log.info("【UserReal】doGetAuthenticationInfo:身份认证 login successfully! username, pwd = {}", username + user.getPassword());
         return new SimpleAuthenticationInfo(user, user.getPassword(), getName());

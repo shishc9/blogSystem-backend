@@ -48,7 +48,6 @@ public class MyTestController {
         return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "hello404");
     }
 
-
     @GetMapping("/tests")
     public void test01() {
         System.out.println("test01");

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @date: 2021-5-8, 18:09
  * @author: ShiShc
- * @DESC: 错误控制器
+ * @DESC: springboot错误拦截
  */
 @RestController
 public class MyErrorController implements ErrorController {

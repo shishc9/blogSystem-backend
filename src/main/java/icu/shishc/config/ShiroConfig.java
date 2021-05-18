@@ -26,17 +26,22 @@ public class ShiroConfig {
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
 
-        // 设置拦截器
-        // 注意拦截顺序
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-
-        // one api in Application. default response.
+        //设置默认拦截器
+//        Map<String, Filter> filterMap = new LinkedHashMap<>();
+//        filterMap.put("loginFilter", loginFilter);
+//        shiroFilterFactoryBean.setFilters(filterMap);
+//
+//        // 设置拦截器
+//        // 注意拦截顺序
+//        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+//
+//        //one api in Application. default response.
 //        filterChainDefinitionMap.put("/", "anon");
 //
 //        // four Api in LoginController
 //        filterChainDefinitionMap.put("/login", "anon");
-//        filterChainDefinitionMap.put("/register", "anon");
-//        filterChainDefinitionMap.put("/noAuth", "anon");
+//        filterChainDefinitionMap.put("/join", "anon");
+//        filterChainDefinitionMap.put("/noauth", "anon");
 //        filterChainDefinitionMap.put("/logout", "authc");
 //
 //        // one api in MyErrorController
@@ -46,7 +51,8 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/test/**", "anon");
 //
 //        // thirteen api in BlogController
-//        filterChainDefinitionMap.put("/blog/get/**", "anon");
+//        filterChainDefinitionMap.put("/blog/square", "anon");
+//        filterChainDefinitionMap.put("/blog/{title}", "perms[BLOGGER]");
 //        filterChainDefinitionMap.put("/blog/add/like", "authc");
 //        filterChainDefinitionMap.put("/blog/delete/like", "authc");
 //        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
@@ -58,13 +64,10 @@ public class ShiroConfig {
 //        //three api in CommentController
 //        filterChainDefinitionMap.put("/comment/get/**", "anon");
 //        filterChainDefinitionMap.put("/comment/add", "authc");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+//        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
 
-        // 设置默认拦截器
-        Map<String, Filter> filterMap = new LinkedHashMap<>();
-        filterMap.put("loginFilter", loginFilter);
-        shiroFilterFactoryBean.setFilters(filterMap);
+
         return shiroFilterFactoryBean;
     }
 

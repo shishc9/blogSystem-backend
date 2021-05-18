@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         User user1 = userMapper.getUserById(userId);
         if(null == user1) {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
-            throw new CustomException(HttpStatus.OK, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
         }
         userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean checkUserId(Long userId) {
-        if(userId <= 0) {
+        if(userId < 0) {
             log.warn("【UserService】checkUserId::userId <= 0, userId = {}", userId);
             return false;
         }

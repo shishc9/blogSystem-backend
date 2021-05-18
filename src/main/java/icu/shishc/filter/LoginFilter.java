@@ -1,13 +1,7 @@
 package icu.shishc.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import icu.shishc.dto.MyDTO;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +9,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Writer;
 
 /**
  * @date: 2021-5-15, 21:44
  * @author: ShiShc
  * 覆盖自带过滤器，让未登录的行为统一返回401.
  */
+
 public class LoginFilter extends FormAuthenticationFilter {
 //    @Override
 //    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
@@ -78,6 +71,14 @@ public class LoginFilter extends FormAuthenticationFilter {
 //        }
 //    }
 
+
+    /**
+     * 判断是否登录。 在登录的情况下会执行这个方法，此方法返回true直接访问控制器
+     * @param request request
+     * @param response response
+     * @param mappedValue mappedValue
+     * @return boolean
+     */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue){
         return false;
@@ -85,29 +86,53 @@ public class LoginFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        if (isLoginRequest(request, response)) {
-            if (!isLoginSubmission(request, response)) {
-//                if (log.isTraceEnabled()) {
-//                    log.trace("Attempting to access a path which requires authentication.  Forwarding to the " +
-//                            "Authentication url [" + getLoginUrl() + "]");
-//                }
-
-                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse.setContentType("application/json;charset=UTF-8");
-                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("message", "没有权限访问");
-                jsonObject.put("code", "401");
-                jsonObject.put("data", "");
-                Writer writer = httpServletResponse.getWriter();
-                writer.write(jsonObject.toJSONString());
-                writer.flush();
-                writer.close();
-            }else {
-                return executeLogin(request, response);
-            }
+        //加了一次过滤
+        if (isAjax(request)) {
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.setContentType("application/json");
+            httpServletResponse.setStatus(401);
+            return false;
         }
-        return false;
+        return super.onAccessDenied(request, response);
     }
+
+    private boolean isAjax(ServletRequest request) {
+        String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equalsIgnoreCase(header)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+
+//    /**
+//     * 是否拒绝登录。 在没有登录的情况下访问此方法。
+//     * @param request request
+//     * @param response response
+//     * @return boolean
+//     * @throws Exception boolean
+//     */
+//    @Override
+//    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+//        if (isLoginRequest(request, response)) {
+//            if (!isLoginSubmission(request, response)) {
+//                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//                httpServletResponse.setContentType("application/json;charset=UTF-8");
+//                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("message", "没有权限访问...");
+//                jsonObject.put("code", "401");
+//                jsonObject.put("data", "");
+//                Writer writer = httpServletResponse.getWriter();
+//                writer.write(jsonObject.toJSONString());
+//                writer.flush();
+//                writer.close();
+//            }else {
+//                return executeLogin(request, response);
+//            }
+//        }
+//        return false;
+//    }
 
 }

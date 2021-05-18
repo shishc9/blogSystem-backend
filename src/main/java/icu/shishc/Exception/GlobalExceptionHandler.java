@@ -22,9 +22,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseEntity<String> ExceptionHandler(HttpServletRequest httpServletRequest, Exception exception) {
+    public ResponseEntity ExceptionHandler(HttpServletRequest httpServletRequest, Exception exception) {
         log.error("GlobalExceptionHandler::ExceptionHandler=> e=\"{}\". Stack is :\n", exception.getMessage(),exception);
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("INTERNAL_SERVER_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(CustomException.class)
@@ -32,6 +32,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MyDTO> CustomExceptionHandler(HttpServletRequest httpServletRequest, CustomException customException) {
         MyDTO myDTO = MyDTO.wrongDTO(customException.getHttpStatus(), customException.getMessage());
         log.warn("GlobalExceptionHandler::CustomExceptionHandler=> e=\"{}\".Stack is:\n",customException.getMessage(),customException);
-        return new ResponseEntity<MyDTO>(myDTO, HttpStatus.OK);
+        return new ResponseEntity<>(myDTO, HttpStatus.OK);
     }
 }

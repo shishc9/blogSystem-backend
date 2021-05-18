@@ -1,6 +1,7 @@
 package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
+import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.User;
 import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.service.LoginService;
@@ -26,15 +27,16 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserService userService;
 
+
     @Override
     public boolean authLogin(String username, String password) throws CustomException {
         User user = userService.getUserByName(username);
         if(user == null) {
-            log.warn("【Service】LoginService::the user doesn't exists! username = {}", username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "the user doesn't exists!");
+            log.warn("【LoginService】authLogin::the user doesn't exists! username = {}", username);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
         } else if(!user.getPassword().equals(password)) {
-            log.warn("【Service】LoginService::pwd error! username = {}, pwd = {}", username, password);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "pwd error!");
+            log.warn("【LoginService】authLogin::pwd error! username = {}, pwd = {}", username, password);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
         }
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -57,30 +59,32 @@ public class LoginServiceImpl implements LoginService {
 //        return null;
 //    }
 
+
     @Override
     public boolean logout() throws CustomException{
         Subject currentUser = SecurityUtils.getSubject();
-        if(!currentUser.isAuthenticated()) {
-            log.warn("【Service】LoginService::logout, Not logged in, unable to log out");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "Not logged in, unable to log out");
-        }
+//        if(!currentUser.isAuthenticated()) {
+//            log.warn("【Service】LoginService::logout, Not logged in, unable to log out");
+//            throw new CustomException(HttpStatus.BAD_REQUEST, "Not logged in, unable to log out");
+//        }
 //        预留，处理没有登录但请求登出的情况
 //        if(currentUser == null) {
 //            log.warn("【Service】LoginService::logout, please log in first");
 //            throw new CustomException(HttpStatus.OK, "please log in first");
 //        }
         currentUser.logout();
-        log.info("【Service】LoginService::logout");
+        log.info("【LoginService】logout");
         return true;
     }
 
+
     @Override
     public User register(User user) throws CustomException {
-        log.info("【Service】LoginService::register");
-        if(user.getUserIdentity().equals(UserIdentity.BLOGGER)) {
-            log.warn("【Service】LoginService::register, you can't be BLOGGER");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "u can't be BLOGGER");
+        if(user.getUserIdentity().equals(UserIdentity.ADMIN)) {
+            log.warn("【LoginService】register, you can't be ADMIN");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "U_NOT_BE_ADMIN");
         }
+        log.info("【LoginService】register");
         return userService.insert(user);
     }
 }

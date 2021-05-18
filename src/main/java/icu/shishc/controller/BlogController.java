@@ -32,7 +32,6 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-
     /**
      * 获取博客广场
      * @param page page
@@ -115,10 +114,6 @@ public class BlogController {
             @PathVariable("status") int status
     ) throws CustomException {
         BlogStatus blogStatus = BlogStatus.ValueOf(status);
-        if(blogStatus == null) {
-            log.warn("【BlogController】getByStatus::bad status, status = {}", status);
-            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "");
-        }
         log.info("【BlogController】getByStatus::blogStatus = {}, userId = {}", blogStatus, userId);
         PageHelper.startPage(page, size);
         List<Blog> list = blogService.getBlogByStatus(blogStatus, userId);
