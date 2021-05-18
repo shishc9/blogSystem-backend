@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @date: 2021-5-8, 18:09
  * @author: ShiShc
+ * @DESC: 错误控制器
  */
-
 @RestController
 public class MyErrorController implements ErrorController {
 
@@ -20,26 +20,32 @@ public class MyErrorController implements ErrorController {
     public MyDTO handleError (HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         switch (statusCode) {
+            /* 400 */
             case 400: {
                 return return400();
             }
 
+            /* 401 */
             case 401: {
                 return return401();
             }
 
+            /* 403 */
             case 403: {
                 return return403();
             }
 
+            /* 404 */
             case 404: {
                 return return404();
             }
 
+            /* 500 */
             case 500: {
                 return return500();
             }
 
+            /* default */
             default:
                 return unKnown();
         }

@@ -1,6 +1,5 @@
 package icu.shishc.controller;
 
-import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.Blog;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test")
 public class MyTestController {
-
 
     @ApiOperation("返回一个字符串")
     @GetMapping("/returnString")
@@ -40,22 +38,13 @@ public class MyTestController {
     @ApiOperation("返回对象")
     @GetMapping("/testBlog")
     public Blog testBlog() {
-        Blog blog = new Blog();
-        return blog;
+        return new Blog();
     }
 
 
     @ApiOperation("返回一个404")
     @GetMapping("/test404")
-    public Blog test404() throws Exception {
-        throw new CustomException(HttpStatus.NOT_FOUND, "hello404");
+    public MyDTO test404() {
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "hello404");
     }
-
-
-    @ApiOperation("返回一个DTO")
-    @GetMapping("/test-mydto")
-    public MyDTO testMyDTO() {
-        return MyDTO.successDTO(new Blog());
-    }
-
 }
