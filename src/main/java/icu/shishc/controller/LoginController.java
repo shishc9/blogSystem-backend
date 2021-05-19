@@ -50,7 +50,7 @@ public class LoginController {
             log.info("【LoginController】Logout, successfully");
             return MyDTO.successDTO("LOGOUT_SUCCESS");
         }
-        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "LOGOUT_FAILED");
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
     }
 
 

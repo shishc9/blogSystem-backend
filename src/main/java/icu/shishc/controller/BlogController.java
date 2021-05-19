@@ -252,7 +252,7 @@ public class BlogController {
     ) throws CustomException {
         log.info("【Controller】Blog::delete：bid = {}", bid);
         Integer status = blogService.delete(bid);
-        return status == 1 ? MyDTO.successDTO("DELETE_SUCCESS") : MyDTO.successDTO("BAD_PARAM");
+        return MyDTO.successDTO(status);
     }
 
 }

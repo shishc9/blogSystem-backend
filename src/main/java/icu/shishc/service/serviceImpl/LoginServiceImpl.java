@@ -33,10 +33,10 @@ public class LoginServiceImpl implements LoginService {
         User user = userService.getUserByName(username);
         if(user == null) {
             log.warn("【LoginService】authLogin::the user doesn't exists! username = {}", username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         } else if(!user.getPassword().equals(password)) {
             log.warn("【LoginService】authLogin::pwd error! username = {}, pwd = {}", username, password);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -63,15 +63,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean logout() throws CustomException{
         Subject currentUser = SecurityUtils.getSubject();
-//        if(!currentUser.isAuthenticated()) {
-//            log.warn("【Service】LoginService::logout, Not logged in, unable to log out");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "Not logged in, unable to log out");
-//        }
-//        预留，处理没有登录但请求登出的情况
-//        if(currentUser == null) {
-//            log.warn("【Service】LoginService::logout, please log in first");
-//            throw new CustomException(HttpStatus.OK, "please log in first");
-//        }
         currentUser.logout();
         log.info("【LoginService】logout");
         return true;
@@ -82,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
     public User register(User user) throws CustomException {
         if(user.getUserIdentity().equals(UserIdentity.ADMIN)) {
             log.warn("【LoginService】register, you can't be ADMIN");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "U_NOT_BE_ADMIN");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【LoginService】register");
         return userService.insert(user);

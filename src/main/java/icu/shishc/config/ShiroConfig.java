@@ -5,6 +5,7 @@ import javax.servlet.Filter;
 import icu.shishc.filter.LoginFilter;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -19,40 +20,37 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    //@ConditionalOnClass(value = {LoginFilter.class, DefaultWebSecurityManager.class})
     @Bean
-    @ConditionalOnClass(value = {LoginFilter.class, DefaultWebSecurityManager.class})
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager, @Qualifier("loginFilter") LoginFilter loginFilter) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
 
-        //设置默认拦截器
-//        Map<String, Filter> filterMap = new LinkedHashMap<>();
-//        filterMap.put("loginFilter", loginFilter);
-//        shiroFilterFactoryBean.setFilters(filterMap);
-//
-//        // 设置拦截器
-//        // 注意拦截顺序
-//        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-//
-//        //one api in Application. default response.
-//        filterChainDefinitionMap.put("/", "anon");
-//
-//        // four Api in LoginController
-//        filterChainDefinitionMap.put("/login", "anon");
-//        filterChainDefinitionMap.put("/join", "anon");
-//        filterChainDefinitionMap.put("/noauth", "anon");
-//        filterChainDefinitionMap.put("/logout", "authc");
-//
-//        // one api in MyErrorController
-//        filterChainDefinitionMap.put("/error", "anon");
-//
-//        // one api in MyTestController
-//        filterChainDefinitionMap.put("/test/**", "anon");
-//
-//        // thirteen api in BlogController
-//        filterChainDefinitionMap.put("/blog/square", "anon");
-//        filterChainDefinitionMap.put("/blog/{title}", "perms[BLOGGER]");
+
+
+        // 设置拦截器
+        // 注意拦截顺序
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        //one api in Application. default response.
+        filterChainDefinitionMap.put("/", "anon");
+
+        // four Api in LoginController
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/join", "anon");
+        filterChainDefinitionMap.put("/noauth", "anon");
+        filterChainDefinitionMap.put("/logout", "authc");
+
+        // one api in MyErrorController
+        filterChainDefinitionMap.put("/error", "anon");
+
+        // one api in MyTestController
+        filterChainDefinitionMap.put("/test/**", "anon");
+
+        // thirteen api in BlogController
+        filterChainDefinitionMap.put("/blog/square", "anon");
+        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
 //        filterChainDefinitionMap.put("/blog/add/like", "authc");
 //        filterChainDefinitionMap.put("/blog/delete/like", "authc");
 //        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
@@ -64,9 +62,13 @@ public class ShiroConfig {
 //        //three api in CommentController
 //        filterChainDefinitionMap.put("/comment/get/**", "anon");
 //        filterChainDefinitionMap.put("/comment/add", "authc");
-//        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
-
+        //设置默认拦截器
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("authc", new LoginFilter());
+        filterMap.put("perms", new LoginFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
 
         return shiroFilterFactoryBean;
     }

@@ -57,15 +57,15 @@ public class MyErrorController implements ErrorController {
     }
 
     private MyDTO return400() {
-        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "Bad request");
+        return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
     }
 
     private MyDTO return401() {
-        return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED");
     }
 
     private MyDTO return404() {
-        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "Not Found");
+        return MyDTO.wrongDTO(HttpStatus.NOT_FOUND, "NOT_FOUND");
     }
 
     private MyDTO return403() {
@@ -77,7 +77,7 @@ public class MyErrorController implements ErrorController {
     }
 
     private MyDTO unKnown() {
-        return MyDTO.successDTO("Unknown");
+        return MyDTO.successDTO("UNKNOWN");
     }
 
 }

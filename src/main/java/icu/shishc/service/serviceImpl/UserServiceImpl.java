@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long userId) throws CustomException {
         if(!checkUserId(userId)) {
             log.warn("【UserService】getUserById::bad userid, userid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_ENTITY");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【UserService】getUserById::return user");
         return userMapper.getUserById(userId);
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByName(String username) throws CustomException {
         if("".equals(username.trim())) {
             log.warn("【UserService】getUserByName::bad username, username = {}", username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USERNAME");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【UserService】getUserByName::return user");
         return userMapper.getUserByName(username);
@@ -48,13 +48,13 @@ public class UserServiceImpl implements UserService {
     public User insert(User user) throws CustomException {
         if(!userCheck(user)) {
             log.warn("【UserService】insert::bad user entity");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USER_ENTITY");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         String username = user.getUsername();
         User user1 = userMapper.getUserByName(username);
         if(user1 != null) {
             log.warn("【UserService】insert::the user has exist, username = {}", username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_EXIST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         userMapper.insert(username, user.getPassword(), user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getEmail());
         User user2 = userMapper.getUserByName(user.getUsername());
@@ -67,12 +67,12 @@ public class UserServiceImpl implements UserService {
     public Integer delete(Long userId) throws CustomException {
         if(!checkUserId(userId)) {
             log.warn("【UserService】delete::bad userid, userid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_UID");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         User user = userMapper.getUserById(userId);
         if(null == user) {
             log.warn("【UserService】delete::the user doesn't exist, uid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         int flag = userMapper.delete(userId);
         if(flag == 1) {
@@ -88,13 +88,13 @@ public class UserServiceImpl implements UserService {
     public User update(User user) throws CustomException {
         if(!userCheck(user)) {
             log.warn("【UserService】update::bad user entity");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_USER_ENTITY");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         Long userId = user.getUserId();
         User user1 = userMapper.getUserById(userId);
         if(null == user1) {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
