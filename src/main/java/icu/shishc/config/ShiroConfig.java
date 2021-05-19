@@ -5,9 +5,7 @@ import javax.servlet.Filter;
 import icu.shishc.filter.LoginFilter;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,7 +18,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    //@ConditionalOnClass(value = {LoginFilter.class, DefaultWebSecurityManager.class})
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -49,15 +46,18 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/test/**", "anon");
 
         // thirteen api in BlogController
-        filterChainDefinitionMap.put("/blog/square", "anon");
-        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
+        filterChainDefinitionMap.put("/blogs/square", "anon");
+        filterChainDefinitionMap.put("/blogs/u/**", "anon");
+        filterChainDefinitionMap.put("/blogs/blog", "authc");
+        filterChainDefinitionMap.put("/blogs/**", "anon");
+
 //        filterChainDefinitionMap.put("/blog/add/like", "authc");
 //        filterChainDefinitionMap.put("/blog/delete/like", "authc");
 //        filterChainDefinitionMap.put("/blog/**", "perms[BLOGGER]");
 //
-//        //three api in UserController
-//        filterChainDefinitionMap.put("/user/get/**", "anon");
-//        filterChainDefinitionMap.put("/user/**", "authc");
+        //three api in UserController
+        filterChainDefinitionMap.put("/users/user", "perms[ADMIN]");
+        filterChainDefinitionMap.put("/user/**", "anon");
 //
 //        //three api in CommentController
 //        filterChainDefinitionMap.put("/comment/get/**", "anon");
@@ -67,7 +67,6 @@ public class ShiroConfig {
         //设置默认拦截器
         Map<String, Filter> filterMap = new LinkedHashMap<>();
         filterMap.put("authc", new LoginFilter());
-        filterMap.put("perms", new LoginFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
 
         return shiroFilterFactoryBean;
@@ -84,12 +83,6 @@ public class ShiroConfig {
         securityManager.setRealm(userRealm);
         return securityManager;
     }
-
-    @Bean(name = "loginFilter")
-    public LoginFilter loginFilter() {
-        return new LoginFilter();
-    }
-
 
     /**
      * 注入自定义身份认证

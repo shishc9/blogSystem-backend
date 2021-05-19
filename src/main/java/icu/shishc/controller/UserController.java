@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     /**
@@ -67,7 +67,7 @@ public class UserController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
     public MyDTO update(@RequestBody User user) throws CustomException {
         log.info("【UserController】update:: before update, user = {}", user.toString());
         User user1 = userService.update(user);
@@ -82,7 +82,7 @@ public class UserController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user", method = RequestMethod.DELETE)
     public MyDTO delete(@RequestParam("uid") String uid) throws CustomException {
         long param = Long.parseLong(uid);
         Integer status = userService.delete(param);

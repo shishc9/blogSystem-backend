@@ -21,22 +21,22 @@ import java.io.IOException;
 public class LoginFilter extends FormAuthenticationFilter {
 
 
-    /**
-     * 判断是否登录。 在登录的情况下会执行这个方法，此方法返回true直接访问控制器. 如果isAccessAllowed返回false 则执行onAccessDenied
-     * @param request request
-     * @param response response
-     * @param mappedValue mappedValue
-     * @return boolean
-     */
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (request instanceof HttpServletRequest) {
-            if ("OPTIONS".equals(((HttpServletRequest) request).getMethod().toUpperCase())) {
-                return true;
-            }
-        }
-        return super.isAccessAllowed(request, response, mappedValue);
-    }
+//    /**
+//     * 判断是否登录。 在登录的情况下会执行这个方法，此方法返回true直接访问控制器. 如果isAccessAllowed返回false 则执行onAccessDenied
+//     * @param request request
+//     * @param response response
+//     * @param mappedValue mappedValue
+//     * @return boolean
+//     */
+//    @Override
+//    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+//        if (request instanceof HttpServletRequest) {
+//            if ("OPTIONS".equals(((HttpServletRequest) request).getMethod().toUpperCase())) {
+//                return true;
+//            }
+//        }
+//        return super.isAccessAllowed(request, response, mappedValue);
+//    }
 
 
     /**

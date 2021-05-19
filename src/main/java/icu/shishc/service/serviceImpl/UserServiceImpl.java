@@ -69,18 +69,8 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】delete::bad userid, userid = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        User user = userMapper.getUserById(userId);
-        if(null == user) {
-            log.warn("【UserService】delete::the user doesn't exist, uid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
-        int flag = userMapper.delete(userId);
-        if(flag == 1) {
-            log.info("【UserService】delete::delete user successfully! userId = {}", userId);
-        } else {
-            log.info("【UserService】delete::delete user failed! userId = {}", userId);
-        }
-        return flag;
+        log.info("【UserService】delete::delete user, userId = {}", userId);
+        return userMapper.delete(userId);
     }
 
 

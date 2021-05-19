@@ -10,7 +10,6 @@ import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.service.BlogService;
 import icu.shishc.util.PagerUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/blogs")
 public class BlogController {
 
     private final BlogService blogService;
@@ -215,7 +214,7 @@ public class BlogController {
      * @param blog 博客实体
      * @return MyDTO
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/blog", method = RequestMethod.POST)
     public MyDTO insertBlog(
             @RequestBody Blog blog
     ) throws CustomException {
@@ -230,7 +229,7 @@ public class BlogController {
      * @param blog 博客实体
      * @return MyDTO
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/blog", method = RequestMethod.PUT)
     public MyDTO updateBlog(
         @RequestBody Blog blog
     ) throws CustomException {
@@ -246,7 +245,7 @@ public class BlogController {
      * @param bid 博客id
      * @return MyDTO
      */
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/blog", method = RequestMethod.DELETE)
     public MyDTO deleteBlog(
             @RequestParam("bid") Long bid
     ) throws CustomException {

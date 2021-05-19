@@ -41,6 +41,7 @@ public class UserRealm extends AuthorizingRealm {
         String role = user.getUserIdentity().toString();
         log.info("【UserRealm】doGetAuthorization:身份授权, 当前用户name = {}, 身份role = {}", user.getUsername(), role);
         // 将BlOGGER / ADMIN 进行授权
+//        info.addRole(role);
         info.addStringPermission(role);
         log.info("【UserRealm】doGetAuthorization:身份授权, user[{}]授权完成, 身份是{}", user.getUsername(), user.getUserIdentity().toString());
         return info;
