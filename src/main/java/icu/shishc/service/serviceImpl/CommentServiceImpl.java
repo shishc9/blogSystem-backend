@@ -22,15 +22,46 @@ import java.util.List;
 @Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
+
+
+    @Autowired
+    CommentMapper commentMapper;
+    @Autowired
+    BlogService blogService;
+
+    private List<Comment> tempComments = new ArrayList<>();
+
     @Override
     public List<Comment> findCommentsByBlogId(Long bid) throws CustomException {
+        if(!blogService.checkBid(bid)) {
+            log.warn("【CommentService】findCommentsByBlogId::bad bid, bid = {}", bid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
+        List<Comment> firstComments = commentMapper.findFirstComments(bid, Long.parseLong("0"));
+        for(Comment comment : firstComments) {
+            Long commentId = comment.getCommentId();
+            String parentUsername = comment.getParentUsername();
+            List<Comment> secondComments = commentMapper.findByParentIdNotNull(commentId);
+
+        }
         return null;
     }
 
+
+    private void combineChildren(List<Comment> childComments, String parentUsername) {
+        if(childComments.size() > 0) {
+            for(Comment comment :childComments) {
+                String tempParentUsername = comment.getParentUsername();
+                comment.setParentUsername(parentUsername);
+            }
+        }
+    }
+
     @Override
-    public int saveComment(Comment comment, Long bid) throws CustomException {
+    public int saveComment(Comment comment) throws CustomException {
         return 0;
     }
+
 
     @Override
     public Comment getCommentById(Long commentId) {

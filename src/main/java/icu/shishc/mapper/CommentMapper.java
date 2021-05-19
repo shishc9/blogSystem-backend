@@ -17,11 +17,11 @@ public interface CommentMapper {
 
     /**
      *  保存评论
-     * @param bid
-     * @param username
-     * @param content
-     * @param pid
-     * @return
+     * @param bid 所属博客id
+     * @param username 评论者用户名
+     * @param content 评论内容
+     * @param pid 父评论id
+     * @return int
      */
     int saveComment(@Param("bid") Long bid,
                     @Param("username") String username,
@@ -31,41 +31,42 @@ public interface CommentMapper {
 
 
     /**
-     * 查询父级评论
-     * @param parentId
+     * 查询某博客父级评论
+     * @param bid 博客id
+     * @param parentId 父评论id
      * @return
      */
-    List<Comment> findCommentByParentIdNull(@Param("parentId") Long parentId);
+    List<Comment> findFirstComments(@Param("bid")Long bid, @Param("parentId") Long parentId);
 
 
     /**
      * 查询父级留言
-     * @param parentId
-     * @return
+     * @param parentId 父评论id
+     * @return list
      */
     List<Comment> findMessageByParentIdNull(@Param("parentId") Long parentId);
 
 
     /**
      * 查询一级回复
-     * @param id
-     * @return
+     * @param id 评论id
+     * @return list
      */
     List<Comment> findByParentIdNotNull(@Param("id") Long id);
 
 
     /**
      * 查询二级以及所有子集回复
-     * @param childId
-     * @return
+     * @param childId 子评论id
+     * @return list
      */
     List<Comment> findByReplyId(@Param("childId") Long childId);
 
 
     /**
      * 通过id查找评论
-     * @param commentId
-     * @return
+     * @param commentId 评论id
+     * @return 评论实体
      */
     Comment findCommentById(@Param("commentId")Long commentId);
 }

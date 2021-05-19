@@ -23,7 +23,6 @@ public class Comment {
     private Date gmtCreate;
     private Long parentCommentId;
 
-
     // reply comment
     private List<Comment> replyComments = new ArrayList<>();
     private Comment parentComment;

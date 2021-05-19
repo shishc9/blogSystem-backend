@@ -18,9 +18,9 @@
     </insert>
 
 
-    <select id="findCommentByParentIdNull" resultMap="BaseResultMap">
+    <select id="findFirstComments" resultMap="BaseResultMap">
         SELECT * FROM comment c
-            WHERE blog_id != 0 AND parent_comment_id = ${parentId}
+            WHERE blog_id = ${bid} AND parent_comment_id = ${parentId}
             ORDER BY c.gmt_create DESC
     </select>
 
