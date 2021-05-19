@@ -1,13 +1,18 @@
 package icu.shishc.service.serviceImpl;
 
 import icu.shishc.Exception.CustomException;
+import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
+import icu.shishc.enumeration.UserIdentity;
+import icu.shishc.mapper.PermsMapper;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @PackageName:icu.shishc.service.serviceImpl
@@ -20,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    PermsMapper permsMapper;
 
 
     @Override
@@ -121,5 +128,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         return true;
+    }
+
+
+    @Override
+    public List<Perms> getUserPerms(UserIdentity identity) {
+        return permsMapper.getUserPerms(identity.getKey());
     }
 }

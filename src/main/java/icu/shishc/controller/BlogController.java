@@ -253,5 +253,4 @@ public class BlogController {
         Integer status = blogService.delete(bid);
         return MyDTO.successDTO(status);
     }
-
 }

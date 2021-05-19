@@ -59,3 +59,21 @@ INSERT INTO message(user_id, username, content, gmt_create, parent_comment_id)
     VALUES(3, 'C', 'reply B leave message', NOW(), 50002);
 
 
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'BLOG', 'UPDATE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'BLOG', 'DELETE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'BLOG', 'INSERT');
+INSERT INTO perms(user_identity, entity, perm)
+VALUES(1, 'BLOG', 'DELETE');
+
+
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'USER', 'UPDATE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'USER', 'DELETE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(1, 'USER', 'UPDATE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(1, 'USER', 'DELETE');

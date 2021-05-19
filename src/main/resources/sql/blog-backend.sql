@@ -80,3 +80,13 @@ CREATE TABLE blike (
 ALTER TABLE blike ADD UNIQUE KEY (blog_id, user_id);
 
 
+DROP TABLE IF EXISTS perms;
+CREATE TABLE perms (
+    user_identity TINYINT UNSIGNED DEFAULT 0 COMMENT '是不是博主',
+    entity VARCHAR(10),
+    perm VARCHAR(10)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4;
+
+
+
+

@@ -1,7 +1,11 @@
 package icu.shishc.service;
 
 import icu.shishc.Exception.CustomException;
+import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
+import icu.shishc.enumeration.UserIdentity;
+
+import java.util.List;
 
 /**
  * @author ShiShc
@@ -83,5 +87,13 @@ public interface UserService{
      * @return T/F
      */
     Boolean checkUserId(Long userId);
+
+
+    /**
+     * 获取用户所有权限
+     * @param identity identity
+     * @return list
+     */
+    List<Perms> getUserPerms(UserIdentity identity);
 
 }

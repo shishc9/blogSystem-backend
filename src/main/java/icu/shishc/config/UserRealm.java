@@ -1,6 +1,7 @@
 package icu.shishc.config;
 
 import icu.shishc.Exception.CustomException;
+import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.SneakyThrows;
@@ -14,6 +15,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 
 /**
  * @author Closer
@@ -24,7 +27,6 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
 
     /**
      * 权限认证
@@ -38,11 +40,12 @@ public class UserRealm extends AuthorizingRealm {
         // 获取当前用户
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         // 将BLOGGER / ADMIN 保存为字符串
-        String role = user.getUserIdentity().toString();
-        log.info("【UserRealm】doGetAuthorization:身份授权, 当前用户name = {}, 身份role = {}", user.getUsername(), role);
+        List<Perms> list = userService.getUserPerms(user.getUserIdentity());
         // 将BlOGGER / ADMIN 进行授权
-//        info.addRole(role);
-        info.addStringPermission(role);
+        for(Perms perm:list) {
+            info.addStringPermission(perm.getEntity().toUpperCase() + ":" + perm.getPerm().toUpperCase());
+        }
+        System.out.println(info.getStringPermissions());
         log.info("【UserRealm】doGetAuthorization:身份授权, user[{}]授权完成, 身份是{}", user.getUsername(), user.getUserIdentity().toString());
         return info;
     }

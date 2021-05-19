@@ -29,12 +29,6 @@ public class MyTestController {
     }
 
 
-    @PostMapping("/testBody")
-    public void hello2(@RequestBody String s) {
-        System.out.println(s);
-    }
-
-
     @ApiOperation("返回对象")
     @GetMapping("/testBlog")
     public Blog testBlog() {
