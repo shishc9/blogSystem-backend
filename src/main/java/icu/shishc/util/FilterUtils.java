@@ -22,7 +22,7 @@ public class FilterUtils {
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        MyDTO myDTO = new MyDTO(httpStatus, httpStatus.toString(), null);
+        MyDTO myDTO = new MyDTO(httpStatus, httpStatus.getReasonPhrase(), null);
         httpServletResponse.getWriter().write(JSONObject.toJSON(myDTO).toString());
     }
 }

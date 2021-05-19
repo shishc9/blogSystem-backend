@@ -46,7 +46,7 @@ public class ShiroConfig {
         // thirteen api in BlogController
         filterChainDefinitionMap.put("/blogs/square", "anon");
         filterChainDefinitionMap.put("/blogs/u/**", "anon");
-        filterChainDefinitionMap.put("/blogs/blog", "authc, rest[BLOG]");
+        filterChainDefinitionMap.put("/blogs/blog", "rest[BLOG]");
         filterChainDefinitionMap.put("/blogs/**", "anon");
 
         //three api in UserController

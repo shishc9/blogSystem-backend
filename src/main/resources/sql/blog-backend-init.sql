@@ -66,7 +66,7 @@ INSERT INTO perms(user_identity, entity, perm)
 INSERT INTO perms(user_identity, entity, perm)
     VALUES(0, 'BLOG', 'INSERT');
 INSERT INTO perms(user_identity, entity, perm)
-VALUES(1, 'BLOG', 'DELETE');
+    VALUES(1, 'BLOG', 'DELETE');
 
 
 INSERT INTO perms(user_identity, entity, perm)

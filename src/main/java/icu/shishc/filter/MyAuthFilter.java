@@ -14,7 +14,6 @@ import java.io.IOException;
  * @author: ShiShc
  * 覆盖自带过滤器，让未登录的行为统一返回401.
  */
-
 public class MyAuthFilter extends FormAuthenticationFilter {
 
 
@@ -28,7 +27,7 @@ public class MyAuthFilter extends FormAuthenticationFilter {
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        System.out.println("MyAuthFilter");
+        System.out.println("这里是未登录且请求了授权资源的认证处~：MyAuthFilter");
         FilterUtils.onAccessDenied(request, response, HttpStatus.FORBIDDEN);
         return false;
     }
