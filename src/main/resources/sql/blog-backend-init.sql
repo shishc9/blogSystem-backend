@@ -47,9 +47,14 @@ INSERT INTO comment(blog_id, username, content, parent_comment_id)
     VALUES('30000', 'D', 'first comment', 0);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
     VALUES('30000', 'D', 'second comment', 0);
-
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
     VALUES('30000', 'A', 'reply D', 50001);
+INSERT INTO comment(blog_id, username, content, parent_comment_id)
+    VALUES('30000', 'A', 'reply D', 50001);
+INSERT INTO comment(blog_id, username, content, parent_comment_id)
+    VALUES('30000', 'A', 'reply D', 50003);
+INSERT INTO comment(blog_id, username, content, parent_comment_id)
+    VALUES('30000', 'A', 'reply D', 50004);
 
 INSERT INTO message(user_id, username, content, gmt_create, parent_comment_id)
     VALUES(3, 'B', 'leave message1', NOW(), 0);
