@@ -28,6 +28,15 @@
         where blog_id = ${blog_id}
     </update>
 
+    <update id="addALike" parameterType="java.lang.Long">
+        UPDATE blog SET like_num = like_num + 1;
+    </update>
+
+    <update id="cancelALike" parameterType="java.lang.Long">
+        UPDATE blog SET like_num = like_num - 1;
+    </update>
+
+
     <delete id="delete">
         DELETE FROM blog WHERE blog_id = ${bid}
     </delete>

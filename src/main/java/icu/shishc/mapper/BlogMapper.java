@@ -111,31 +111,19 @@ public interface BlogMapper {
                                @Param("userId") Long userId);
 
 
-//    /**
-//     * 获取所有点赞
-//     * @return
-//     */
-//    Integer getAllLike();
-//
-//
-//    /**
-//     * 所有阅读量
-//     * @return
-//     */
-//    Integer getAllReadNum();
-//
-//    /**
-//     * 点赞
-//     * @param bid
-//     * @return
-//     */
-//    Integer addLike(@Param("bid") Long bid);
-//
-//
-//    /**
-//     * 取消点赞
-//     * @param bid
-//     * @return
-//     */
-//    Integer cancelLike(@Param("bid") Long bid);
+    /**
+     * 点赞
+     * @param bid 博客id
+     * @return 受影响的行
+     */
+    int addALike(@Param("bid")Long bid);
+
+
+    /**
+     * 取消点赞
+     * @param bid 博客id
+     * @return 受影响的行
+     */
+    int cancelALike(@Param("bid")Long bid);
+
 }

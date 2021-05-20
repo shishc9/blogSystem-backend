@@ -1,5 +1,6 @@
 package icu.shishc.controller;
 
+import icu.shishc.Exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.service.LikeService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +26,13 @@ public class LikeController {
     }
 
     @RequestMapping(value = "/like", method = RequestMethod.POST)
-    public MyDTO addLike(@RequestParam Long bid, @RequestParam Long uid) {
+    public MyDTO addLike(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
         log.info("【LikeController】addLike");
         return MyDTO.successDTO(likeService.addLike(bid, uid));
     }
 
     @RequestMapping(value = "/like", method = RequestMethod.DELETE)
-    public MyDTO cancelLike(@RequestParam Long bid, @RequestParam Long uid){
+    public MyDTO cancelLike(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
         log.info("【LikeController】cancelLike");
         return MyDTO.successDTO(likeService.cancelLike(bid, uid));
     }
