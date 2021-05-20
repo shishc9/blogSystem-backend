@@ -116,18 +116,6 @@ public class CommentServiceImpl implements CommentService {
 
 
     /**
-     * 通过评论id查找评论
-     * @param commentId 评论id
-     * @return
-     */
-    @Override
-    public Comment getCommentById(Long commentId) {
-        log.info("【CommentService】getCommentById, commentId = {}",commentId);
-        return commentMapper.findCommentById(commentId);
-    }
-
-
-    /**
      * 检查评论实体：
      * @param comment 评论实体
      * @return T / F

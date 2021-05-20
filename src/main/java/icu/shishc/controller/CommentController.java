@@ -23,23 +23,17 @@ public class CommentController {
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
 
-//    @GetMapping("/get/message")
-//    public MyDTO getLeaveMessage()
-//            throws CustomException {
-//        return MyDTO.successDTO(commentService.listMessage());
-//    }
-
-
-    @GetMapping("/get/by-id")
-    public MyDTO getCommentByBid(@RequestParam("bid") Long bid)
+    @GetMapping("/{bid}")
+    public MyDTO getCommentByBid(@PathVariable("bid") Long bid)
             throws CustomException {
         return MyDTO.successDTO(commentService.findCommentsByBlogId(bid));
     }
 
 
-//    @PostMapping("/add")
-//    public MyDTO saveComment(@RequestBody Comment comment)
-//            throws CustomException {
-//        return MyDTO.successDTO(commentService.saveComment(comment));
-//    }
+    @PostMapping("/comment")
+    public MyDTO saveComment(@RequestBody Comment comment)
+            throws CustomException {
+        log.info("【CommentController】saveComment");
+        return MyDTO.successDTO(commentService.saveComment(comment));
+    }
 }
