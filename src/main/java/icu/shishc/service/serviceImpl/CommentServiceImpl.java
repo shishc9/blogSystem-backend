@@ -23,14 +23,22 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-
     @Autowired
     CommentMapper commentMapper;
     @Autowired
     BlogService blogService;
+    @Autowired
+    UserService userService;
 
     private List<Comment> tempComments = new ArrayList<>();
 
+
+    /**
+     * 找出一篇博客的所有一级评论
+     * @param bid 博客id
+     * @return list
+     * @throws CustomException CustomException
+     */
     @Override
     public List<Comment> findCommentsByBlogId(Long bid) throws CustomException {
         if(!blogService.checkBid(bid)) {
@@ -42,188 +50,103 @@ public class CommentServiceImpl implements CommentService {
             Long commentId = comment.getCommentId();
             String parentUsername = comment.getParentUsername();
             List<Comment> secondComments = commentMapper.findByParentIdNotNull(commentId);
-
+            combineChildren(secondComments, parentUsername);
+            comment.setReplyComments(tempComments);
+            tempComments = new ArrayList<>();
         }
-        return null;
+        return firstComments;
     }
 
 
+    /**
+     * 将二级评论和父评论拼接起来
+     * @param childComments 二级评论
+     * @param parentUsername 父评论者用户名
+     */
     private void combineChildren(List<Comment> childComments, String parentUsername) {
         if(childComments.size() > 0) {
             for(Comment comment :childComments) {
                 String tempParentUsername = comment.getParentUsername();
                 comment.setParentUsername(parentUsername);
+                tempComments.add(comment);
+                Long secondCommentId = comment.getCommentId();
+                recursively(secondCommentId, tempParentUsername);
             }
         }
     }
 
+
+    /**
+     * 将二级评论和所有子评论连接起来
+     * @param secondCommentId 二级评论Id
+     * @param parentUsername 二级评论者的用户名
+     */
+    private void recursively(Long secondCommentId, String parentUsername) {
+        List<Comment> replyComments = commentMapper.findByReplyId(secondCommentId);
+        if(replyComments.size() > 0) {
+            for(Comment comment : replyComments) {
+                String tempParentUsername = comment.getParentUsername();
+                comment.setParentUsername(parentUsername);
+                Long replyId = comment.getCommentId();
+                tempComments.add(comment);
+                recursively(replyId, tempParentUsername);
+            }
+        }
+    }
+
+
+    /**
+     * 保存评论
+     * @param comment 评论实体
+     * @return int
+     * @throws CustomException .
+     */
     @Override
     public int saveComment(Comment comment) throws CustomException {
-        return 0;
+        if(!commentCheck(comment)) {
+            log.warn("【CommentService】saveComment::bad comment entity");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
+        log.info("【CommentService】saveComment::saveComment");
+        return commentMapper.saveComment(comment.getBlogId(),
+                comment.getUsername(),
+                comment.getContent(),
+                comment.getParentCommentId());
     }
 
 
+    /**
+     * 通过评论id查找评论
+     * @param commentId 评论id
+     * @return
+     */
     @Override
     public Comment getCommentById(Long commentId) {
-        return null;
+        log.info("【CommentService】getCommentById, commentId = {}",commentId);
+        return commentMapper.findCommentById(commentId);
     }
 
-//
-//    @Autowired
-//    CommentMapper commentMapper;
-//    @Autowired
-//    UserService userService;
-//    @Autowired
-//    BlogService blogService;
-//
-//    private List<Comment> tempRelies = new ArrayList<>();
-//
-//    /**
-//     * 通过博客id列出所有评论
-//     * @param bid
-//     * @return
-//     */
-//    @Override
-//    public List<Comment> findCommentsByBlogId(Long bid) throws CustomException {
-//        if(bid <= 0) {
-//            log.warn("【Service】CommentService::findCommentsByBlogId:Illegal param, bid = {}", bid);
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "bad param");
-//        }
-//        // 查找评论
-//        List<Comment> comments = commentMapper.findCommentByParentIdNull((long) 0);
-//        for(Comment comment : comments) {
-//            Long id = comment.getCommentId();
-//            String parentUsername = comment.getParentUsername();
-//            List<Comment> childComments = commentMapper.findByParentIdNotNull(id);
-//            combineChildren(childComments, parentUsername);
-//            comment.setReplyComments(tempRelies);
-//            // 这里找到了一个评论/留言极其所有子属性，讲tempRelies清零
-//            tempRelies = new ArrayList<>();
-//        }
-//        log.info("【Service】CommentService::findComentsByBlogId::return comments");
-//        return comments;
-//    }
-//
-//
-//    /**
-//     * 列出所有评论
-//     * ps: 把这个当做留言来做，所以comment.blogId = 0; 如果是非零的话就说明是博客的评论，因为博客的id是从1000开始自增的。
-//     * @return
-//     */
-//    @Override
-//    public List<Comment> listMessage() {
-//        // 查找留言
-//        List<Comment> comments = commentMapper.findMessageByParentIdNull((long) 0);
-//        for(Comment comment : comments) {
-//            Long id = comment.getCommentId();
-//            String parentUsername = comment.getParentUsername();
-//            List<Comment> childComments = commentMapper.findByParentIdNotNull(id);
-//            combineChildren(childComments, parentUsername);
-//            comment.setReplyComments(tempRelies);
-//            // 这里找到了一个评论/留言极其所有子属性，讲tempRelies清零
-//            tempRelies = new ArrayList<>();
-//        }
-//        log.info("【Service】CommentService::listMessage, return leave message");
-//        return comments;
-//    }
-//
-//
-//    /**
-//     * 查询出子评论/子留言
-//     * @param childComments
-//     * @param parentUsername1
-//     */
-//    private void combineChildren(List<Comment> childComments, String parentUsername1) {
-//        if(childComments.size() > 0) {
-//            for(Comment childComment : childComments) {
-//                String parentUsername = childComment.getParentUsername();
-//                childComment.setParentUsername(parentUsername1);
-//                tempRelies.add(childComment);
-//                Long childId = childComment.getCommentId();
-//                recursively(childId, parentUsername);
-//            }
-//        }
-//    }
-//
-//
-//    /**
-//     * 迭代找出子集回复
-//     * @param childId
-//     * @param parentUsername1
-//     */
-//    private void recursively(Long childId, String parentUsername1) {
-//        List<Comment> replyComments = commentMapper.findByReplyId(childId);
-//        if(replyComments.size() > 0) {
-//            for(Comment comment : replyComments) {
-//                String parentUsername = comment.getParentUsername();
-//                comment.setParentUsername(parentUsername1);
-//                Long replyId = comment.getCommentId();
-//                tempRelies.add(comment);
-//                recursively(replyId, parentUsername);
-//            }
-//        }
-//
-//    }
-//
-//
-//    /**
-//     * 保存评论
-//     * @param comment
-//     * @return
-//     */
-//    @Override
-//    public int saveComment(Comment comment) throws CustomException{
-//        if(!commentCheck(comment)) {
-//            log.warn("【Service】CommentService::comment entity check, bad entity");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "bad comment entity");
-//        }
-//        log.info("【Service】CommentService::saveComment");
-//        return commentMapper.saveComment(comment.getBlogId(),
-//                comment.getUsername(),
-//                comment.getContent(), comment.getParentCommentId()
-//        );
-//    }
-//
-//    @Override
-//    public Comment getCommentById(Long commentId) {
-//        return commentMapper.findCommentById(commentId);
-//    }
-//
-//
-//    /**
-//     * 评论实体检查
-//     * 1. 对blogId合法性进行检查
-//     * 2. 如果不是0，则检查该博客是否存在
-//     * 3. 对username进行检查
-//     * 4. 邮箱合法性检验
-//     * 5. 内容不为空检查
-//     * 6. 对父评论id进行检查
-//     * @param comment
-//     * @return
-//     */
-//    private boolean commentCheck(Comment comment) throws CustomException {
-//        Long blogId = comment.getBlogId();
-//        String username = comment.getUsername();
-//        String content = comment.getContent();
-//        Long parentCommentId = comment.getParentCommentId();
-//        if(blogId < 0 || "".equals(username.trim())
-//            || "".equals(content.trim()) || parentCommentId < 0) {
-//            log.warn("【Service】CommentService::commentCheck, bad param");
-//            return false;
-//        }
-//        if(blogId != 0 && blogService.getBlogByBID(blogId) == null) {
-//            log.warn("【Service】CommentService::commentCheck, bad bid");
-//            return false;
-//        }
-//        if(userService.getUserByName(username) == null) {
-//            log.warn("【Service】CommentService::commentCheck, bad username");
-//            return false;
-//        }
-//        if(parentCommentId != 0 && getCommentById(parentCommentId) == null) {
-//            log.warn("【Service】CommentService::commentCheck, bad parentCommentId");
-//            return false;
-//        }
-//        log.info("【Service】CommentService::commentCheck, good entity");
-//        return true;
-//    }
+
+    /**
+     * 检查评论实体：
+     * @param comment 评论实体
+     * @return T / F
+     * @throws CustomException .
+     */
+    private boolean commentCheck(Comment comment) throws CustomException {
+        if(blogService.getBlogByBID(comment.getBlogId()) == null) {
+            return false;
+        }
+        if(userService.getUserByName(comment.getUsername()) == null) {
+            return false;
+        }
+        if("".equals(comment.getContent().trim())) {
+            return false;
+        }
+        if(commentMapper.findCommentById(comment.getParentCommentId()) == null) {
+            return false;
+        }
+        log.info("【CommentService】commentCheck::good entity");
+        return true;
+    }
 }

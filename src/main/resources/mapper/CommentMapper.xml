@@ -25,13 +25,6 @@
     </select>
 
 
-    <select id="findMessageByParentIdNull" resultMap="BaseResultMap">
-        SELECT * FROM comment c
-            WHERE blog_id = 0 AND parent_comment_id = ${parentId}
-            ORDER BY c.gmt_create DESC
-    </select>
-
-
     <select id="findByParentIdNotNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM comment c
             WHERE parent_comment_id = ${id}

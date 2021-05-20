@@ -40,14 +40,6 @@ public interface CommentMapper {
 
 
     /**
-     * 查询父级留言
-     * @param parentId 父评论id
-     * @return list
-     */
-    List<Comment> findMessageByParentIdNull(@Param("parentId") Long parentId);
-
-
-    /**
      * 查询一级回复
      * @param id 评论id
      * @return list
