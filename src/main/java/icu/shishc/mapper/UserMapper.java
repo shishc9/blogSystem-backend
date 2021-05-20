@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Closer
  */
@@ -15,16 +17,16 @@ public interface UserMapper {
 
     /**
      * 通过id查找用户
-     * @param userId
-     * @return
+     * @param userId 用户id
+     * @return user
      */
     User getUserById(@Param("userId") Long userId);
 
 
     /**
      * 用户名查找
-     * @param username
-     * @return
+     * @param username username
+     * @return user
      */
     User getUserByName(@Param("username") String username);
 
@@ -38,14 +40,20 @@ public interface UserMapper {
 
 
     /**
+     * 获取除管理员外的所有用户
+     * @return list
+     */
+    List<User> getAllUsers();
+
+    /**
      * 新增
-     * @param username
-     * @param password
-     * @param identity
-     * @param age
-     * @param gender
-     * @param email
-     * @return
+     * @param username 用户名
+     * @param password 密码
+     * @param identity 身份
+     * @param age 年龄
+     * @param gender 性别
+     * @param email 邮件
+     * @return int
      */
     Integer insert(@Param("username") String username,
                    @Param("password") String password,
@@ -58,18 +66,19 @@ public interface UserMapper {
 
     /**
      * 删除用户
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return int
      */
     Integer delete(@Param("id") Long id);
 
 
     /**
-     * 更新
-     * @param username username
-     * @param age age
-     * @param gender gender
-     * @param email email
+     * 更新用户基本信息（除了密码）
+     * @param userId 用户id
+     * @param username 用户名
+     * @param age 年龄
+     * @param gender 性别
+     * @param email 邮件
      * @return int
      */
     Integer update(@Param("userId") Long userId,
@@ -77,6 +86,7 @@ public interface UserMapper {
                    @Param("age") int age,
                    @Param("gender") String gender,
                    @Param("email") String email);
+
 
     /**
      * 修改密码

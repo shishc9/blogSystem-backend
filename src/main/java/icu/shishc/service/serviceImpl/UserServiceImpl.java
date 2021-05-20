@@ -32,7 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        List<User> list = userMapper.getAllUsers();
+        log.info("【UserService】getAllUsers");
+        return list;
     }
 
 
@@ -116,10 +118,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void updatePassword(Long userId, String password) {
+    public boolean updatePassword(String oldPassword, Long userId, String newPassword) throws CustomException{
         log.info("【UserService】updatePwd::update");
-        String pwd = MD5Utils.toMd5(password, "shishc", 10);
-        userMapper.updatePassword(pwd, userId);
+        String oldP = MD5Utils.toMd5(oldPassword, "shishc", 10);
+        String newP = MD5Utils.toMd5(newPassword, "shishc", 10);
+        if(!oldP.equals(newP)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "PWD_ERROR");
+        }
+        userMapper.updatePassword(newP, userId);
+        log.info("【UserService】updatePassword::pwd change successfully!");
+        return true;
     }
 
 

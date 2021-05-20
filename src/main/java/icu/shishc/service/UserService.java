@@ -100,10 +100,12 @@ public interface UserService{
 
     /**
      * 更新密码
+     * @param oldPassword 旧密码
      * @param userId 用户id
-     * @param password 密码
+     * @param newPassword 新密码
+     * @return T / F
      */
-    void updatePassword(Long userId, String password);
+    boolean updatePassword(String oldPassword, Long userId, String newPassword) throws CustomException;
 
 
     /**

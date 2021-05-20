@@ -46,4 +46,8 @@
         SELECT * FROM user WHERE email = ${'email'}
     </select>
 
+    <select id="getAllUsers" resultMap="BaseResultMap">
+        SELECT * FROM user WHERE user_identity = 0
+    </select>
+
 </mapper>

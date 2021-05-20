@@ -8,6 +8,8 @@ import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author ShiShc
  * @PackageName:icu.shishc.controller
@@ -58,6 +60,24 @@ public class UserController {
 
 
     /**
+     * 用户修改新密码接口
+     * @param oldPassword 旧密码
+     * @param userId 用户id
+     * @param newPassword 新密码
+     * @return .
+     * @throws CustomException .
+     */
+    @RequestMapping(value = "/pass_change", method = RequestMethod.PATCH)
+    public MyDTO updatePwd(
+            @RequestParam String oldPassword,
+            @RequestParam Long userId,
+            @RequestParam String newPassword)
+    throws CustomException{
+        return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword));
+    }
+
+
+    /**
      * 删除/注销用户, 等级开放 -> blogger + user
      * @param uid 用户id
      * @return MyDTO
@@ -70,4 +90,15 @@ public class UserController {
         log.info("【UserController】delete:: delete uid = {}", uid);
         return MyDTO.successDTO(status);
     }
+
+
+    /**
+     * 给管理员开放的用户管理中心。 获取所有用户。
+     * @return .
+     */
+    @GetMapping("/management")
+    public MyDTO userManagementCenter() {
+        return MyDTO.successDTO(userService.getAllUsers());
+    }
+
 }
