@@ -5,7 +5,6 @@ import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.LoginService;
-import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,10 +37,6 @@ public class LoginController {
         return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "LOGIN_FAILED");
     }
 
-//    @GetMapping(value = "/index")
-//    public String index() {
-//        return "index";
-//    }
 
     @GetMapping("/logout")
     public MyDTO logout() throws CustomException{
@@ -54,10 +49,6 @@ public class LoginController {
     }
 
 
-    /**
-     *
-     * @return
-     */
     @GetMapping("/noauth")
     public MyDTO noAuth() {
         return MyDTO.wrongDTO(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED");
