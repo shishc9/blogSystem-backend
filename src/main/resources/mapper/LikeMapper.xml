@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="icu.shishc.mapper.LikeMapper">
 
-    <select id="addLike" resultType="int" parameterType="java.lang.Long">
+    <insert id="addLike" parameterType="java.lang.Long">
+        INSERT INTO blike(blog_id, user_id) VALUES(${bid}, ${uid})
+    </insert>
 
-    </select>
-
-    <delete id="cancelLike">
-
+    <delete id="cancelLike" parameterType="java.lang.Long">
+        DELETE FROM blike WHERE blog_id = ${bid} AND user_id = ${uid}
     </delete>
 
 </mapper>

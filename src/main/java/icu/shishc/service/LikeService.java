@@ -1,9 +1,8 @@
 package icu.shishc.service;
 
-import icu.shishc.Exception.CustomException;
-
 /**
  * 点赞服务
+ * @author ShiShc
  */
 public interface LikeService {
 
@@ -13,9 +12,8 @@ public interface LikeService {
      * @param bid 博客ID
      * @param userId 用户id
      * @return 1 0
-     * @throws CustomException .
      */
-    Integer addLike(Long bid, Long userId) throws CustomException;
+    Integer addLike(Long bid, Long userId);
 
 
     /**
@@ -23,8 +21,7 @@ public interface LikeService {
      * @param bid 博客ID
      * @param userId 用户ID
      * @return 1 0
-     * @throws CustomException .
      */
-    Integer cancelLike(Long bid, Long userId) throws CustomException;
+    Integer cancelLike(Long bid, Long userId);
 
 }
