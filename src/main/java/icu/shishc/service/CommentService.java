@@ -28,4 +28,12 @@ public interface CommentService {
      */
     int saveComment(Comment comment) throws CustomException;
 
+
+    /**
+     * 删除评论和所有回复
+     * @param cid 待删除的评论id
+     * @return 受影响行数
+     */
+    int deleteComment(Long cid) ;
+
 }

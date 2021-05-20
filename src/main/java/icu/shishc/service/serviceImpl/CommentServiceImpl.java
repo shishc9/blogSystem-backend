@@ -115,6 +115,33 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
+    private int count = 0;
+
+    @Override
+    public int deleteComment(Long cid) {
+        List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
+        count += commentMapper.deleteCommentById(cid);
+        if(toDeleteId.size() > 0) {
+            for(Long id : toDeleteId) {
+                help(id);
+                count += commentMapper.deleteCommentById(id);
+            }
+        }
+        return count;
+    }
+
+
+    private void help(Long cid) {
+        List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
+        if(toDeleteId.size() > 0) {
+            for(Long id : toDeleteId) {
+                help(id);
+                count += commentMapper.deleteCommentById(id);
+            }
+        }
+    }
+
+
     /**
      * 检查评论实体：
      * @param comment 评论实体

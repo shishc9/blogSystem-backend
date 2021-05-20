@@ -61,4 +61,20 @@ public interface CommentMapper {
      * @return 评论实体
      */
     Comment findCommentById(@Param("commentId")Long commentId);
+
+
+    /**
+     * 通过评论id删除评论
+     * @param commentId 评论id
+     * @return 受影响的行数
+     */
+    int deleteCommentById(@Param("commentId")Long commentId);
+
+
+    /**
+     * 待删除评论list
+     * @param commentId 父评论id
+     * @return list
+     */
+    List<Long> toDeleteComments(@Param("commentId")Long commentId);
 }

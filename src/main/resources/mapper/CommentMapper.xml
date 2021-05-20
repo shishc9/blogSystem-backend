@@ -38,9 +38,21 @@
             ORDER BY c.gmt_create DESC
     </select>
 
-    <select id="findCommentById" resultType="icu.shishc.entity.Comment">
+
+    <select id="findCommentById" resultMap="BaseResultMap">
         SELECT * FROM comment c
             WHERE comment_id = ${commentId}
     </select>
+
+
+    <delete id="deleteCommentById" parameterType="java.lang.Long">
+        DELETE FROM comment WHERE comment_id = ${commentId}
+    </delete>
+
+
+    <select id="toDeleteComments" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT c.comment_id FROM comment c WHERE parent_comment_id = ${commentId}
+    </select>
+
 
 </mapper>

@@ -36,4 +36,11 @@ public class CommentController {
         log.info("【CommentController】saveComment");
         return MyDTO.successDTO(commentService.saveComment(comment));
     }
+
+
+    @DeleteMapping("/comment")
+    public MyDTO deleteComment(@RequestParam("cid") Long cid) {
+        log.info("【CommentController】deleteComment, delete cid = {}", cid);
+        return MyDTO.successDTO(commentService.deleteComment(cid));
+    }
 }
