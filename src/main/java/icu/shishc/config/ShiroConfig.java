@@ -53,6 +53,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/users/user", "rest[USER]");
         filterChainDefinitionMap.put("/users/**", "anon");
 
+        //two api in CommentController
+        filterChainDefinitionMap.put("/comments/comment", "rest[COMMENT]");
+        filterChainDefinitionMap.put("/comments/**", "anon");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         //设置默认拦截器
