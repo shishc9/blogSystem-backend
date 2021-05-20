@@ -3,9 +3,9 @@ package icu.shishc.Exception;
 import org.springframework.http.HttpStatus;
 
 /**
+ * @author ShiShc
  * @PackageName:icu.shishc.Exception
  * @Date:2021/3/15, 23:44
- * @Auther:ShiShc
  */
 
 public class CustomException extends Exception{

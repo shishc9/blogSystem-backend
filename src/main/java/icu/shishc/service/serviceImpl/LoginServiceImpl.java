@@ -30,14 +30,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public boolean authLogin(String username, String password) throws CustomException {
-        User user = userService.getUserByName(username);
-        if(user == null) {
-            log.warn("【LoginService】authLogin::the user doesn't exists! username = {}", username);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        } else if(!user.getPassword().equals(password)) {
-            log.warn("【LoginService】authLogin::pwd error! username = {}, pwd = {}", username, password);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {

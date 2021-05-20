@@ -1,9 +1,10 @@
 package icu.shishc.config;
 
 import javax.servlet.Filter;
-
 import icu.shishc.filter.MyAuthFilter;
 import icu.shishc.filter.MyRestFilter;
+import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -89,6 +90,27 @@ public class ShiroConfig {
      */
     @Bean(name = "userRealm")
     public UserRealm userRealm() {
-        return new UserRealm();
+        UserRealm userRealm = new UserRealm();
+        userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return userRealm;
+    }
+
+
+    /**
+     * MD5加盐加密10次
+     * @return HashedCredentialsMatcher
+     */
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        hashedCredentialsMatcher.setHashIterations(10);
+        return hashedCredentialsMatcher;
+    }
+
+
+    @Bean
+    public AllowAllCredentialsMatcher allowAllCredentialsMatcher() {
+        return new AllowAllCredentialsMatcher();
     }
 }

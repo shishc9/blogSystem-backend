@@ -20,11 +20,14 @@
 
     <update id="update">
         UPDATE user SET username = '${username}',
-                        password = '${password}',
                         age = ${age},
                         gender = '${gender}',
                         email = '${email}'
         WHERE user_id = ${userId}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE user SET password = '${pwd}' WHERE user_id = ${uid}
     </update>
 
     <delete id="delete">
@@ -37,6 +40,10 @@
 
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT * FROM user WHERE username = '${username}'
+    </select>
+
+    <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT * FROM user WHERE email = ${'email'}
     </select>
 
 </mapper>

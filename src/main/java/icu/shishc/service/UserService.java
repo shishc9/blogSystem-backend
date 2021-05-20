@@ -23,6 +23,14 @@ public interface UserService{
 
 
     /**
+     * 通过邮箱查找用户
+     * @param email 邮箱
+     * @return 用户user
+     */
+    User getUserByEmail(String email);
+
+
+    /**
      * 根据用户名查找用户
      * @param username 用户名
      * @return 用户实体
@@ -74,13 +82,6 @@ public interface UserService{
     boolean regexMatch(String email);
 
 
-//    /**
-//     * 获取用户角色
-//     * @param username 用户名
-//     * @return 角色名
-//     */
-//    String getRole(String username);
-
     /**
      * 检查userid
      * @param userId 用户ID
@@ -96,4 +97,18 @@ public interface UserService{
      */
     List<Perms> getUserPerms(UserIdentity identity);
 
+
+    /**
+     * 更新密码
+     * @param userId 用户id
+     * @param password 密码
+     */
+    void updatePassword(Long userId, String password);
+
+
+    /**
+     * 获取所有用户
+     * @return list
+     */
+    List<User> getAllUsers();
 }

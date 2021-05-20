@@ -7,6 +7,7 @@ import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.mapper.PermsMapper;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
+import icu.shishc.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public List<User> getAllUsers() {
+        return null;
+    }
+
+
+    @Override
     public User getUserById(Long userId) throws CustomException {
         if(!checkUserId(userId)) {
             log.warn("【UserService】getUserById::bad userid, userid = {}", userId);
@@ -37,6 +44,13 @@ public class UserServiceImpl implements UserService {
         }
         log.info("【UserService】getUserById::return user");
         return userMapper.getUserById(userId);
+    }
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        log.info("【UserService】gerUserByEmail::email = {}", email);
+        return userMapper.findUserByEmail(email);
     }
 
 
@@ -63,7 +77,9 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】insert::the user has exist, username = {}", username);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        userMapper.insert(username, user.getPassword(), user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getEmail());
+        String pwd = MD5Utils.toMd5(user.getPassword(), "shishc", 10);
+        user.setPassword(pwd);
+        userMapper.insert(username, pwd, user.getUserIdentity().getKey(), user.getAge(), user.getGender(), user.getEmail());
         User user2 = userMapper.getUserByName(user.getUsername());
         log.info("【UserService】insert::add user successfully! userId = {}", user2.getUserId());
         return user2;
@@ -93,9 +109,17 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        userMapper.update(userId, user.getUsername(), user.getPassword(), user.getAge(), user.getGender(), user.getEmail());
+        userMapper.update(userId, user.getUsername(), user.getAge(), user.getGender(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
+    }
+
+
+    @Override
+    public void updatePassword(Long userId, String password) {
+        log.info("【UserService】updatePwd::update");
+        String pwd = MD5Utils.toMd5(password, "shishc", 10);
+        userMapper.updatePassword(pwd, userId);
     }
 
 
@@ -135,4 +159,6 @@ public class UserServiceImpl implements UserService {
     public List<Perms> getUserPerms(UserIdentity identity) {
         return permsMapper.getUserPerms(identity.getKey());
     }
+
+
 }

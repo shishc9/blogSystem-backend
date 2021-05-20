@@ -28,14 +28,6 @@ public class UserController {
     }
 
 
-//    //@GetMapping("/get/by-id")
-//    private MyDTO getUserById(@RequestParam("userId") Long userId) throws CustomException {
-//        User user = userService.getUserById(userId);
-//        log.info("【Controller】UserController::getById: return user, uID = {}", userId);
-//        return MyDTO.successDTO(new UserDTO(user));
-//    }
-
-
     /**
      * 通过用户名查找用户
      * @param username 用户名
@@ -48,17 +40,6 @@ public class UserController {
         log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
         return user == null ? MyDTO.successDTO(null) : MyDTO.successDTO(new UserDTO(user));
     }
-
-
-//    private MyDTO insert(@RequestBody User user) throws CustomException {
-//        if(!userService.userCheck(user)) {
-//            log.warn("【Controller】UserController::insert: bad user entity");
-//            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "bad user entity");
-//        }
-//        User user1 = userService.insert(user);
-//        log.info("【Controller】UserController::insert: insert successfully! username = {}", user.getUsername() == user1.getUsername()?user.getUsername() : null);
-//        return MyDTO.successDTO(user1);
-//    }
 
 
     /**

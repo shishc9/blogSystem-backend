@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Closer
+ */
 @Mapper
 @Repository
 public interface UserMapper {
@@ -24,6 +27,14 @@ public interface UserMapper {
      * @return
      */
     User getUserByName(@Param("username") String username);
+
+
+    /**
+     * 通过邮箱查找用户
+     * @param email email
+     * @return user
+     */
+    User findUserByEmail(@Param("email")String email);
 
 
     /**
@@ -55,17 +66,23 @@ public interface UserMapper {
 
     /**
      * 更新
-     * @param username
-     * @param password
-     * @param age
-     * @param gender
-     * @param email
-     * @return
+     * @param username username
+     * @param age age
+     * @param gender gender
+     * @param email email
+     * @return int
      */
     Integer update(@Param("userId") Long userId,
                    @Param("username") String username,
-                   @Param("password") String password,
                    @Param("age") int age,
                    @Param("gender") String gender,
                    @Param("email") String email);
+
+    /**
+     * 修改密码
+     * @param password 密码
+     * @param uid 用户id
+     * @return int
+     */
+    int updatePassword(@Param("pwd")String password, @Param("uid")Long uid);
 }
