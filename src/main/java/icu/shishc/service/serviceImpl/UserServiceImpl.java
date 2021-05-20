@@ -120,9 +120,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updatePassword(String oldPassword, Long userId, String newPassword) throws CustomException{
         log.info("【UserService】updatePwd::update");
+        String dbPwd = userMapper.getPasswordByUid(userId);
         String oldP = MD5Utils.toMd5(oldPassword, "shishc", 10);
         String newP = MD5Utils.toMd5(newPassword, "shishc", 10);
-        if(!oldP.equals(newP)) {
+        if(!oldP.equals(dbPwd)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "PWD_ERROR");
         }
         userMapper.updatePassword(newP, userId);

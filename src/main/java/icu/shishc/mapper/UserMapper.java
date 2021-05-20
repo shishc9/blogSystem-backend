@@ -95,4 +95,12 @@ public interface UserMapper {
      * @return int
      */
     int updatePassword(@Param("pwd")String password, @Param("uid")Long uid);
+
+
+    /**
+     * 通过用户id查找密码
+     * @param uid 用户id
+     * @return string
+     */
+    String getPasswordByUid(@Param("uid")Long uid);
 }

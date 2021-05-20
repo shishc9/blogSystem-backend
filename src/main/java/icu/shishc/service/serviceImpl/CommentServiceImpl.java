@@ -158,7 +158,8 @@ public class CommentServiceImpl implements CommentService {
         if("".equals(comment.getContent().trim())) {
             return false;
         }
-        if(commentMapper.findCommentById(comment.getParentCommentId()) == null) {
+        Long parentCommentId = comment.getParentCommentId();
+        if(parentCommentId != 0 && commentMapper.findCommentById(parentCommentId) == null) {
             return false;
         }
         log.info("【CommentService】commentCheck::good entity");

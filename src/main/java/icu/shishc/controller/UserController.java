@@ -67,13 +67,13 @@ public class UserController {
      * @return .
      * @throws CustomException .
      */
-    @RequestMapping(value = "/pass_change", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/pass_change", method = RequestMethod.PUT)
     public MyDTO updatePwd(
             @RequestParam String oldPassword,
             @RequestParam Long userId,
             @RequestParam String newPassword)
     throws CustomException{
-        return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword));
+        return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword) ? 1 :0);
     }
 
 

@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Validator;
 import icu.shishc.Exception.CustomException;
 import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
+import icu.shishc.enumeration.UserIdentity;
 import icu.shishc.service.UserService;
 import icu.shishc.util.MD5Utils;
 import lombok.SneakyThrows;

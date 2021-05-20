@@ -52,6 +52,8 @@ public class ShiroConfig {
 
         //three api in UserController
         filterChainDefinitionMap.put("/users/user", "rest[USER]");
+        filterChainDefinitionMap.put("/users/pass_change", "rest[CHANGE]");
+        filterChainDefinitionMap.put("/users/management", "rest[MANAGE]");
         filterChainDefinitionMap.put("/users/**", "anon");
 
         //two api in CommentController

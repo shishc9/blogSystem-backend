@@ -50,4 +50,8 @@
         SELECT * FROM user WHERE user_identity = 0
     </select>
 
+    <select id="getPasswordByUid" resultType="java.lang.String">
+        SELECT password FROM user WHERE user_id = ${uid}
+    </select>
+
 </mapper>
