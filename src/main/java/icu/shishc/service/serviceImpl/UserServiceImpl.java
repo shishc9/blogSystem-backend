@@ -1,6 +1,6 @@
 package icu.shishc.service.serviceImpl;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
 import icu.shishc.enumeration.UserIdentity;

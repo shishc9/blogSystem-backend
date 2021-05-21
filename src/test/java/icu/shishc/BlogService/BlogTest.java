@@ -1,6 +1,6 @@
 package icu.shishc.BlogService;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
 import org.junit.jupiter.api.Test;

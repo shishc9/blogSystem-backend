@@ -1,6 +1,6 @@
 package icu.shishc.service.serviceImpl;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.mapper.BlogMapper;

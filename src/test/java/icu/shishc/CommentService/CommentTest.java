@@ -1,6 +1,6 @@
 package icu.shishc.CommentService;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.service.CommentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

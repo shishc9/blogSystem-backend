@@ -1,6 +1,6 @@
 package icu.shishc.service;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 
 /**
  * 点赞服务

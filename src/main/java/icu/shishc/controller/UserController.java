@@ -1,14 +1,12 @@
 package icu.shishc.controller;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author ShiShc

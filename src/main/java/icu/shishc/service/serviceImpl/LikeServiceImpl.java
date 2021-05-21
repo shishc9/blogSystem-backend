@@ -1,6 +1,6 @@
 package icu.shishc.service.serviceImpl;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.mapper.LikeMapper;
 import icu.shishc.service.LikeService;

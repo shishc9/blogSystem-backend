@@ -1,4 +1,4 @@
-package icu.shishc.Exception;
+package icu.shishc.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,6 +1,6 @@
 package icu.shishc.controller;
 
-import icu.shishc.Exception.CustomException;
+import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;

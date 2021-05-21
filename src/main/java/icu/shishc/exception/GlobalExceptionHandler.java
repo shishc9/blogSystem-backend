@@ -1,4 +1,4 @@
-package icu.shishc.Exception;
+package icu.shishc.exception;
 
 import icu.shishc.dto.MyDTO;
 import lombok.extern.slf4j.Slf4j;
