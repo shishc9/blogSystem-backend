@@ -43,7 +43,7 @@
     </select>
 
     <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT * FROM user WHERE email = ${'email'}
+        SELECT * FROM user WHERE email = '${email}'
     </select>
 
     <select id="getAllUsers" resultMap="BaseResultMap">
