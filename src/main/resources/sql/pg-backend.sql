@@ -65,7 +65,7 @@ CREATE TABLE blike (
 
 DROP TABLE IF EXISTS perms;
 CREATE TABLE perms (
-    user_identity SMALLSERIAL PRIMARY KEY,
+    user_identity SMALLINT NOT NULL,
     entity VARCHAR(10) NOT NULL,
     perm VARCHAR(10) NOT NULL
 );
