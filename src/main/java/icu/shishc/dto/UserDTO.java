@@ -14,6 +14,7 @@ import lombok.Data;
 @ApiModel(value = "User数据")
 public class UserDTO {
 
+    Long userId;
     String username;
     UserIdentity userIdentity;
     Integer age;
@@ -22,6 +23,7 @@ public class UserDTO {
 
 
     public UserDTO(User user) {
+        this.userId = user.getUserId();
         this.username = user.getUsername();
         this.userIdentity = user.getUserIdentity();
         this.age = user.getAge();

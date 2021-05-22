@@ -3,6 +3,7 @@ package icu.shishc.controller;
 import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
+import icu.shishc.dto.LoginDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,9 @@ public class LoginController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public MyDTO login(@RequestParam String username, @RequestParam String pwd) throws CustomException {
+    public MyDTO login(@RequestBody LoginDTO loginDTO) throws CustomException {
+        String username = loginDTO.getUsername();
+        String pwd = loginDTO.getPwd();
         boolean flag = loginService.authLogin(username, pwd);
         if(flag) {
             log.info("【LoginController】authLogin, username = {}, pwd = {}, successfully!", username, pwd);

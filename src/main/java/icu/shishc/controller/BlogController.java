@@ -86,21 +86,21 @@ public class BlogController {
     }
 
 
-//    /**
-//     * 废弃的方法
-//     * 通过bid查找博客
-//     * @param bid
-//     * @return
-//     */
-//    @GetMapping("/get/by-id")
-//    public MyDTO getById(@RequestParam("bid") Long bid
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::get-by-id：bid = {}", bid);
-//        Blog blog = blogService.getBlogByBID(bid);
-//        return MyDTO.successDTO(blog);
-//    }
-//
-//
+    /**
+     * 废弃的方法
+     * 通过bid查找博客
+     * @param bid
+     * @return
+     */
+    @GetMapping("/get/by-id")
+    public MyDTO getById(@RequestParam("bid") Long bid
+    ) throws CustomException {
+        log.info("[Controller] Blog::get-by-id(bid = {})", bid);
+        Blog blog = blogService.getBlogByBID(bid);
+        return MyDTO.successDTO(blog);
+    }
+
+
     /**
      * 通过状态查找博客
      * @return MyDTO

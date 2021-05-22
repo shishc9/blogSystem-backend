@@ -6,6 +6,7 @@ import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,9 +28,9 @@ public class UserController {
         this.userService = userService;
     }
 
-
     /**
      * 通过用户名查找用户
+     * 
      * @param username 用户名
      * @return UserDTO
      * @throws CustomException .
@@ -38,12 +39,15 @@ public class UserController {
     public MyDTO getUserByName(@PathVariable("username") String username) throws CustomException {
         User user = userService.getUserByName(username);
         log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
-        return user == null ? MyDTO.successDTO(null) : MyDTO.successDTO(new UserDTO(user));
+        if (user == null) {
+            MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
+        return MyDTO.successDTO(new UserDTO(user));
     }
-
 
     /**
      * 更新用户信息， 等级开放 -> Blogger + User
+     * 
      * @param user user实体
      * @return MyDTO
      * @throws CustomException .
@@ -56,27 +60,24 @@ public class UserController {
         return MyDTO.successDTO(new UserDTO(user1));
     }
 
-
     /**
      * 用户修改新密码接口
+     * 
      * @param oldPassword 旧密码
-     * @param userId 用户id
+     * @param userId      用户id
      * @param newPassword 新密码
      * @return .
      * @throws CustomException .
      */
     @RequestMapping(value = "/pass_change", method = RequestMethod.PUT)
-    public MyDTO updatePwd(
-            @RequestParam String oldPassword,
-            @RequestParam Long userId,
-            @RequestParam String newPassword)
-    throws CustomException{
-        return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword) ? 1 :0);
+    public MyDTO updatePwd(@RequestParam String oldPassword, @RequestParam Long userId,
+            @RequestParam String newPassword) throws CustomException {
+        return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword) ? 1 : 0);
     }
-
 
     /**
      * 删除/注销用户, 等级开放 -> blogger + user
+     * 
      * @param uid 用户id
      * @return MyDTO
      * @throws CustomException .
@@ -89,9 +90,9 @@ public class UserController {
         return MyDTO.successDTO(status);
     }
 
-
     /**
      * 给管理员开放的用户管理中心。 获取所有用户。
+     * 
      * @return .
      */
     @GetMapping("/management")

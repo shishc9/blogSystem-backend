@@ -15,6 +15,12 @@
         \i src/main/resources/sql/pg-backend-init.sql
         ```
 
+5. 用 `mvn -q exec:java -Dexec.mainClass=md5.hash.Main -Dexec.args="<password> shishc 10"` 生成密码并替换初始密码。
+
+    ```sql
+    update users set password = <md5hash> where username = 'Admin';
+    ```
+
 4. 在命令行输入以下命令
 
     ```sh

@@ -134,12 +134,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userCheck(User user) {
-        Long userId = user.getUserId();
         String password = user.getPassword();
         String username = user.getUsername();
         String email = user.getEmail();
-        String gender = user.getGender();
-        if(!checkUserId(userId) || "".equals(username) || "".equals(password) || !regexMatch(email) || (!"MALE".equals(gender) && !"FEMALE".equals(gender))) {
+        if("".equals(username) || "".equals(password) || !regexMatch(email)) {
             log.warn("【UserService】userCheck::bad user entity");
             return false;
         }
