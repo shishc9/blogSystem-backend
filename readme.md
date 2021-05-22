@@ -12,8 +12,7 @@
 
         ```psql
         \i src/main/resources/sql/pg-backend.sql
-        \i src/main/resources/sql/pg-backend-test.sql
-        \i src/main/resources/sql/pg-comment.sql
+        \i src/main/resources/sql/pg-backend-init.sql
         ```
 
 4. 在命令行输入以下命令
