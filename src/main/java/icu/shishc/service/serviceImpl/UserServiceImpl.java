@@ -76,16 +76,16 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】insert::bad user entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        String username = user.getUsername();
+        String username = user.getUsername().trim();
         User user1 = userMapper.getUserByName(username);
         if(user1 != null) {
             log.warn("【UserService】insert::the user has exist, username = {}", username);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        String pwd = MD5Utils.toMd5(user.getPassword(), "shishc", 10);
+        String pwd = MD5Utils.toMd5(user.getPassword().trim(), "shishc", 10);
         user.setPassword(pwd);
         userMapper.insert(username, pwd, user.getUserIdentity().getKey(), user.getUserSite(), user.getAge(), user.getGender(), user.getEmail());
-        User user2 = userMapper.getUserByName(user.getUsername());
+        User user2 = userMapper.getUserByName(username);
         log.info("【UserService】insert::add user successfully! userId = {}", user2.getUserId());
         return user2;
     }
@@ -139,8 +139,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userCheck(User user) {
-        String password = user.getPassword();
-        String username = user.getUsername();
+        String password = user.getPassword().trim();
+        String username = user.getUsername().trim();
         String email = user.getEmail();
         if("".equals(username) || "".equals(password) || !regexMatch(email)) {
             log.warn("【UserService】userCheck::bad user entity");
