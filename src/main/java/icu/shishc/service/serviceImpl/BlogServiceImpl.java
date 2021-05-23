@@ -153,13 +153,14 @@ public class BlogServiceImpl implements BlogService {
             log.warn("【BlogService】insert::bad blog entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        Blog blog1 = blogMapper.getBlogByTitle(blog.getTitle());
+        String title = blog.getTitle().trim();
+        Blog blog1 = blogMapper.getBlogByTitle(title);
         if(blog1 != null) {
             log.warn("【BlogService】insert::the blog has exist! blogTitle = {}", blog.getTitle());
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        blogMapper.insert(blog.getUserId(), blog.getTitle(), blog.getContent(), blog.getStatus().getKey());
-        Blog blog2 = blogMapper.getBlogByTitle(blog.getTitle());
+        blogMapper.insert(blog.getUserId(), title, blog.getContent().trim(), blog.getStatus().getKey());
+        Blog blog2 = blogMapper.getBlogByTitle(title);
         log.info("【BlogService】insert::add blog successfully! bID = {}", blog2.getBlogId());
         return blog2;
     }
@@ -195,7 +196,7 @@ public class BlogServiceImpl implements BlogService {
             log.warn("【BlogService】update::the blog doesn't exist!");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        blogMapper.update(blog.getTitle(), blog.getContent(), blog.getStatus().getKey(), bid);
+        blogMapper.update(blog.getTitle().trim(), blog.getContent().trim(), blog.getStatus().getKey(), bid);
         log.info("【BlogService】update::return blog");
         return blogMapper.getBlogByBID(bid);
     }

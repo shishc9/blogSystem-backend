@@ -69,8 +69,8 @@ public class BlogController {
         Pager pager = PagerUtils.getPager(new PageInfo<>(list));
         return MyDTO.successDTO(pager);
     }
-//
-//
+
+
     /**
      * 通过标题查找博客
      * @param title 博客标题
@@ -92,7 +92,7 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @GetMapping("/{bid}}")
+    @GetMapping("/{bid}")
     public MyDTO getById(@PathVariable("bid") Long bid
     ) throws CustomException {
         log.info("【Controller】getById::get-by-id(bid = {})", bid);
@@ -119,59 +119,7 @@ public class BlogController {
         Pager pager = PagerUtils.getPager(new PageInfo<>(list));
         return MyDTO.successDTO(pager);
     }
-//
-//
-//    /**
-//     * 点赞
-//     * @param bid
-//     * @return
-//     * @throws CustomException
-//     */
-//    @GetMapping("/add/like")
-//    public MyDTO addLike(@RequestParam Long bid) throws CustomException {
-//        log.info("【Controller】Blog::addLike, bid = {}", bid);
-//        return MyDTO.successDTO(blogService.addLike(bid));
-//    }
-//
-//
-//    /**
-//     * 取消点赞
-//     * @param bid
-//     * @return
-//     * @throws CustomException
-//     */
-//    @GetMapping("/delete/like")
-//    public MyDTO cancelLike(@RequestParam Long bid) throws CustomException {
-//        log.info("【Controller】Blog::cancelLike, bid = {}", bid);
-//        return MyDTO.successDTO(blogService.cancelLike(bid));
-//    }
-//
-//    /**
-//     * 获取所有点赞
-//     * @return
-//     */
-//    @GetMapping("/get/all-like")
-//    public MyDTO getAllLike(
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::get-all-like");
-//        Integer allLike = blogService.getAllLike();
-//        return MyDTO.successDTO(allLike);
-//    }
-//
-//
-//    /**
-//     * 获取所有阅读
-//     * @return
-//     */
-//    @GetMapping("/get/all-read")
-//    public MyDTO getAllReadNum(
-//    ) throws CustomException {
-//        log.info("【Controller】Blog::get-all-read");
-//        Integer allReadNum = blogService.getAllReadNum();
-//        return MyDTO.successDTO(allReadNum);
-//    }
-//
-//
+
 
     /**
      * 用户当前博客的上一篇博客
@@ -207,8 +155,8 @@ public class BlogController {
         Blog blog = blogService.getNext(bid, userId);
         return MyDTO.successDTO(blog);
     }
-//
-//
+
+
     /**
      * 添加博客
      * @param blog 博客实体

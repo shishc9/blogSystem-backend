@@ -55,38 +55,6 @@ public interface BlogService{
     List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException;
 
 
-//    /**
-//     * 点赞
-//     * @param bid
-//     * @return
-//     * @throws CustomException
-//     */
-//    Integer addLike(Long bid) throws CustomException;
-//
-//
-//    /**
-//     * 取消点赞
-//     * @param bid
-//     * @return
-//     * @throws CustomException
-//     */
-//    Integer cancelLike(Long bid) throws CustomException;
-
-
-//    /**
-//     * 统计所有点赞
-//     * @return
-//     */
-//    Integer getAllLike() throws CustomException;
-//
-//
-//    /**
-//     * 统计所有阅读数
-//     * @return
-//     */
-//    Integer getAllReadNum() throws CustomException;
-
-
     /**
      * 某个用户新增一篇博客
      * @param blog 博客实体

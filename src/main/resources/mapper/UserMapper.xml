@@ -7,6 +7,8 @@
         <result column="password" property="password"/>
         <result column="user_identity" property="userIdentity" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
         <result column="age" property="age"/>
+        <result column="post_count" property="postCount"/>
+        <result column="user_site" property="userSite"/>
         <result column="gender" property="gender"/>
         <result column="email" property="email"/>
         <result column="gmt_create" property="gmtCreate"/>
@@ -14,15 +16,16 @@
     </resultMap>
 
     <insert id="insert">
-        INSERT INTO user(username, password, user_identity, age, gender, email, gmt_create, gmt_last_login)
-            VALUES ('${username}', '${password}', ${identity}, ${age}, '${gender}', '${email}', now(), now())
+        INSERT INTO user(username, password, user_identity, email, gmt_create, gmt_last_login, user_site)
+        VALUES ('${username}', '${password}', ${identity}, '${email}', now(), now(), '${site}')
     </insert>
 
     <update id="update">
         UPDATE user SET username = '${username}',
-                        age = ${age},
+                        email = '${email}',
                         gender = '${gender}',
-                        email = '${email}'
+                        user_site = '${site}',
+                        age = ${age}
         WHERE user_id = ${userId}
     </update>
 

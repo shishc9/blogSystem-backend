@@ -52,23 +52,23 @@
     </select>
 
     <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
+        SELECT * FROM blog WHERE blog_id &lt; ${bid} AND status = 0 ORDER BY blog_id DESC LIMIT 1
     </select>
 
     <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
+        SELECT * FROM blog WHERE blog_id &gt; ${bid} AND status = 0 ORDER BY blog_id LIMIT 1
     </select>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
-        SELECT * FROM blog ORDER BY read_num
+        SELECT * FROM blog WHERE status = 0 ORDER BY read_num
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE user_id = ${userId} ORDER BY gmt_modified DESC
+        SELECT * FROM blog WHERE user_id = ${userId} AND status = 0 ORDER BY gmt_modified DESC
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE title = '${title}'
+        SELECT * FROM blog WHERE title = '${title}' AND status = 0
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap">
