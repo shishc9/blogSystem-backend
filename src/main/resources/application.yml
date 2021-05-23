@@ -13,7 +13,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     banner-mode: console
-    
+
 
 # Mybatis配置
 mybatis:
