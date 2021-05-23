@@ -8,6 +8,8 @@ CREATE TABLE user(
                      username VARCHAR(64) NOT NULL COMMENT '用户名',
                      password VARCHAR(255) DEFAULT NULL COMMENT '密码',
                      user_identity TINYINT UNSIGNED DEFAULT 0 COMMENT '是不是博主',
+                     user_site VARCHAR(64) DEFAULT NULL COMMENT '个人主页',
+                     post_count INT DEFAULT 0 COMMENT '博客数',
                      age INT(2) UNSIGNED DEFAULT NULL COMMENT '年龄',
                      gender CHAR(6) NOT NULL NULL DEFAULT 'MALE' COMMENT '性别，默认男性',
                      email VARCHAR(64) DEFAULT NULL COMMENT '邮箱',
@@ -30,6 +32,7 @@ CREATE TABLE blog(
                      status  TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '博客状态，只有0/1，0：公开，1：私有',
                      read_num INT UNSIGNED DEFAULT 0 COMMENT '博客阅读数',
                      like_num INT UNSIGNED DEFAULT 0 COMMENT '博客点赞数',
+                     comment_num INT UNSIGNED DEFAULT 0 COMMENT '评论数',
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客创建时间',
                      gmt_modified DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客修改时间',
                      PRIMARY KEY (blog_id) USING BTREE,
@@ -51,22 +54,6 @@ CREATE TABLE comment (
     FOREIGN KEY (username) REFERENCES user(username),
     FOREIGN KEY (blog_id) REFERENCES blog(blog_id)
 )ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 50000;
-
-
-
-DROP TABLE IF EXISTS message;
-CREATE TABLE message (
-    message_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论自增id',
-    user_id BIGINT UNSIGNED NOT NULL COMMENT '',
-    username VARCHAR(64) NOT NULL COMMENT '',
-    content VARCHAR(255) NOT NULL COMMENT '',
-    gmt_create BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
-    parent_comment_id BIGINT UNSIGNED DEFAULT 0 COMMENT '父评论id',
-    PRIMARY KEY (message_id) USING BTREE,
-    FOREIGN KEY (username) REFERENCES user(username),
-    FOREIGN KEY (user_id) REFERENCES user(user_id)
-)ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 100000;
-
 
 
 DROP TABLE IF EXISTS blike;

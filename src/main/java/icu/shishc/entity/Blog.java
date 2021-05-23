@@ -30,6 +30,7 @@ public class Blog implements Serializable {
     private BlogStatus status;
     private Integer readNum;
     private Integer likeNum;
+    private Integer commentNum;
 
     private Date gmtCreate;
     private Date gmtModified;
