@@ -18,6 +18,8 @@ public class UserDTO {
     String username;
     UserIdentity userIdentity;
     Integer age;
+    String userSite;
+    Integer postCount;
     String gender;
     String email;
 
@@ -29,5 +31,7 @@ public class UserDTO {
         this.age = user.getAge();
         this.gender = user.getGender();
         this.email = user.getEmail();
+        this.userSite = user.getUserSite();
+        this.postCount = user.getPostCount();
     }
 }

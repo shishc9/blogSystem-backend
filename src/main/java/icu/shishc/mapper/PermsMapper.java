@@ -1,7 +1,9 @@
 package icu.shishc.mapper;
 
 import icu.shishc.entity.Perms;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * @author Closer
  * @DESC: 权限列表
  */
+@Mapper
+@Repository
 public interface PermsMapper {
 
     /**

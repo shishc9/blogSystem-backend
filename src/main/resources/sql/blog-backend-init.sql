@@ -1,8 +1,8 @@
 use blogsys;
 
 # USER INIT
-INSERT INTO user(username, password, user_identity, age, gender, email)
-    VALUES('blogger', '02571c02bcabe4bfc42be1306ae9ff9c', 0, 20, 'MALE',  '123456789@126.com');
+INSERT INTO user(username, password, user_identity, age, gender, email, user_site)
+    VALUES('blogger', '02571c02bcabe4bfc42be1306ae9ff9c', 0, 20, 'MALE',  '123456789@126.com', 'https://github.com/shishc9');
 INSERT INTO user(username, password, age, email)
     VALUES('A', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '111111111@126.com');
 INSERT INTO user(username, password, age, email)
@@ -52,13 +52,6 @@ INSERT INTO comment(blog_id, username, content, parent_comment_id)
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
     VALUES('30000', 'A', 'reply D', 50004);
 
-#MESSAGE INIT
-INSERT INTO message(user_id, username, content, gmt_create, parent_comment_id)
-    VALUES(3, 'B', 'leave message1', NOW(), 0);
-INSERT INTO message(user_id, username, content, gmt_create, parent_comment_id)
-    VALUES(3, 'A', 'leave message2', NOW(), 0);
-INSERT INTO message(user_id, username, content, gmt_create, parent_comment_id)
-    VALUES(3, 'C', 'reply B leave message', NOW(), 50002);
 
 # PERMS INIT
 INSERT INTO perms(user_identity, entity, perm)

@@ -58,6 +58,7 @@ public interface UserMapper {
     Integer insert(@Param("username") String username,
                    @Param("password") String password,
                    @Param("identity") int identity,
+                   @Param("site") String userSite,
                    @Param("age") int age,
                    @Param("gender") String gender,
                    @Param("email") String email
@@ -84,6 +85,7 @@ public interface UserMapper {
     Integer update(@Param("userId") Long userId,
                    @Param("username") String username,
                    @Param("age") int age,
+                   @Param("site") String userSite,
                    @Param("gender") String gender,
                    @Param("email") String email);
 
