@@ -92,10 +92,10 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @GetMapping("/get/by-id")
-    public MyDTO getById(@RequestParam("bid") Long bid
+    @GetMapping("/{bid}}")
+    public MyDTO getById(@PathVariable("bid") Long bid
     ) throws CustomException {
-        log.info("[Controller] Blog::get-by-id(bid = {})", bid);
+        log.info("【Controller】getById::get-by-id(bid = {})", bid);
         Blog blog = blogService.getBlogByBID(bid);
         return MyDTO.successDTO(blog);
     }

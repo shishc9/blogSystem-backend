@@ -4,6 +4,7 @@ import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
 import icu.shishc.enumeration.UserIdentity;
+import icu.shishc.mapper.BlogMapper;
 import icu.shishc.mapper.PermsMapper;
 import icu.shishc.mapper.UserMapper;
 import icu.shishc.service.UserService;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     PermsMapper permsMapper;
+    @Autowired
+    BlogMapper blogMapper;
 
 
     @Override
@@ -95,6 +98,8 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【UserService】delete::delete user, userId = {}", userId);
+        blogMapper.deleteByUser(userId);
+        log.info("【UserService】delete::delete user's all blog successfully!");
         return userMapper.delete(userId);
     }
 

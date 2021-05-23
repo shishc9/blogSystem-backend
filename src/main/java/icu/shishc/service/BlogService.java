@@ -106,6 +106,14 @@ public interface BlogService{
 
 
     /**
+     * 删除某个用户的所有博客
+     * @param uid 用户id
+     * @return int
+     */
+    Integer deleteByUser(Long uid);
+
+
+    /**
      * 某个用户更新一篇自己博客
      * @param blog 博客实体
      * @return 更新后的博客实体

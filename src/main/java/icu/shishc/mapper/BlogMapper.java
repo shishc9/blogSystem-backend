@@ -17,7 +17,7 @@ public interface BlogMapper {
      * @param title 标题
      * @param content 内容
      * @param status 状态
-     * @return
+     * @return int
      */
     Integer insert(@Param("userId") Long userId,
                    @Param("title") String title,
@@ -32,6 +32,14 @@ public interface BlogMapper {
      * @return
      */
     Integer delete(@Param("bid") Long bid);
+
+
+    /**
+     * 删除某个用户的所有博客
+     * @param uid 用户id
+     * @return int
+     */
+    Integer deleteByUser(@Param("uid") Long uid);
 
 
     /**

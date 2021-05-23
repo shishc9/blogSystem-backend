@@ -40,7 +40,7 @@ public class UserController {
         User user = userService.getUserByName(username);
         log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
         if (user == null) {
-            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+            return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
         }
         return MyDTO.successDTO(new UserDTO(user));
     }

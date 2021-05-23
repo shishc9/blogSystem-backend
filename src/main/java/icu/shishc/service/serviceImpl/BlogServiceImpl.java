@@ -177,6 +177,13 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
+    public Integer deleteByUser(Long uid) {
+
+        return null;
+    }
+
+
+    @Override
     public Blog update(Blog blog) throws CustomException {
         if(!checkBlog(blog)) {
             log.warn("【BlogService】update::bad blog entity");
