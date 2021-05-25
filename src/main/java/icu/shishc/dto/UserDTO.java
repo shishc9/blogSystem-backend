@@ -28,8 +28,6 @@ public class UserDTO {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.userIdentity = user.getUserIdentity();
-        this.age = user.getAge();
-        this.gender = user.getGender();
         this.email = user.getEmail();
         this.userSite = user.getUserSite();
         this.postCount = user.getPostCount();

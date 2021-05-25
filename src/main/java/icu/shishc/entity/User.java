@@ -24,10 +24,9 @@ public class User implements Serializable {
     private String username;
     private String password;
     private UserIdentity userIdentity;
+    // yong hu wang zhan
     private String userSite;
     private Integer postCount;
-    private Integer age;
-    private String gender;
     private String email;
     private Date gmtCreate;
     private Date gmtLastLogin;

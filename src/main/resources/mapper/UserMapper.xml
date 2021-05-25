@@ -23,9 +23,7 @@
     <update id="update">
         UPDATE user SET username = '${username}',
                         email = '${email}',
-                        gender = '${gender}',
                         user_site = '${site}',
-                        age = ${age}
         WHERE user_id = ${userId}
     </update>
 

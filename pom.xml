@@ -16,9 +16,9 @@
     </parent>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <java.version>1.8</java.version>
+<!--        <maven.compiler.source>8</maven.compiler.source>-->
+<!--        <maven.compiler.target>8</maven.compiler.target>-->
+        <java.version>11</java.version>
         <docker.image.prefix>springboot</docker.image.prefix>
     </properties>
 
@@ -116,13 +116,12 @@
             <version>5.6.3</version>
         </dependency>
 
-        <!-- springboot继承fastdfs -->
+        <!-- fastdfs  -->
         <dependency>
-            <groupId>com.github.tobato</groupId>
-            <artifactId>fastdfs-client</artifactId>
-            <version>1.27.2</version>
+            <groupId>io.github.bluemiaomiao</groupId>
+            <artifactId>fastdfs-spring-boot-starter</artifactId>
+            <version>2.0.1-RELEASE</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -149,8 +148,13 @@
         <!--  maven package plugin   -->
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>11</source>  <!-- same as <java.version> -->
+                    <target>11</target>    <!-- same as <java.version> -->
+                </configuration>
             </plugin>
             <!-- Docker maven plugin -->
             <plugin>

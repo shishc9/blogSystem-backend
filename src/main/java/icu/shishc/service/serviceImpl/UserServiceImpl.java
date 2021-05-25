@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         }
         String pwd = MD5Utils.toMd5(user.getPassword().trim(), "shishc", 10);
         user.setPassword(pwd);
-        userMapper.insert(username, pwd, user.getUserIdentity().getKey(), user.getUserSite(), user.getAge(), user.getGender(), user.getEmail());
+        userMapper.insert(username, pwd, user.getUserIdentity().getKey(), user.getUserSite(), user.getEmail());
         User user2 = userMapper.getUserByName(username);
         log.info("【UserService】insert::add user successfully! userId = {}", user2.getUserId());
         return user2;
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        userMapper.update(userId, user.getUsername(), user.getAge(), user.getUserSite(), user.getGender(), user.getEmail());
+        userMapper.update(userId, user.getUsername(), user.getUserSite(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
     }
