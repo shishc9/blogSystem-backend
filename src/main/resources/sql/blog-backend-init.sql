@@ -1,26 +1,16 @@
 use blogsys;
 
 # USER INIT
-INSERT INTO user(username, password, user_identity, age, gender, email, user_site)
-    VALUES('blogger', '02571c02bcabe4bfc42be1306ae9ff9c', 0, 20, 'MALE',  '123456789@126.com', 'https://github.com/shishc9');
-INSERT INTO user(username, password, age, email)
-    VALUES('A', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '111111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('B', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '121111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('C', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '131111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('D', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '141111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('E', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '151111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('F', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '161111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('G', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '171111111@126.com');
-INSERT INTO user(username, password, age, email)
-    VALUES('H', '02571c02bcabe4bfc42be1306ae9ff9c', 20, '181111111@126.com');
-INSERT INTO user(username, password, user_identity, age, gender, email)
-    VALUES('admin', 'db18a83510dbb5a3d38e5cec4ab1b047', 1, 20, 'MALE',  'shishc9@126.com');
+INSERT INTO user(username, password, email, avatar)
+    VALUES('user1', '02571c02bcabe4bfc42be1306ae9ff9c', '123456780@126.com', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
+INSERT INTO user(username, password, email, avatar)
+    VALUES('user2', '02571c02bcabe4bfc42be1306ae9ff9c', '123456781@126.com', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
+INSERT INTO user(username, password, email, avatar)
+    VALUES('user3', '02571c02bcabe4bfc42be1306ae9ff9c', '123456782@126.com', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
+INSERT INTO user(username, password, email, avatar)
+    VALUES('user4', '02571c02bcabe4bfc42be1306ae9ff9c', '123456783@126.com', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
+INSERT INTO user(username, password, user_identity, email, user_site, avatar)
+    VALUES('admin', 'db18a83510dbb5a3d38e5cec4ab1b047', 1, 'shishc9@126.com', 'https://github.com/shishc9', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
 
 # BLOG INIT
 INSERT INTO blog(user_id, title, content) values (1, '第一篇博客', '应该能正常发出去吧');
@@ -40,17 +30,17 @@ INSERT INTO blog(user_id, title, content) values (10, 'admin26', '应该能正�
 
 # COMMENT INIT
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'D', 'first comment', 0);
+    VALUES('30000', 'user1', 'first comment', 0);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'D', 'second comment', 0);
+    VALUES('30000', 'user1', 'second comment', 0);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'A', 'reply D', 50001);
+    VALUES('30000', 'user2', 'reply user1', 50001);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'A', 'reply D', 50001);
+    VALUES('30000', 'user1', 'reply user2', 50001);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'A', 'reply D', 50003);
+    VALUES('30000', 'user1', 'reply user2', 50003);
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
-    VALUES('30000', 'A', 'reply D', 50004);
+    VALUES('30000', 'user1', 'reply user2', 50004);
 
 
 # PERMS INIT

@@ -8,15 +8,16 @@ CREATE TABLE user(
                      username VARCHAR(64) NOT NULL COMMENT '用户名',
                      password VARCHAR(255) DEFAULT NULL COMMENT '密码',
                      user_identity TINYINT UNSIGNED DEFAULT 0 COMMENT '是不是博主',
-                     user_site VARCHAR(64) DEFAULT NULL COMMENT '个人主页',
+                     user_site VARCHAR(255) DEFAULT NULL COMMENT '个人主页',
                      post_count INT DEFAULT 0 COMMENT '博客数',
-                     age INT(2) UNSIGNED DEFAULT NULL COMMENT '年龄',
-                     gender CHAR(6) NOT NULL NULL DEFAULT 'MALE' COMMENT '性别，默认男性',
+                     like_count INT DEFAULT 0 COMMENT '获赞数',
+                     avatar VARCHAR(255) DEFAULT NULL COMMENT '用户头像',
                      email VARCHAR(64) DEFAULT NULL COMMENT '邮箱',
+                     following INT DEFAULT 0 COMMENT '他的关注',
+                     followed INT DEFAULT 0 COMMENT '关注他的',
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '用户创建时间',
                      gmt_last_login DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '用户上次登陆时间',
-                     PRIMARY KEY (user_id) USING BTREE,
-                     CONSTRAINT ck CHECK (gender = 'MALE' or gender = 'FEMALE')
+                     PRIMARY KEY (user_id) USING BTREE
 )ENGINE = InnoDB CHARACTER SET = utf8mb4 AUTO_INCREMENT = 1;
 # 保证数据库中用户名唯一
 # 一个邮箱只能绑定一个用户
@@ -33,6 +34,7 @@ CREATE TABLE blog(
                      read_num INT UNSIGNED DEFAULT 0 COMMENT '博客阅读数',
                      like_num INT UNSIGNED DEFAULT 0 COMMENT '博客点赞数',
                      comment_num INT UNSIGNED DEFAULT 0 COMMENT '评论数',
+                     collection_num INT UNSIGNED DEFAULT 0 COMMENT '收藏数',
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客创建时间',
                      gmt_modified DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客修改时间',
                      PRIMARY KEY (blog_id) USING BTREE,
@@ -73,6 +75,25 @@ CREATE TABLE perms (
     entity VARCHAR(10),
     perm VARCHAR(10)
 )ENGINE = InnoDB CHARACTER SET = utf8mb4;
+
+
+DROP TABLE IF EXISTS attention;
+CREATE TABLE attention(
+    uid BIGINT UNSIGNED NOT NULL COMMENT '用户id',
+    uided BIGINT UNSIGNED NOT NULL COMMENT '关注的用户id'
+);
+CREATE INDEX attention_index ON attention(uid, uided);
+ALTER TABLE attention ADD UNIQUE KEY (uid, uided);
+
+
+DROP TABLE IF EXISTS collection;
+CREATE TABLE collection(
+    uid BIGINT UNSIGNED NOT NULL COMMENT '用户id',
+    bid BIGINT UNSIGNED NOT NULL COMMENT '博客id'
+);
+CREATE INDEX collection_index ON collection(uid, bid);
+ALTER TABLE collection ADD UNIQUE KEY (uid, bid);
+
 
 
 

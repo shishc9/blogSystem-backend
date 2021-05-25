@@ -25,6 +25,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final static String USER_DEFAULT_AVATAR = "https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg";
+
     @Autowired
     UserMapper userMapper;
     @Autowired
