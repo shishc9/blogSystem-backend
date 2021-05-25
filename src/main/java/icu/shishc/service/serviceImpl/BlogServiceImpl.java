@@ -159,7 +159,7 @@ public class BlogServiceImpl implements BlogService {
             log.warn("【BlogService】insert::the blog has exist! blogTitle = {}", blog.getTitle());
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        blogMapper.insert(blog.getUserId(), title, blog.getContent().trim(), blog.getStatus().getKey());
+        blogMapper.insert(blog.getUserId(), title, blog.getContent().trim());
         Blog blog2 = blogMapper.getBlogByTitle(title);
         log.info("【BlogService】insert::add blog successfully! bID = {}", blog2.getBlogId());
         return blog2;

@@ -32,6 +32,14 @@ public interface UserMapper {
 
 
     /**
+     * list批量查找用户
+     * @param list list
+     * @return .
+     */
+    List<User> getUserByList(@Param("list") List<Long> list);
+
+
+    /**
      * 通过邮箱查找用户
      * @param email email
      * @return user
@@ -50,8 +58,6 @@ public interface UserMapper {
      * @param username 用户名
      * @param password 密码
      * @param identity 身份
-     * @param age 年龄
-     * @param gender 性别
      * @param email 邮件
      * @return int
      */
@@ -75,8 +81,6 @@ public interface UserMapper {
      * 更新用户基本信息（除了密码）
      * @param userId 用户id
      * @param username 用户名
-     * @param age 年龄
-     * @param gender 性别
      * @param email 邮件
      * @return int
      */
@@ -101,4 +105,28 @@ public interface UserMapper {
      * @return string
      */
     String getPasswordByUid(@Param("uid")Long uid);
+
+
+    int addPostCount(@Param("uid") Long uid);
+
+
+    int cancelPostCount(@Param("uid") Long uid);
+
+
+    int addLikeCount(@Param("uid") Long uid);
+
+
+    int cancelLikeCount(@Param("uid") Long uid);
+
+
+    int addFollowingCount(@Param("uid") Long uid);
+
+
+    int cancelFollowingCount(@Param("uid") Long uid);
+
+
+    int addFollowedCount(@Param("uid") Long uid);
+
+
+    int cancelFollowedCount(@Param("uid") Long uid);
 }

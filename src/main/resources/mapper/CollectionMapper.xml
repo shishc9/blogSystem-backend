@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="icu.shishc.mapper.CollectionMapper">
+    <resultMap id="BaseResultMap" type="icu.shishc.entity.BlogCollection">
+        <result column="uid" property="uid"/>
+        <result column="bid" property="bid"/>
+    </resultMap>
+
+    <insert id="userAddBlogCollection">
+        INSERT INTO collection(uid, bid) VALUES (${uid}, ${bid})
+    </insert>
+
+    <insert id="userCancelBlogCollection">
+        DELETE FROM collection WHERE uid = ${uid} AND bid = ${bid}
+    </insert>
+
+    <select id="getCollections" resultType="java.lang.Long">
+        SELECT bid FROM collection WHERE uid = ${uid}
+    </select>
+
+    <select id="collectionOrNot" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM collection WHERE uid = ${uid} AND bid = ${bid}
+    </select>
+
+</mapper>

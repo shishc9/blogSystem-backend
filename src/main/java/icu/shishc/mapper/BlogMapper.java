@@ -16,13 +16,11 @@ public interface BlogMapper {
      * @param userId 用户id
      * @param title 标题
      * @param content 内容
-     * @param status 状态
      * @return int
      */
     Integer insert(@Param("userId") Long userId,
                    @Param("title") String title,
-                   @Param("content") String content,
-                   @Param("status") int status
+                   @Param("content") String content
     );
 
 
@@ -57,12 +55,19 @@ public interface BlogMapper {
     );
 
 
-
     /**
      * 博客广场
      * @return list
      */
     List<Blog> getBlogSquare();
+
+
+    /**
+     * list bid 批量查询
+     * @param list list
+     * @return list
+     */
+    List<Blog> getBlogByList(@Param("list") List<Long> list);
 
 
     /**
@@ -133,5 +138,45 @@ public interface BlogMapper {
      * @return 受影响的行
      */
     int cancelALike(@Param("bid")Long bid);
+
+
+    /**
+     * 增加阅读量
+     * @param bid bid
+     * @return .
+     */
+    int addRead(@Param("bid") Long bid);
+
+
+    /**
+     * 评论数
+     * @param bid bid .
+     * @return .
+     */
+    int addComment(@Param("bid") Long bid);
+
+
+    /**
+     * 减少评论数
+     * @param bid bid
+     * @param count count
+     * @return .
+     */
+    int cancelComment(@Param("bid")Long bid, @Param("count")Integer count);
+
+
+    /**
+     * 收藏
+     * @param bid bid
+     * @return .
+     */
+    int addCollection(@Param("bid") Long bid);
+
+    /**
+     * 取消收藏
+     * @param bid bid
+     * @return .
+     */
+    int cancelCollection(@Param("bid")Long bid);
 
 }

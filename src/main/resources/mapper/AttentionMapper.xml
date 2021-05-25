@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="icu.shishc.mapper.AttentionMapper">
+    <resultMap id="BaseResultMap" type="icu.shishc.entity.Attention">
+        <result column="uid" property="uid"/>
+        <result column="uided" property="attentionUid"/>
+    </resultMap>
+
+    <insert id="addAttention">
+        INSERT INTO attention(uid, uided)
+            VALUES(${uid}, ${uided})
+    </insert>
+
+    <delete id="cancelAttention">
+        DELETE FROM attention WHERE uid = ${uid} AND uided = ${uided}
+    </delete>
+
+    <select id="getAttentions" resultType="java.lang.Long">
+        SELECT uided FROM attention WHERE uid = ${uid}
+    </select>
+
+    <select id="countAttentions" resultType="java.lang.Long">
+        SELECT uid FROM attention WHERE uided = ${uid}
+    </select>
+
+    <select id="attentionOrNot" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM attention WHERE uid = ${uid} AND uided = ${uided}
+    </select>
+
+</mapper>

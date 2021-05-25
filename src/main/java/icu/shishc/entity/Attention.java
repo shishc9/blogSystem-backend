@@ -7,5 +7,5 @@ package icu.shishc.entity;
  */
 public class Attention {
     Long uid;
-    Long attention_uid;
+    Long attentionUid;
 }
