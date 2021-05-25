@@ -57,14 +57,13 @@ public interface UserMapper {
      * 新增
      * @param username 用户名
      * @param password 密码
-     * @param identity 身份
      * @param email 邮件
+     * @param avatar 头像
      * @return int
      */
     Integer insert(@Param("username") String username,
                    @Param("password") String password,
-                   @Param("identity") int identity,
-                   @Param("site") String userSite,
+                   @Param("avatar") String avatar,
                    @Param("email") String email
     );
 
@@ -82,11 +81,13 @@ public interface UserMapper {
      * @param userId 用户id
      * @param username 用户名
      * @param email 邮件
+     * @param avatar 头像
      * @return int
      */
     Integer update(@Param("userId") Long userId,
                    @Param("username") String username,
                    @Param("site") String userSite,
+                   @Param("avatar") String avatar,
                    @Param("email") String email);
 
 
@@ -129,4 +130,7 @@ public interface UserMapper {
 
 
     int cancelFollowedCount(@Param("uid") Long uid);
+
+
+    int updateLoginTime(@Param("username")String username);
 }

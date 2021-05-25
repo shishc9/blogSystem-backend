@@ -12,6 +12,12 @@ import java.util.List;
  */
 public interface UserService{
 
+    /**
+     * 更新登陆时间
+     * @param uid uid
+     */
+    void updateLoginTime(String username);
+
 
     /**
      * 根据UID查找用户

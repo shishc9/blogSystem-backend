@@ -25,7 +25,8 @@
     <update id="update">
         UPDATE user SET username = '${username}',
                         email = '${email}',
-                        user_site = '${site}'
+                        user_site = '${site}',
+                        avatar = '${avatar}'
         WHERE user_id = ${userId}
     </update>
 
@@ -34,34 +35,38 @@
     </update>
 
     <update id="addPostCount">
-        UPDATE user SET post_count = post_count + 1
+        UPDATE user SET post_count = post_count + 1 WHERE user_id = ${uid}
     </update>
 
     <update id="addLikeCount">
-        UPDATE user SET like_count = user.like_count + 1
+        UPDATE user SET like_count = user.like_count + 1 WHERE user_id = ${uid}
     </update>
 
     <update id="addFollowingCount">
-        UPDATE user SET following = user.following + 1
+        UPDATE user SET following = user.following + 1 WHERE user_id = ${uid}
     </update>
     <update id="addFollowedCount">
-        UPDATE user SET followed = user.followed + 1
+        UPDATE user SET followed = user.followed + 1 WHERE user_id = ${uid}
     </update>
 
     <update id="cancelPostCount">
-        UPDATE user SET post_count = post_count - 1
+        UPDATE user SET post_count = post_count - 1 WHERE user_id = ${uid}
     </update>
 
     <update id="cancelLikeCount">
-        UPDATE user SET like_count = like_count - 1
+        UPDATE user SET like_count = like_count - 1 WHERE user_id = ${uid}
     </update>
 
     <update id="cancelFollowingCount">
-        UPDATE user SET following = user.following - 1
+        UPDATE user SET following = user.following - 1 WHERE user_id = ${uid}
     </update>
 
     <update id="cancelFollowedCount">
-        UPDATE user SET followed = user.followed - 1
+        UPDATE user SET followed = user.followed - 1 WHERE user_id = ${uid}
+    </update>
+
+    <update id="updateLoginTime">
+        UPDATE user SET gmt_last_login = NOW() WHERE username = '${username}'
     </update>
 
     <delete id="delete">

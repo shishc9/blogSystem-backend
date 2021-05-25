@@ -33,6 +33,7 @@ public class LoginServiceImpl implements LoginService {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             currentUser.login(token);
+            userService.updateLoginTime(username);
             return true;
         } catch (AuthenticationException e) {
             return false;
@@ -40,19 +41,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-//    /**
-//     * 目前先不用这个, 预留方法
-//     * @return
-//     */
-//    @Override
-//    public String getInfo() {
-//        //Session session = SecurityUtils.getSubject().getSession();
-//        return null;
-//    }
-
-
     @Override
-    public boolean logout() throws CustomException{
+    public boolean logout() {
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         log.info("【LoginService】logout");
