@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User insert(User user) throws CustomException {
-        if(userCheck(user)) {
+        if(!userCheck(user)) {
             log.warn("【UserService】insert::bad user entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
