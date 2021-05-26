@@ -19,46 +19,45 @@ import java.util.Collections;
  */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer{
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        // 设置允许跨域的路由
-        registry.addMapping("/**")
-                // 设置允许跨域请求的域名
-                .allowedOriginPatterns("*")
-                // 是否允许证书（cookies）
-                .allowCredentials(true)
-                // 设置允许的方法
-                .allowedMethods("*")
-                // 跨域允许时间
-                .maxAge(3600);
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        // 设置允许跨域的路由
+//        registry.addMapping("/**")
+//                // 设置允许跨域请求的域名
+//                .allowedOriginPatterns("*")
+//                // 是否允许证书（cookies）
+//                .allowCredentials(true)
+//                // 设置允许的方法
+//                .allowedMethods("*")
+//                // 跨域允许时间
+//                .maxAge(3600);
+//    }
+////    @Bean
+////    public WebMvcConfigurer corsConfigurer() {
+////        return new WebMvcConfigurer() {
+////            @Override
+////            public void addCorsMappings(CorsRegistry registry) {
+////                registry.addMapping("/**")
+////                        .allowedOrigins("*")
+////                        .allowCredentials(true)
+////                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTION", "HEAD")
+////                        .allowedHeaders("*")
+////                        .exposedHeaders("*");
+////            }
+////        };
+////    }
+    @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilter() {
+        FilterRegistrationBean<CorsFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+        CorsFilter corsFilter = new CorsFilter((request) -> {
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
+            corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+            corsConfiguration.setAllowedMethods(Collections.singletonList("\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTION\", \"HEAD\""));
+            corsConfiguration.setAllowCredentials(true);
+            return corsConfiguration;
+        });
+        filterFilterRegistrationBean.setFilter(corsFilter);
+        filterFilterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
+        return filterFilterRegistrationBean;
     }
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("*")
-//                        .allowCredentials(true)
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTION", "HEAD")
-//                        .allowedHeaders("*")
-//                        .exposedHeaders("*");
-//            }
-//        };
-//    }
-//    @Bean
-//    public FilterRegistrationBean<CorsFilter> corsFilter() {
-//
-//        FilterRegistrationBean<CorsFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-//        CorsFilter corsFilter = new CorsFilter((request) -> {
-//            CorsConfiguration corsConfiguration = new CorsConfiguration();
-//            corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
-//            corsConfiguration.setAllowedMethods(Collections.singletonList("\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTION\", \"HEAD\""));
-//            corsConfiguration.setAllowCredentials(true);
-//            return corsConfiguration;
-//        });
-//        filterFilterRegistrationBean.setFilter(corsFilter);
-//        filterFilterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
-//        return filterFilterRegistrationBean;
-//    }
 }
