@@ -4,7 +4,6 @@ import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
-import icu.shishc.service.BlogService;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,10 +23,8 @@ public class UserController {
      * 用户接口
      */
     private final UserService userService;
-    private final BlogService blogService;
 
-    public UserController(UserService userService, BlogService blogService) {
-        this.blogService = blogService;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -38,8 +35,8 @@ public class UserController {
      * @return UserDTO
      * @throws CustomException .
      */
-    @GetMapping("/{username}")
-    public MyDTO getUserByName(@PathVariable("username") String username) throws CustomException {
+    @GetMapping("/username")
+    public MyDTO getUserByName(@RequestParam("username") String username) throws CustomException {
         User user = userService.getUserByName(username);
         log.info("【UserController】getUserByName:: return user, uID = {}", user == null ? 0 : user.getUserId());
         if (user == null) {
@@ -98,7 +95,6 @@ public class UserController {
 
     /**
      * 给管理员开放的用户管理中心。 获取所有用户。
-     * 
      * @return .
      */
     @GetMapping("/management")

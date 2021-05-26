@@ -30,7 +30,6 @@ CREATE TABLE blog(
                      user_id BIGINT UNSIGNED NOT NULL COMMENT '博客所属用户id',
                      title VARCHAR(255) NOT NULL COMMENT '标题',
                      content LONGTEXT COMMENT '正文',
-                     status  TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '博客状态，只有0/1，0：公开，1：私有',
                      read_num INT UNSIGNED DEFAULT 0 COMMENT '博客阅读数',
                      like_num INT UNSIGNED DEFAULT 0 COMMENT '博客点赞数',
                      comment_num INT UNSIGNED DEFAULT 0 COMMENT '评论数',

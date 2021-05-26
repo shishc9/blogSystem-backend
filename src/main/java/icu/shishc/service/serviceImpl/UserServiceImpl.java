@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    // TODO
     @Override
     public Integer delete(Long userId) throws CustomException {
         if(!checkUserId(userId)) {

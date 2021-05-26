@@ -44,13 +44,11 @@ public interface BlogMapper {
      * 博客更新
      * @param title 博客标题
      * @param content 内容
-     * @param status 状态
      * @param blogId 博客id
      * @return 1 0
      */
     Integer update(@Param("title") String title,
                    @Param("content") String content,
-                   @Param("status") int status,
                    @Param("blog_id") Long blogId
     );
 
@@ -114,14 +112,14 @@ public interface BlogMapper {
                  @Param("userId") Long userId);
 
 
-    /**
-     * 用户的状态博客
-     * @param status 博客状态
-     * @param userId 用户id
-     * @return list
-     */
-    List<Blog> getBlogByStatus(@Param("status") int status,
-                               @Param("userId") Long userId);
+//    /**
+//     * 用户的状态博客
+//     * @param status 博客状态
+//     * @param userId 用户id
+//     * @return list
+//     */
+//    List<Blog> getBlogByStatus(@Param("status") int status,
+//                               @Param("userId") Long userId);
 
 
     /**

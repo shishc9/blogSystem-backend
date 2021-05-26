@@ -6,8 +6,6 @@
         <result column="user_id" property="userId"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
-        <!-- 对应枚举字段加上TypeHandler -->
-        <result column="status" property="status" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
         <result column="read_num" property="readNum"/>
         <result column="like_num" property="likeNum"/>
         <result column="comment_num" property="commentNum"/>
@@ -24,7 +22,6 @@
     <update id="update">
         UPDATE blog SET title = '${title}',
                 content = '${content}',
-                status = ${status},
                 gmt_modified = now()
         where blog_id = ${blog_id}
     </update>
@@ -66,29 +63,24 @@
         UPDATE blog SET like_num = like_num - ${count} WHERE blog_id = ${bid}
     </update>
 
-    <!-- 注意ResultType 和 ResultMap -->
-    <select id="getBlogByStatus" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE user_id = ${userId} AND status = ${status}
-    </select>
-
     <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &lt; ${bid} AND status = 0 ORDER BY blog_id DESC LIMIT 1
+        SELECT * FROM blog WHERE blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
     </select>
 
     <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog_id &gt; ${bid} AND status = 0 ORDER BY blog_id LIMIT 1
+        SELECT * FROM blog WHERE blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
     </select>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE status = 0 ORDER BY read_num
+        SELECT * FROM blog ORDER BY read_num
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE user_id = ${userId} AND status = 0 ORDER BY gmt_modified DESC
+        SELECT * FROM blog WHERE user_id = ${userId} ORDER BY gmt_modified DESC
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE title = '${title}' AND status = 0
+        SELECT * FROM blog WHERE title = '${title}'
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap">

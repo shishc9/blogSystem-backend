@@ -6,7 +6,6 @@ import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.Blog;
 import icu.shishc.entity.Pager;
-import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.service.BlogService;
 import icu.shishc.util.PagerUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -57,11 +56,11 @@ public class BlogController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @GetMapping("/u/{userId}")
+    @GetMapping("/u/blog")
     public MyDTO getUserBlogs(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "5") int size,
-            @PathVariable("userId") Long userId
+            @RequestParam("userId") Long userId
     ) throws CustomException {
         log.info("【BlogController】getUserBlogs::userId = {}", userId);
         PageHelper.startPage(page, size);
@@ -76,9 +75,9 @@ public class BlogController {
      * @param title 博客标题
      * @return MyDTO
      */
-    @GetMapping("/{title}")
+    @GetMapping("/title")
     public MyDTO getByTitle(
-            @PathVariable("title") String title
+            @RequestParam("title") String title
     ) throws CustomException {
         Blog blog = blogService.getBlogByTitle(title);
         log.info("【Controller】Blog::get-by-title, title = {}", title);
@@ -92,32 +91,12 @@ public class BlogController {
      * @param bid
      * @return
      */
-    @GetMapping("/{bid}")
-    public MyDTO getById(@PathVariable("bid") Long bid
+    @GetMapping("/id")
+    public MyDTO getById(@RequestParam("bid") Long bid
     ) throws CustomException {
         log.info("【Controller】getById::get-by-id(bid = {})", bid);
         Blog blog = blogService.getBlogByBID(bid);
         return MyDTO.successDTO(blog);
-    }
-
-
-    /**
-     * 通过状态查找博客
-     * @return MyDTO
-     */
-    @GetMapping("/u/{userId}/{status}")
-    public MyDTO getByStatus(
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            @PathVariable("userId") Long userId,
-            @PathVariable("status") int status
-    ) throws CustomException {
-        BlogStatus blogStatus = BlogStatus.ValueOf(status);
-        log.info("【BlogController】getByStatus::blogStatus = {}, userId = {}", blogStatus, userId);
-        PageHelper.startPage(page, size);
-        List<Blog> list = blogService.getBlogByStatus(blogStatus, userId);
-        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
-        return MyDTO.successDTO(pager);
     }
 
 
@@ -128,10 +107,10 @@ public class BlogController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @GetMapping("/u/{userId}/{bid}/previous")
+    @GetMapping("/u/id/previous")
     public MyDTO getPrevious(
-            @PathVariable("bid") Long bid,
-            @PathVariable("userId") Long userId
+            @RequestParam("bid") Long bid,
+            @RequestParam("userId") Long userId
     ) throws CustomException {
         log.info("【Controller】Blog::getPrevious: bid = {},userid = {}", bid, userId);
         Blog blog = blogService.getPrevious(bid, userId);
@@ -146,10 +125,10 @@ public class BlogController {
      * @return MyDTO
      * @throws CustomException .
      */
-    @GetMapping("/u/{userId}/{bid}/next")
+    @GetMapping("/u/id/next")
     public MyDTO getNext(
-            @PathVariable("bid") Long bid,
-            @PathVariable("userId") Long userId
+            @RequestParam("bid") Long bid,
+            @RequestParam("userId") Long userId
     ) throws CustomException {
         log.info("【Controller】Blog::getPrevious: bid = {}, user = {}", bid, userId);
         Blog blog = blogService.getNext(bid, userId);

@@ -23,8 +23,8 @@ public class CommentController {
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
 
-    @GetMapping("/{bid}")
-    public MyDTO getCommentByBid(@PathVariable("bid") Long bid)
+    @GetMapping("/b")
+    public MyDTO getCommentByBid(@RequestParam("bid") Long bid)
             throws CustomException {
         return MyDTO.successDTO(commentService.findCommentsByBlogId(bid));
     }

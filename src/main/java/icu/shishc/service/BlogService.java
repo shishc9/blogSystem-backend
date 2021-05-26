@@ -2,7 +2,6 @@ package icu.shishc.service;
 
 import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Blog;
-import icu.shishc.enumeration.BlogStatus;
 import java.util.List;
 
 /**
@@ -45,14 +44,14 @@ public interface BlogService{
     Blog getBlogByBID(Long bid) throws CustomException;
 
 
-    /**
-     * 根据状态查找某个用户的博客
-     * @param blogStatus 博客状态
-     * @param userId 用户id
-     * @return list
-     * @throws CustomException .
-     */
-    List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException;
+//    /**
+//     * 根据状态查找某个用户的博客
+//     * @param blogStatus 博客状态
+//     * @param userId 用户id
+//     * @return list
+//     * @throws CustomException .
+//     */
+//    List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException;
 
 
     /**

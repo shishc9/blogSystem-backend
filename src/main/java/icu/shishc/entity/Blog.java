@@ -36,10 +36,6 @@ public class Blog implements Serializable {
      */
     private String content;
     /**
-     * 状态0：公开， 状态1：私有
-     */
-    private BlogStatus status;
-    /**
      * 阅读量
      */
     private Integer readNum;
