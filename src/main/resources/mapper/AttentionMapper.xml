@@ -15,6 +15,10 @@
         DELETE FROM attention WHERE uid = ${uid} AND uided = ${uided}
     </delete>
 
+    <delete id="deleteUserAttention">
+        DELETE FROM attention WHERE uid = ${uid} OR uided = ${uid}
+    </delete>
+
     <select id="getAttentions" resultType="java.lang.Long">
         SELECT uided FROM attention WHERE uid = ${uid}
     </select>

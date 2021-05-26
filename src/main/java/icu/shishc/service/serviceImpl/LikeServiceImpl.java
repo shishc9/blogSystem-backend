@@ -1,5 +1,6 @@
 package icu.shishc.service.serviceImpl;
 
+import icu.shishc.entity.User;
 import icu.shishc.exception.CustomException;
 import icu.shishc.mapper.BlogMapper;
 import icu.shishc.mapper.LikeMapper;
@@ -53,7 +54,14 @@ public class LikeServiceImpl implements LikeService {
             log.warn("【LikeService】cancelLike::bad blogId, blogId = {}", bid);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        blogMapper.cancelALike(bid);
+        blogMapper.cancelLikes(bid, 1);
         return likeMapper.cancelLike(bid, userId);
+    }
+
+
+    @Override
+    public Integer deleteBlogLikes(Long bid){
+        // 删除博客的所有点赞
+        return likeMapper.deleteBlogAllLike(bid);
     }
 }

@@ -125,6 +125,13 @@ public interface BlogMapper {
 
 
     /**
+     * 通过博客id找到用户id
+     * @param bid bid
+     * @return .
+     */
+    Long getUserByBid(@Param("bid") Long bid);
+
+    /**
      * 点赞
      * @param bid 博客id
      * @return 受影响的行
@@ -137,7 +144,7 @@ public interface BlogMapper {
      * @param bid 博客id
      * @return 受影响的行
      */
-    int cancelALike(@Param("bid")Long bid);
+    int cancelLikes(@Param("bid")Long bid, @Param("count") Integer count);
 
 
     /**

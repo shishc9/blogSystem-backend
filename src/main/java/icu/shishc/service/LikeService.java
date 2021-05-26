@@ -26,4 +26,13 @@ public interface LikeService {
      */
     Integer cancelLike(Long bid, Long userId) throws CustomException;
 
+
+    /**
+     * 删除博客的所有点赞
+     * @param bid bid
+     * @return .
+     */
+    Integer deleteBlogLikes(Long bid);
+
+
 }

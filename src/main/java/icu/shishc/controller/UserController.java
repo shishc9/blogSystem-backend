@@ -4,6 +4,7 @@ import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
+import icu.shishc.service.BlogService;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,10 @@ public class UserController {
      * 用户接口
      */
     private final UserService userService;
+    private final BlogService blogService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BlogService blogService) {
+        this.blogService = blogService;
         this.userService = userService;
     }
 
@@ -77,7 +80,6 @@ public class UserController {
 
     /**
      * 删除/注销用户, 等级开放 -> blogger + user
-     * 
      * @param uid 用户id
      * @return MyDTO
      * @throws CustomException .
@@ -86,6 +88,10 @@ public class UserController {
     public MyDTO delete(@RequestParam("uid") String uid) throws CustomException {
         long param = Long.parseLong(uid);
         Integer status = userService.delete(param);
+        if(status == 1) {
+            //userService.deleteUserData(param);
+            log.info("【UserController】delete:: delete {}'s all data", uid);
+        }
         log.info("【UserController】delete:: delete uid = {}", uid);
         return MyDTO.successDTO(status);
     }

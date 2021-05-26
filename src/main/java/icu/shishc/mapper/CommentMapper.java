@@ -77,4 +77,12 @@ public interface CommentMapper {
      * @return list
      */
     List<Long> toDeleteComments(@Param("commentId")Long commentId);
+
+
+    /**
+     * 删除博客的所有评论
+     * @param bid bid
+     * @return .
+     */
+    int deleteBlogComments(@Param("bid") Long bid);
 }

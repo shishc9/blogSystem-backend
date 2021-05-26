@@ -1,11 +1,11 @@
 package icu.shishc.service.serviceImpl;
 
+import icu.shishc.entity.User;
 import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Blog;
 import icu.shishc.enumeration.BlogStatus;
 import icu.shishc.mapper.BlogMapper;
-import icu.shishc.service.BlogService;
-import icu.shishc.service.UserService;
+import icu.shishc.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +27,12 @@ public class BlogServiceImpl implements BlogService {
     BlogMapper blogMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    LikeService likeService;
+    @Autowired
+    CollectionService collectionService;
+    @Autowired
+    CommentService commentService;
 
 
     @Override
@@ -173,14 +179,18 @@ public class BlogServiceImpl implements BlogService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
-        return blogMapper.delete(bid);
-    }
-
-
-    @Override
-    public Integer deleteByUser(Long uid) {
-
-        return null;
+        Integer num = blogMapper.delete(bid);
+        if(num == 1) {
+            Integer likeCount = likeService.deleteBlogLikes(bid);
+            // 删除收藏该博客的记录
+            collectionService.deleteBlogCollection(bid);
+            // 删除该博客的所有评论
+            commentService.deleteBlogComments(bid);
+            // 更新该博客所属用户的信息
+            User user = userService.getUserById(blogMapper.getUserByBid(bid));
+            userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount() - likeCount, user.getFollowing(), user.getFollowed());
+        }
+        return num;
     }
 
 

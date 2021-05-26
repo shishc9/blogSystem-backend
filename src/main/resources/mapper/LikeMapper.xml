@@ -10,4 +10,16 @@
         DELETE FROM blike WHERE blog_id = ${bid} AND user_id = ${uid}
     </delete>
 
+    <delete id="deleteBlogAllLike">
+        DELETE FROM blike WHERE blog_id = ${bid}
+    </delete>
+
+    <select id="getUserAllLike" resultType="java.lang.Long">
+        SELECT blog_id FROM blike WHERE user_id = ${uid}
+    </select>
+
+    <select id="getBlogAllLike" resultType="java.lang.Integer">
+        SELECT count(*) FROM blike WHERE blog_id = ${bid}
+    </select>
+
 </mapper>

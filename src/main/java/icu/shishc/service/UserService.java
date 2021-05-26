@@ -14,7 +14,7 @@ public interface UserService{
 
     /**
      * 更新登陆时间
-     * @param uid uid
+     * @param username username
      */
     void updateLoginTime(String username);
 
@@ -61,6 +61,14 @@ public interface UserService{
      * @throws CustomException .
      */
     Integer delete(Long id) throws CustomException;
+
+
+//    /**
+//     * 删除一个用户的所有附带数据
+//     * @param uid uid
+//     * @throws CustomException .
+//     */
+//    void deleteUserData(Long uid) throws CustomException;
 
 
     /**
@@ -112,6 +120,16 @@ public interface UserService{
      * @return T / F
      */
     boolean updatePassword(String oldPassword, Long userId, String newPassword) throws CustomException;
+
+
+    /**
+     * 更新用户统计量
+     * @param postCount postCount
+     * @param likeCount likeCount
+     * @param following following
+     * @param followed followed
+     */
+    void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer following, Integer followed);
 
 
     /**

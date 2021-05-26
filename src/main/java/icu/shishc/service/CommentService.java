@@ -34,6 +34,14 @@ public interface CommentService {
      * @param cid 待删除的评论id
      * @return 受影响行数
      */
-    int deleteComment(Long cid) ;
+    int deleteComment(Long cid);
+
+
+    /**
+     * 删除一篇博客的所有评论
+     * @param bid bid
+     * @return .
+     */
+    int deleteBlogComments(Long bid);
 
 }

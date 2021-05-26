@@ -50,9 +50,15 @@
     </delete>
 
 
+    <delete id="deleteBlogComments">
+        DELETE FROM comment WHERE blog_id = ${bid}
+    </delete>
+
+
     <select id="toDeleteComments" resultType="java.lang.Long" parameterType="java.lang.Long">
         SELECT c.comment_id FROM comment c WHERE parent_comment_id = ${commentId}
     </select>
+
 
 
 </mapper>

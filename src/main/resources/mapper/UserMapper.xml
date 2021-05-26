@@ -69,6 +69,14 @@
         UPDATE user SET gmt_last_login = NOW() WHERE username = '${username}'
     </update>
 
+    <update id="updateNum">
+        UPDATE user SET post_count = ${postCount},
+                        like_count = ${likeCount},
+                        following = ${following},
+                        followed = ${followed}
+                WHERE user_id = ${uid}
+    </update>
+
     <delete id="delete">
         DELETE FROM user WHERE user_id = ${id}
     </delete>

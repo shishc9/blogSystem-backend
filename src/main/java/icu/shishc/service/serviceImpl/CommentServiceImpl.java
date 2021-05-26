@@ -1,5 +1,6 @@
 package icu.shishc.service.serviceImpl;
 
+import icu.shishc.entity.Blog;
 import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Comment;
 import icu.shishc.mapper.CommentMapper;
@@ -117,6 +118,7 @@ public class CommentServiceImpl implements CommentService {
 
     private int count = 0;
 
+
     @Override
     public int deleteComment(Long cid) {
         List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
@@ -128,6 +130,12 @@ public class CommentServiceImpl implements CommentService {
             }
         }
         return count;
+    }
+
+
+    @Override
+    public int deleteBlogComments(Long bid) {
+        return commentMapper.deleteBlogComments(bid);
     }
 
 

@@ -1,12 +1,14 @@
 package icu.shishc.service.serviceImpl;
 
+import icu.shishc.entity.Blog;
 import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Perms;
 import icu.shishc.entity.User;
 import icu.shishc.enumeration.UserIdentity;
-import icu.shishc.mapper.BlogMapper;
-import icu.shishc.mapper.PermsMapper;
-import icu.shishc.mapper.UserMapper;
+import icu.shishc.mapper.*;
+import icu.shishc.service.BlogService;
+import icu.shishc.service.CommentService;
+import icu.shishc.service.LikeService;
 import icu.shishc.service.UserService;
 import icu.shishc.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PermsMapper permsMapper;
     @Autowired
-    BlogMapper blogMapper;
+    BlogService blogService;
+    @Autowired
+    CollectionMapper collectionMapper;
+    @Autowired
+    AttentionMapper attentionMapper;
+    @Autowired
+    LikeService likeService;
+    @Autowired
+    CommentService commentService;
 
 
     @Override
@@ -62,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         log.info("【UserService】gerUserByEmail::email = {}", email);
-        return userMapper.findUserByEmail(email);
+        return userMapper.findUserByEmail(email.trim());
     }
 
 
@@ -79,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User insert(User user) throws CustomException {
-        if(!userCheck(user)) {
+        if(userCheck(user)) {
             log.warn("【UserService】insert::bad user entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
@@ -105,10 +115,33 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【UserService】delete::delete user, userId = {}", userId);
-        blogMapper.deleteByUser(userId);
-        log.info("【UserService】delete::delete user's all blog successfully!");
+        //deleteUserData(userId);
+        log.info("【UserService】delete::delete user's all data successfully!");
         return userMapper.delete(userId);
     }
+
+
+//    @Override
+//    public void deleteUserData(Long uid) throws CustomException {
+//        // 删除用户的所有关注和被关注
+//        attentionMapper.deleteUserAttention(uid);
+//        // 删除一个该用户的所有博客
+//        List<Blog> list = blogService.getBlogByUserId(uid);
+//        if(list.size() > 0) {
+//            for(Blog blog : list) {
+//                // 删除所有收藏博客的用户
+//                Long bid = blog.getBlogId();
+//                collectionMapper.deleteBlogCollection(bid);
+//                blogService.delete(bid);
+//                // 删除该用户的所有评论
+//                commentService.deleteBlogComments(bid);
+//                // 删除用户的所有收藏博客
+//                collectionMapper.deleteBlogCollection(bid);
+//                // 删除用户的所有点赞
+//                likeService.deleteBlogLikes(bid);
+//            }
+//        }
+//    }
 
 
     @Override
@@ -123,7 +156,7 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        //userMapper.update(userId, user.getUsername(), user.getUserSite(), user.getEmail());
+        userMapper.update(userId, user.getUsername(), user.getUserSite(), user.getAvatar(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
     }
@@ -145,15 +178,21 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer following, Integer followed) {
+        userMapper.updateNum(uid, postCount, likeCount, following, followed);
+    }
+
+
+    @Override
     public boolean userCheck(User user) {
         String password = user.getPassword().trim();
         String username = user.getUsername().trim();
         String email = user.getEmail();
         if("".equals(username) || "".equals(password) || !regexMatch(email)) {
             log.warn("【UserService】userCheck::bad user entity");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 

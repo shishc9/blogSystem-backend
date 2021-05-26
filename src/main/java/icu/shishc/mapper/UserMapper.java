@@ -91,6 +91,13 @@ public interface UserMapper {
                    @Param("email") String email);
 
 
+    Integer updateNum(@Param("uid") Long uid,
+                      @Param("postCount") Integer postCount,
+                      @Param("likeCount") Integer likeCount,
+                      @Param("following") Integer following,
+                      @Param("followed") Integer followed);
+
+
     /**
      * 修改密码
      * @param password 密码

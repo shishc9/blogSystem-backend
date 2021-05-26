@@ -26,4 +26,9 @@ public interface CollectionMapper {
 
     int collectionOrNot(@Param("uid") Long uid, @Param("bid") Long bid);
 
+
+    int deleteUserCollections(@Param("uid") Long uid);
+
+
+    int deleteBlogCollection(@Param("bid") Long bid);
 }
