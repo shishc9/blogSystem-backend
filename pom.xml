@@ -16,10 +16,10 @@
     </parent>
 
     <properties>
-<!--        <maven.compiler.source>8</maven.compiler.source>-->
-<!--        <maven.compiler.target>8</maven.compiler.target>-->
+        <maven.compiler.version>3.8.0</maven.compiler.version>
         <java.version>11</java.version>
         <docker.image.prefix>springboot</docker.image.prefix>
+        <start-class>icu.shishc.BlogApplication</start-class>
     </properties>
 
     <dependencies>
@@ -150,10 +150,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>11</source>  <!-- same as <java.version> -->
-                    <target>11</target>    <!-- same as <java.version> -->
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <!-- Docker maven plugin -->
