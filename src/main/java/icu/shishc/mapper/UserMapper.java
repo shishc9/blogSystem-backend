@@ -24,6 +24,14 @@ public interface UserMapper {
 
 
     /**
+     * 获取用户id
+     * @param username
+     * @return
+     */
+    Long getUserId(@Param("username") String username);
+
+
+    /**
      * 用户名查找
      * @param username username
      * @return user

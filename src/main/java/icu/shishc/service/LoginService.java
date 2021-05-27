@@ -12,7 +12,7 @@ public interface LoginService {
      * @return 登陆是否成功
      * @throws CustomException .
      */
-    boolean authLogin(String username, String password) throws CustomException;
+    Long authLogin(String username, String password) throws CustomException;
 
 //
 //    /**

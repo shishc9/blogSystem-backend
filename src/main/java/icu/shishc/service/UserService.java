@@ -71,6 +71,8 @@ public interface UserService{
     void deleteUserData(Long uid) throws CustomException;
 
 
+    Long getUserId(String username);
+
     /**
      * 更新一个用户
      * @param user 用户实体

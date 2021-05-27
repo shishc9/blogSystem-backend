@@ -161,6 +161,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Long getUserId(String username) {
+        return userMapper.getUserId(username);
+    }
+
 
     @Override
     public User update(User user) throws CustomException {

@@ -6,6 +6,7 @@ import icu.shishc.dto.UserDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

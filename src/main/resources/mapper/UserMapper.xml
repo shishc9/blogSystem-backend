@@ -111,4 +111,8 @@
         </foreach>
     </select>
 
+    <select id="getUserId" resultType="java.lang.Long">
+        SELECT user_id FROM user WHERE username = '${username}'
+    </select>
+
 </mapper>

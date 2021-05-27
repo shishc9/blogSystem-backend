@@ -31,10 +31,10 @@ public class LoginController {
     public MyDTO login(@RequestBody LoginDTO loginDTO) throws CustomException {
         String username = loginDTO.getUsername();
         String pwd = loginDTO.getPwd();
-        boolean flag = loginService.authLogin(username, pwd);
-        if(flag) {
+        Long uid = loginService.authLogin(username, pwd);
+        if(uid != null) {
             log.info("【LoginController】authLogin, username = {}, pwd = {}, successfully!", username, pwd);
-            return MyDTO.successDTO("LOGIN_SUCCESS");
+            return MyDTO.successDTO(uid);
         }
         log.info("【LoginController】authLogin, username = {}, pwd = {}, failed", username, pwd);
         return MyDTO.wrongDTO(HttpStatus.BAD_REQUEST, "LOGIN_FAILED");

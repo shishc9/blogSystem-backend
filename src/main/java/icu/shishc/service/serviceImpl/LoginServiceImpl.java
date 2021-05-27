@@ -28,15 +28,15 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public boolean authLogin(String username, String password) throws CustomException {
+    public Long authLogin(String username, String password) throws CustomException {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             currentUser.login(token);
             userService.updateLoginTime(username);
-            return true;
+            return userService.getUserId(username);
         } catch (AuthenticationException e) {
-            return false;
+            return null;
         }
     }
 
