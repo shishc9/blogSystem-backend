@@ -36,7 +36,7 @@ public interface CollectionService {
      * @param uid uid
      * @return .
      */
-    List<Blog> collectionList(Long uid);
+    List<Blog> collectionList(Long uid) throws CustomException;
 
     /**
      * 是否收藏
@@ -44,5 +44,5 @@ public interface CollectionService {
      * @param bid bid
      * @return .
      */
-    int collectionOrNot(Long uid, Long bid);
+    int collectionOrNot(Long uid, Long bid) throws CustomException;
 }

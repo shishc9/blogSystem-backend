@@ -54,7 +54,7 @@ public class CommentController {
      * @return
      */
     @DeleteMapping("/comment")
-    public MyDTO deleteComment(@RequestParam("cid") Long cid) {
+    public MyDTO deleteComment(@RequestParam("cid") Long cid) throws CustomException {
         log.info("【CommentController】deleteComment, delete cid = {}", cid);
         return MyDTO.successDTO(commentService.deleteComment(cid));
     }

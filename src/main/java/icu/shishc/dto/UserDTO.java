@@ -17,19 +17,27 @@ public class UserDTO {
     Long userId;
     String username;
     UserIdentity userIdentity;
-    Integer age;
     String userSite;
-    Integer postCount;
-    String gender;
+    String avatar;
     String email;
+    Integer postCount;
+    Integer collectionCount;
+    Integer likeCount;
+    Integer following;
+    Integer followed;
 
 
     public UserDTO(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.userIdentity = user.getUserIdentity();
-        this.email = user.getEmail();
         this.userSite = user.getUserSite();
+        this.avatar = user.getAvatar();
+        this.email = user.getEmail();
         this.postCount = user.getPostCount();
+        this.collectionCount = user.getCollectionCount();
+        this.likeCount = user.getLikeCount();
+        this.following = user.getFollowing();
+        this.followed = user.getFollowed();
     }
 }

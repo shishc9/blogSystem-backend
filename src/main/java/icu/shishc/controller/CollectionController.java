@@ -41,9 +41,12 @@ public class CollectionController {
     public MyDTO listUserCollections(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size,
-            @RequestParam("uid") Long uid) {
+            @RequestParam("uid") Long uid) throws CustomException {
         PageHelper.startPage(page, size);
         List<Blog> list = collectionService.collectionList(uid);
+        if(list == null) {
+            return MyDTO.successDTO(null);
+        }
         Pager pager = PagerUtils.getPager(new PageInfo<>(list));
         return MyDTO.successDTO(pager);
     }
@@ -62,7 +65,7 @@ public class CollectionController {
     }
 
     @RequestMapping(value = "/collection", method = RequestMethod.GET)
-    public MyDTO collectionOrNot(@RequestParam("uid") Long uid, @RequestParam("bid") Long bid) {
+    public MyDTO collectionOrNot(@RequestParam("uid") Long uid, @RequestParam("bid") Long bid) throws CustomException {
         int i = collectionService.collectionOrNot(uid, bid);
         return MyDTO.successDTO(i);
     }

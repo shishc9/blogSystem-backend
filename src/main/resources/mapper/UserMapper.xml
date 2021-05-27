@@ -10,6 +10,7 @@
         <result column="user_site" property="userSite"/>
         <result column="email" property="email"/>
         <result column="like_count" property="likeCount"/>
+        <result column="collection_count" property="collectionCount"/>
         <result column="avatar" property="avatar"/>
         <result column="following" property="following"/>
         <result column="followed" property="followed"/>
@@ -73,7 +74,7 @@
         UPDATE user SET post_count = ${postCount},
                         like_count = ${likeCount},
                         following = ${following},
-                        collection = ${collectionCount},
+                        collection_count = ${collectionCount},
                         followed = ${followed}
                 WHERE user_id = ${uid}
     </update>

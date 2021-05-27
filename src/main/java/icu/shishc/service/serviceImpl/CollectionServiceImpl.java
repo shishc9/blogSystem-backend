@@ -9,6 +9,7 @@ import icu.shishc.service.BlogService;
 import icu.shishc.service.CollectionService;
 import icu.shishc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,9 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public int addCollection(Long uid, Long bid) throws CustomException {
+        if(collectionOrNot(uid, bid) == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "DON'T_COLLECT_AGAIN");
+        }
         User user = userService.getUserById(uid);
         Blog blog = blogService.getBlogByBID(bid);
         userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount(), user.getCollectionCount() + 1, user.getFollowing(), user.getFollowed());
@@ -44,6 +48,9 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public int cancelCollection(Long uid, Long bid) throws CustomException {
+        if(collectionOrNot(uid, bid) == 0) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
         User user = userService.getUserById(uid);
         Blog blog = blogService.getBlogByBID(bid);
         userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount(), user.getCollectionCount() - 1, user.getFollowing(), user.getFollowed());
@@ -52,13 +59,29 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<Blog> collectionList(Long uid) {
+    public List<Blog> collectionList(Long uid) throws CustomException {
+        if(userService.getUserById(uid) == null) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
         List<Long> list = collectionMapper.getCollections(uid);
-        return blogService.getBlogByList(list);
+        if(list.size() > 0) {
+            return blogService.getBlogByList(list);
+        }
+        return null;
     }
 
     @Override
-    public int collectionOrNot(Long uid, Long bid) {
+    public int collectionOrNot(Long uid, Long bid) throws CustomException {
+        if(!paramLegalOrNot(uid, bid)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
         return collectionMapper.collectionOrNot(uid, bid);
+    }
+
+
+    private boolean paramLegalOrNot(Long uid, Long bid) throws CustomException {
+        User user = userService.getUserById(uid);
+        Blog blog = blogService.getBlogByBID(bid);
+        return user != null && blog != null;
     }
 }
