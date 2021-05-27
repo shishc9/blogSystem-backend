@@ -31,4 +31,12 @@ public interface CollectionMapper {
 
 
     int deleteBlogCollection(@Param("bid") Long bid);
+
+
+    /**
+     * 找到收藏了这篇博客的所有用户
+     * @param bid bid
+     * @return .
+     */
+    List<Long> getUidByBid(@Param("bid") Long bid);
 }

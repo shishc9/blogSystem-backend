@@ -58,4 +58,6 @@ public interface LikeMapper {
     int deleteBlogAllLike(@Param("bid") Long bid);
 
 
+    int likeOrNot(@Param("uid") Long uid, @Param("bid") Long bid);
+
 }

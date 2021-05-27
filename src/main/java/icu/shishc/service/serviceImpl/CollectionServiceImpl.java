@@ -30,7 +30,14 @@ public class CollectionServiceImpl implements CollectionService {
     UserService userService;
 
     @Override
-    public Integer deleteBlogCollection(Long bid) {
+    public Integer deleteBlogCollection(Long bid) throws CustomException {
+        List<Long> list = collectionMapper.getUidByBid(bid);
+        if(list.size() > 0) {
+            for(Long uid : list) {
+                User user = userService.getUserById(uid);
+                userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount(), user.getCollectionCount() - 1, user.getFollowing(), user.getFollowed());
+            }
+        }
         return collectionMapper.deleteBlogCollection(bid);
     }
 
@@ -57,6 +64,7 @@ public class CollectionServiceImpl implements CollectionService {
         blogService.updateBlogNum(bid, blog.getCommentNum(), blog.getCollectionNum() - 1);
         return collectionMapper.userCancelBlogCollection(uid, bid);
     }
+
 
     @Override
     public List<Blog> collectionList(Long uid) throws CustomException {

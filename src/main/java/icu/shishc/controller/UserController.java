@@ -86,7 +86,7 @@ public class UserController {
         long param = Long.parseLong(uid);
         Integer status = userService.delete(param);
         if(status == 1) {
-            //userService.deleteUserData(param);
+            userService.deleteUserData(param);
             log.info("【UserController】delete:: delete {}'s all data", uid);
         }
         log.info("【UserController】delete:: delete uid = {}", uid);

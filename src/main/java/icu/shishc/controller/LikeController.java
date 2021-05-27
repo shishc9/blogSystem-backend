@@ -36,4 +36,10 @@ public class LikeController {
         log.info("【LikeController】cancelLike");
         return MyDTO.successDTO(likeService.cancelLike(bid, uid));
     }
+
+    @RequestMapping(value = "/like", method = RequestMethod.GET)
+    public MyDTO likeOrNot(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
+        Integer i = likeService.likeOrNot(bid, uid);
+        return MyDTO.successDTO(i);
+    }
 }

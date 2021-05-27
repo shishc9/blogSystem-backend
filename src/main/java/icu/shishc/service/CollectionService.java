@@ -13,7 +13,7 @@ public interface CollectionService {
      * @param bid bid
      * @return ,
      */
-    Integer deleteBlogCollection(Long bid);
+    Integer deleteBlogCollection(Long bid) throws CustomException;
 
     /**
      * 添加收藏

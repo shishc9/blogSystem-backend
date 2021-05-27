@@ -60,8 +60,16 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/comments/comment", "rest[COMMENT]");
         filterChainDefinitionMap.put("/comments/**", "anon");
 
-        //two api in LikeController
+        //three api in LikeController
         filterChainDefinitionMap.put("/likes/like", "rest[LIKE]");
+
+        // five api in AttentionController
+        filterChainDefinitionMap.put("/attentions/attention", "rest[ATTENTION]");
+        filterChainDefinitionMap.put("/attentions/u/attention", "anon");
+
+        // four api in CollectionController
+        filterChainDefinitionMap.put("/collections/collection", "rest[COLLECTION]");
+        filterChainDefinitionMap.put("/attentions/u", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 

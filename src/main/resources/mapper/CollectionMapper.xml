@@ -30,4 +30,8 @@
         SELECT COUNT(*) FROM collection WHERE uid = ${uid} AND bid = ${bid}
     </select>
 
+    <select id="getUidByBid" resultType="java.lang.Long">
+        SELECT uid FROM collection WHERE bid = ${bid}
+    </select>
+
 </mapper>

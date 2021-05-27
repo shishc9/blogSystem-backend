@@ -186,7 +186,6 @@ public class BlogServiceImpl implements BlogService {
     }
 
 
-    // TODO
     @Override
     public Integer delete(Long bid) throws CustomException {
         if(!checkBid(bid)) {
@@ -196,14 +195,14 @@ public class BlogServiceImpl implements BlogService {
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
         Integer num = blogMapper.delete(bid);
         if(num == 1) {
-            Integer likeCount = likeService.deleteBlogLikes(bid);
+            likeService.deleteBlogLikes(bid);
             // 删除收藏该博客的记录
             collectionService.deleteBlogCollection(bid);
             // 删除该博客的所有评论
             commentService.deleteBlogComments(bid);
             // 更新该博客所属用户的信息
             User user = userService.getUserById(blogMapper.getUserByBid(bid));
-            //userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount() - likeCount, user.getFollowing(), user.getFollowed());
+            userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         }
         return num;
     }

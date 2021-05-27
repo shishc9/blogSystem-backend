@@ -108,7 +108,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // TODO
     @Override
     public Integer delete(Long userId) throws CustomException {
         if(!checkUserId(userId)) {
@@ -116,33 +115,51 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【UserService】delete::delete user, userId = {}", userId);
-        //deleteUserData(userId);
+        deleteUserData(userId);
         log.info("【UserService】delete::delete user's all data successfully!");
         return userMapper.delete(userId);
     }
 
 
-//    @Override
-//    public void deleteUserData(Long uid) throws CustomException {
-//        // 删除用户的所有关注和被关注
-//        attentionMapper.deleteUserAttention(uid);
-//        // 删除一个该用户的所有博客
-//        List<Blog> list = blogService.getBlogByUserId(uid);
-//        if(list.size() > 0) {
-//            for(Blog blog : list) {
-//                // 删除所有收藏博客的用户
-//                Long bid = blog.getBlogId();
-//                collectionMapper.deleteBlogCollection(bid);
-//                blogService.delete(bid);
-//                // 删除该用户的所有评论
-//                commentService.deleteBlogComments(bid);
-//                // 删除用户的所有收藏博客
-//                collectionMapper.deleteBlogCollection(bid);
-//                // 删除用户的所有点赞
-//                likeService.deleteBlogLikes(bid);
-//            }
-//        }
-//    }
+    @Override
+    public void deleteUserData(Long uid) throws CustomException {
+        // 删除用户的所有关注
+        List<Long> attentionList = attentionMapper.getAttentions(uid);
+        if(attentionList.size() > 0) {
+            for(Long uided : attentionList) {
+                attentionMapper.cancelAttention(uid, uided);
+                User user = userMapper.getUserById(uided);
+                userMapper.updateNum(uided, user.getPostCount(), user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed() -1);
+            }
+        }
+        // 更新关注这个用户的所有用户
+        List<Long> attentionedlist = attentionMapper.countAttentions(uid);
+        if(attentionedlist.size() > 0) {
+            for(Long uided : attentionedlist) {
+                attentionMapper.cancelAttention(uided, uid);
+                User user = userMapper.getUserById(uided);
+                userMapper.updateNum(uided, user.getPostCount(), user.getLikeCount(), user.getCollectionCount(), user.getFollowing() - 1, user.getFollowed());
+            }
+        }
+        // 删除一个该用户的所有博客
+        List<Blog> list = blogService.getBlogByUserId(uid);
+        if(list.size() > 0) {
+            for(Blog blog : list) {
+                blogService.delete(blog.getBlogId());
+            }
+        }
+        // 删除用户的所有收藏
+        List<Long> collectionList = collectionMapper.getCollections(uid);
+        if(collectionList.size() > 0) {
+            for(Long id : collectionList) {
+                collectionMapper.userCancelBlogCollection(uid, id);
+                Blog blog = blogService.getBlogByBID(id);
+                blogService.updateBlogNum(id, blog.getCommentNum(), blog.getCollectionNum() - 1);
+            }
+        }
+        // 删除用户参与的所有评论
+
+    }
 
 
     @Override

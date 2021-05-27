@@ -48,11 +48,4 @@ public interface AttentionMapper {
      */
     int attentionOrNot(@Param("uid") Long uid, @Param("uided") Long uided);
 
-
-    /**
-     * 删除用户的所有关注和被关注
-     * @param uid uid
-     * @return .
-     */
-    int deleteUserAttention(@Param("uid") Long uid);
 }

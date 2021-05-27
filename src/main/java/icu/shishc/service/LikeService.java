@@ -35,4 +35,11 @@ public interface LikeService {
     Integer deleteBlogLikes(Long bid);
 
 
+    /**
+     * 是否点过赞了
+     * @param bid
+     * @param uid
+     * @return
+     */
+    Integer likeOrNot(Long bid, Long uid);
 }

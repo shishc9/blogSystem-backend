@@ -63,12 +63,12 @@ public interface UserService{
     Integer delete(Long id) throws CustomException;
 
 
-//    /**
-//     * 删除一个用户的所有附带数据
-//     * @param uid uid
-//     * @throws CustomException .
-//     */
-//    void deleteUserData(Long uid) throws CustomException;
+    /**
+     * 删除一个用户的所有附带数据
+     * @param uid uid
+     * @throws CustomException .
+     */
+    void deleteUserData(Long uid) throws CustomException;
 
 
     /**

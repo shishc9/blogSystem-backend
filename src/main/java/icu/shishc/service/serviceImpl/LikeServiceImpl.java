@@ -64,4 +64,9 @@ public class LikeServiceImpl implements LikeService {
         // 删除博客的所有点赞
         return likeMapper.deleteBlogAllLike(bid);
     }
+
+    @Override
+    public Integer likeOrNot(Long bid, Long uid) {
+        return likeMapper.likeOrNot(uid, bid);
+    }
 }

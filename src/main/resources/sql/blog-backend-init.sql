@@ -65,6 +65,18 @@ INSERT INTO perms(user_identity, entity, perm)
 INSERT INTO perms(user_identity, entity, perm)
     VALUES(0, 'CHANGE', 'UPDATE');
 INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'ATTENTION', 'INSERT');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'ATTENTION', 'DELETE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'ATTENTION', 'READ');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'COLLECTION', 'INSERT');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'COLLECTION', 'DELETE');
+INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'COLLECTION', 'READ');
+INSERT INTO perms(user_identity, entity, perm)
     VALUES(1, 'BLOG', 'DELETE');
 INSERT INTO perms(user_identity, entity, perm)
     VALUES(1, 'USER', 'UPDATE');

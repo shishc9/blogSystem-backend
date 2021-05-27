@@ -22,4 +22,8 @@
         SELECT count(*) FROM blike WHERE blog_id = ${bid}
     </select>
 
+    <select id="likeOrNot" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM blike WHERE blog_id = ${bid} AND user_id = ${uid}
+    </select>
+
 </mapper>

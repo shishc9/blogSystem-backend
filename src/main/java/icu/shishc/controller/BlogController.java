@@ -39,7 +39,7 @@ public class BlogController {
     @GetMapping("/square")
     public MyDTO getSquare(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size
+            @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         PageHelper.startPage(page, size);
         List<Blog> blogSquare = blogService.getBlogSquare();
@@ -59,7 +59,7 @@ public class BlogController {
     @GetMapping("/u/blog")
     public MyDTO getUserBlogs(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam("userId") Long userId
     ) throws CustomException {
         log.info("【BlogController】getUserBlogs::userId = {}", userId);
