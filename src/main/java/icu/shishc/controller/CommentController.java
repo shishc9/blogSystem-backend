@@ -22,14 +22,24 @@ public class CommentController {
 
     public CommentController(CommentService commentService) {this.commentService = commentService;}
 
-
+    /**
+     * 获取一篇博客下面的评论
+     * @param bid
+     * @return
+     * @throws CustomException
+     */
     @GetMapping("/b")
     public MyDTO getCommentByBid(@RequestParam("bid") Long bid)
             throws CustomException {
         return MyDTO.successDTO(commentService.findCommentsByBlogId(bid));
     }
 
-
+    /**
+     * 发布评论
+     * @param comment
+     * @return
+     * @throws CustomException
+     */
     @PostMapping("/comment")
     public MyDTO saveComment(@RequestBody Comment comment)
             throws CustomException {
@@ -38,6 +48,11 @@ public class CommentController {
     }
 
 
+    /**
+     * 删除评论
+     * @param cid
+     * @return
+     */
     @DeleteMapping("/comment")
     public MyDTO deleteComment(@RequestParam("cid") Long cid) {
         log.info("【CommentController】deleteComment, delete cid = {}", cid);

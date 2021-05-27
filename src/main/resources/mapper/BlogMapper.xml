@@ -63,6 +63,12 @@
         UPDATE blog SET like_num = like_num - ${count} WHERE blog_id = ${bid}
     </update>
 
+    <update id="updateBlogNum">
+        UPDATE blog SET collection_num = ${collectionNum},
+                        comment_num = ${commentNum}
+            WHERE blog_id = ${bid}
+    </update>
+
     <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM blog WHERE blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
     </select>

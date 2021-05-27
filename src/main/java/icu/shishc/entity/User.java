@@ -41,14 +41,6 @@ public class User implements Serializable {
      */
     private String userSite;
     /**
-     * 博客发布数量
-     */
-    private Integer postCount;
-    /**
-     * 点赞数量
-     */
-    private Integer likeCount;
-    /**
      * 用户头像
      */
     private String avatar;
@@ -56,6 +48,18 @@ public class User implements Serializable {
      * 用户邮箱
      */
     private String email;
+    /**
+     * 博客发布数量
+     */
+    private Integer postCount;
+    /**
+     * 用户收藏的博客数量
+     */
+    private Integer collectionCount;
+    /**
+     * 点赞数量
+     */
+    private Integer likeCount;
     /**
      * 他的关注
      */

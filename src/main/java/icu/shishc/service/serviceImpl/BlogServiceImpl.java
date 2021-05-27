@@ -64,6 +64,11 @@ public class BlogServiceImpl implements BlogService {
         return blog;
     }
 
+    @Override
+    public List<Blog> getBlogByList(List<Long> list) {
+        return blogMapper.getBlogByList(list);
+    }
+
 
     @Override
     public Blog getBlogByBID(Long bid) throws CustomException {
@@ -153,7 +158,14 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
+    public void updateBlogNum(Long bid, Integer commentNum, Integer collectionNum) {
+        blogMapper.updateBlogNum(bid, commentNum, collectionNum);
+    }
+
+
+    @Override
     public Blog insert(Blog blog) throws CustomException {
+        // 博客实体检查
         if(!checkBlog(blog)) {
             log.warn("【BlogService】insert::bad blog entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
@@ -166,6 +178,9 @@ public class BlogServiceImpl implements BlogService {
         }
         blogMapper.insert(blog.getUserId(), title, blog.getContent().trim());
         Blog blog2 = blogMapper.getBlogByTitle(title);
+        // 增加用户的发布数量
+        User user = userService.getUserById(blog.getUserId());
+        userService.updateUserNum(blog.getUserId(), user.getPostCount() + 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         log.info("【BlogService】insert::add blog successfully! bID = {}", blog2.getBlogId());
         return blog2;
     }
@@ -188,7 +203,7 @@ public class BlogServiceImpl implements BlogService {
             commentService.deleteBlogComments(bid);
             // 更新该博客所属用户的信息
             User user = userService.getUserById(blogMapper.getUserByBid(bid));
-            userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount() - likeCount, user.getFollowing(), user.getFollowed());
+            //userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount() - likeCount, user.getFollowing(), user.getFollowed());
         }
         return num;
     }
@@ -210,42 +225,4 @@ public class BlogServiceImpl implements BlogService {
         log.info("【BlogService】update::return blog");
         return blogMapper.getBlogByBID(bid);
     }
-//
-//
-//    @Override
-//    public Integer addLike(Long bid) throws CustomException {
-//        if(bid <= 0) {
-//            log.warn("【Service】BlogService::addLike: bad bid = {}", bid);
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "bad bid");
-//        }
-//        log.info("【Service】BlogService::addLike: bid = {}", bid);
-//        return blogMapper.addLike(bid);
-//    }
-//
-//
-//    @Override
-//    public Integer cancelLike(Long bid) throws CustomException {
-//        if(bid <= 0) {
-//            log.warn("【Service】BlogService::cancelLike: bad bid = {}", bid);
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "bad bid");
-//        }
-//        log.info("【Service】BlogService::cancelLike: bid = {}", bid);
-//        return blogMapper.cancelLike(bid);
-//    }
-//
-//
-//    @Override
-//    public Integer getAllLike() {
-//        log.info("【Service】BlogService::getAllLike");
-//        return blogMapper.getAllLike();
-//    }
-//
-//
-//    @Override
-//    public Integer getAllReadNum() {
-//        log.info("【Service】BlogService::getAllReadNum");
-//        return blogMapper.getAllReadNum();
-//    }
-//
-
 }

@@ -94,6 +94,7 @@ public interface UserMapper {
     Integer updateNum(@Param("uid") Long uid,
                       @Param("postCount") Integer postCount,
                       @Param("likeCount") Integer likeCount,
+                      @Param("collectionCount") Integer collectionCount,
                       @Param("following") Integer following,
                       @Param("followed") Integer followed);
 
@@ -115,6 +116,9 @@ public interface UserMapper {
     String getPasswordByUid(@Param("uid")Long uid);
 
 
+    /**
+     * 以下都是统计量的修改
+     */
     int addPostCount(@Param("uid") Long uid);
 
 

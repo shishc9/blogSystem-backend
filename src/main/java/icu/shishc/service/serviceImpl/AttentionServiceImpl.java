@@ -24,11 +24,19 @@ public class AttentionServiceImpl implements AttentionService {
 
     @Override
     public int addAttention(Long uid, Long uided) {
+        User user1 = userMapper.getUserById(uid);
+        User user2 = userMapper.getUserById(uided);
+        userMapper.updateNum(uid, user1.getPostCount(), user1.getLikeCount(), user1.getFollowing() + 1, user1.getFollowed());
+        userMapper.updateNum(uided, user2.getPostCount(), user2.getLikeCount(), user2.getFollowing(), user2.getFollowed() + 1);
         return attentionMapper.addAttention(uid, uided);
     }
 
     @Override
     public int cancelAttention(Long uid, Long uided) {
+        User user1 = userMapper.getUserById(uid);
+        User user2 = userMapper.getUserById(uided);
+        userMapper.updateNum(uid, user1.getPostCount(), user1.getLikeCount(), user1.getFollowing() - 1, user1.getFollowed());
+        userMapper.updateNum(uided, user2.getPostCount(), user2.getLikeCount(), user2.getFollowing(), user2.getFollowed() - 1);
         return attentionMapper.cancelAttention(uid, uided);
     }
 

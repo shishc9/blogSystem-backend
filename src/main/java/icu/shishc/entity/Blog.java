@@ -1,6 +1,5 @@
 package icu.shishc.entity;
 
-import icu.shishc.enumeration.BlogStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

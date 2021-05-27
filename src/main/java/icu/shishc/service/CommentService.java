@@ -34,7 +34,7 @@ public interface CommentService {
      * @param cid 待删除的评论id
      * @return 受影响行数
      */
-    int deleteComment(Long cid);
+    int deleteComment(Long cid) throws CustomException;
 
 
     /**

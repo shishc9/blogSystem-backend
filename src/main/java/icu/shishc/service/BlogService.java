@@ -35,6 +35,9 @@ public interface BlogService{
     Blog getBlogByTitle(String title) throws CustomException;
 
 
+    List<Blog> getBlogByList(List<Long> list);
+
+
     /**
      * 根据博客的bid查找博客
      * @param bid 博客id
@@ -42,16 +45,6 @@ public interface BlogService{
      * @throws CustomException .
      */
     Blog getBlogByBID(Long bid) throws CustomException;
-
-
-//    /**
-//     * 根据状态查找某个用户的博客
-//     * @param blogStatus 博客状态
-//     * @param userId 用户id
-//     * @return list
-//     * @throws CustomException .
-//     */
-//    List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException;
 
 
     /**
@@ -115,4 +108,9 @@ public interface BlogService{
      * @return
      */
     Boolean checkBid(Long bid);
+
+
+
+    void updateBlogNum(Long bid, Integer commentNum, Integer collectionNum);
+
 }

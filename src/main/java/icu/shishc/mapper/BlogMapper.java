@@ -184,4 +184,9 @@ public interface BlogMapper {
      */
     int cancelCollection(@Param("bid")Long bid);
 
+
+    int updateBlogNum(@Param("bid") Long bid,
+                      @Param("commentNum") Integer commentNum,
+                      @Param("collectionNum") Integer collectionNum);
+
 }

@@ -129,7 +129,7 @@ public interface UserService{
      * @param following following
      * @param followed followed
      */
-    void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer following, Integer followed);
+    void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer collectionNum, Integer following, Integer followed);
 
 
     /**

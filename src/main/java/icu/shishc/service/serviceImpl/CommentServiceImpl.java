@@ -1,6 +1,7 @@
 package icu.shishc.service.serviceImpl;
 
 import icu.shishc.entity.Blog;
+import icu.shishc.entity.User;
 import icu.shishc.exception.CustomException;
 import icu.shishc.entity.Comment;
 import icu.shishc.mapper.CommentMapper;
@@ -109,10 +110,15 @@ public class CommentServiceImpl implements CommentService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【CommentService】saveComment::saveComment");
-        return commentMapper.saveComment(comment.getBlogId(),
+        int i = commentMapper.saveComment(comment.getBlogId(),
                 comment.getUsername(),
                 comment.getContent(),
                 comment.getParentCommentId());
+        if(i == 1) {
+            Blog blog = blogService.getBlogByBID(comment.getBlogId());
+            blogService.updateBlogNum(blog.getBlogId(), blog.getCommentNum() + 1, blog.getCollectionNum());
+        }
+        return i;
     }
 
 
@@ -120,7 +126,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public int deleteComment(Long cid) {
+    public int deleteComment(Long cid) throws CustomException {
         List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
         count += commentMapper.deleteCommentById(cid);
         if(toDeleteId.size() > 0) {
@@ -129,10 +135,15 @@ public class CommentServiceImpl implements CommentService {
                 count += commentMapper.deleteCommentById(id);
             }
         }
+        if(count > 0) {
+            Blog blog = blogService.getBlogByBID(commentMapper.findCommentById(cid).getBlogId());
+            blogService.updateBlogNum(blog.getBlogId(), blog.getCommentNum() - count, blog.getCollectionNum());
+        }
         return count;
     }
 
 
+    // TODO
     @Override
     public int deleteBlogComments(Long bid) {
         return commentMapper.deleteBlogComments(bid);

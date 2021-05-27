@@ -73,6 +73,7 @@
         UPDATE user SET post_count = ${postCount},
                         like_count = ${likeCount},
                         following = ${following},
+                        collection = ${collectionCount},
                         followed = ${followed}
                 WHERE user_id = ${uid}
     </update>

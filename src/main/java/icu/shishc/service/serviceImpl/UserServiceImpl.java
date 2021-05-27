@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer following, Integer followed) {
+    public void updateUserNum(Long uid, Integer postCount, Integer likeCount, Integer collectionNum, Integer following, Integer followed) {
         userMapper.updateNum(uid, postCount, likeCount, following, followed);
     }
 

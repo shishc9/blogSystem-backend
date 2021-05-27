@@ -1,8 +1,12 @@
 package icu.shishc.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import icu.shishc.dto.MyDTO;
+import icu.shishc.entity.Pager;
 import icu.shishc.entity.User;
 import icu.shishc.service.AttentionService;
+import icu.shishc.util.PagerUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,18 +31,36 @@ public class AttentionController {
     }
 
 
+    /**
+     * 新增关注
+     * @param uid
+     * @param uided
+     * @return
+     */
     @RequestMapping(value = "/attention", method = RequestMethod.POST)
     public MyDTO addAttention(@RequestParam Long uid, @RequestParam Long uided) {
         int i = attentionService.addAttention(uid, uided);
         return MyDTO.successDTO(i);
     }
 
+    /**
+     * 取消关注
+     * @param uid
+     * @param uided
+     * @return
+     */
     @RequestMapping(value = "/attention", method = RequestMethod.DELETE)
     public MyDTO cancelAttention(@RequestParam Long uid, @RequestParam Long uided) {
         int i = attentionService.cancelAttention(uid, uided);
         return MyDTO.successDTO(i);
     }
 
+    /**
+     * 是否关注
+     * @param uid
+     * @param uided
+     * @return
+     */
     @RequestMapping(value = "/attention", method = RequestMethod.GET)
     public MyDTO attentionOrNot(@RequestParam Long uid, @RequestParam Long uided) {
         int i = attentionService.attentionOrNot(uid, uided);
@@ -51,9 +73,14 @@ public class AttentionController {
      * @return
      */
     @RequestMapping(value = "/u/attention", method = RequestMethod.GET)
-    public MyDTO getAttentions(@RequestParam Long uid) {
+    public MyDTO getAttentions(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size,
+            @RequestParam Long uid) {
+        PageHelper.startPage(page, size);
         List<User> list = attentionService.getAttention(uid);
-        return MyDTO.successDTO(list);
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
+        return MyDTO.successDTO(pager);
     }
 
     /**
@@ -62,9 +89,14 @@ public class AttentionController {
      * @return
      */
     @RequestMapping(value = "/u/attentioned", method = RequestMethod.GET)
-    public MyDTO getAttentioned(@RequestParam Long uid) {
+    public MyDTO getAttentioned(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size,
+            @RequestParam Long uid) {
+        PageHelper.startPage(page, size);
         List<User> list = attentionService.getAttentioned(uid);
-        return MyDTO.successDTO(list);
+        Pager pager = PagerUtils.getPager(new PageInfo<>(list));
+        return MyDTO.successDTO(pager);
     }
 
 
