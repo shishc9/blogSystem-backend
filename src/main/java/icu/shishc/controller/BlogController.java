@@ -6,9 +6,11 @@ import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.entity.Blog;
 import icu.shishc.entity.Pager;
+import icu.shishc.mapper.BlogMapper;
 import icu.shishc.service.BlogService;
 import icu.shishc.util.PagerUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,9 @@ public class BlogController {
 
     private final BlogService blogService;
 
+    @Autowired
+    BlogMapper blogMapper;
+
     public BlogController(BlogService blogService) {
         this.blogService = blogService;
     }
@@ -37,7 +42,7 @@ public class BlogController {
      * @param size size
      * @return MyDTO
      */
-    @GetMapping("/square")
+    @GetMapping("/square/read")
     public MyDTO getSquare(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
@@ -46,6 +51,17 @@ public class BlogController {
         List<Blog> blogSquare = blogService.getBlogSquare();
         Pager pager = PagerUtils.getPager(new PageInfo<>(blogSquare));
         log.info("【BlogController】getSquare::return square");
+        return MyDTO.successDTO(pager);
+    }
+
+    @GetMapping("/square/time")
+    public MyDTO getSquareByTime(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        PageHelper.startPage(page, size);
+        List<Blog> blogSquare = blogMapper.getBlogSquareByTime();
+        Pager pager = PagerUtils.getPager(new PageInfo<>(blogSquare));
         return MyDTO.successDTO(pager);
     }
 

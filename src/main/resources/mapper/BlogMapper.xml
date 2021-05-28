@@ -107,4 +107,8 @@
         SELECT user_id FROM blog WHERE blog_id = ${bid}
     </select>
 
+    <select id="getBlogSquareByTime" resultType="icu.shishc.entity.Blog">
+        SELECT * FROM blog WHERE is_delete = 0 ORDER BY gmt_create DESC
+    </select>
+
 </mapper>

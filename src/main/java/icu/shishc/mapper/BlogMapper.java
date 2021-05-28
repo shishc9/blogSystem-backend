@@ -61,6 +61,9 @@ public interface BlogMapper {
     List<Blog> getBlogSquare();
 
 
+    List<Blog> getBlogSquareByTime();
+
+
     /**
      * list bid 批量查询
      * @param list list
