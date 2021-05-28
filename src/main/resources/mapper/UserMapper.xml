@@ -66,7 +66,7 @@
         UPDATE user SET followed = user.followed - 1 WHERE user_id = ${uid}
     </update>
 
-    <update id="updateLoginTime">
+    <update id="updateLoginTimeUsername">
         UPDATE user SET gmt_last_login = NOW() WHERE username = '${username}'
     </update>
 
@@ -77,6 +77,10 @@
                         collection_count = ${collectionCount},
                         followed = ${followed}
                 WHERE user_id = ${uid}
+    </update>
+
+    <update id="updateLoginTimeEmail">
+        UPDATE user SET gmt_last_login = NOW() WHERE email = '${email}'
     </update>
 
     <delete id="delete">

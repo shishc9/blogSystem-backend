@@ -151,5 +151,9 @@ public interface UserMapper {
     int cancelFollowedCount(@Param("uid") Long uid);
 
 
-    int updateLoginTime(@Param("username")String username);
+    int updateLoginTimeUsername(@Param("username")String username);
+
+
+    int updateLoginTimeEmail(@Param("email") String email);
+
 }

@@ -55,7 +55,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateLoginTime(String username) {
-        userMapper.updateLoginTime(username);
+        if(regexMatch(username)) {
+            userMapper.updateLoginTimeEmail(username);
+            return ;
+        }
+        userMapper.updateLoginTimeUsername(username);
     }
 
     @Override
@@ -163,6 +167,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long getUserId(String username) {
+        if(regexMatch(username)) {
+            return userMapper.findUserByEmail(username).getUserId();
+        }
         return userMapper.getUserId(username);
     }
 
@@ -213,9 +220,9 @@ public class UserServiceImpl implements UserService {
         String email = user.getEmail();
         if("".equals(username) || "".equals(password) || !regexMatch(email)) {
             log.warn("【UserService】userCheck::bad user entity");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
 
