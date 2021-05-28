@@ -16,6 +16,7 @@ CREATE TABLE user(
                      collection_count INT DEFAULT 0 COMMENT '',
                      following INT DEFAULT 0 COMMENT '他的关注',
                      followed INT DEFAULT 0 COMMENT '关注他的',
+                     is_delete INT DEFAULT 0 COMMENT '用户是否注销',
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '用户创建时间',
                      gmt_last_login DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '用户上次登陆时间',
                      PRIMARY KEY (user_id) USING BTREE
@@ -35,6 +36,7 @@ CREATE TABLE blog(
                      like_num INT UNSIGNED DEFAULT 0 COMMENT '博客点赞数',
                      comment_num INT UNSIGNED DEFAULT 0 COMMENT '评论数',
                      collection_num INT UNSIGNED DEFAULT 0 COMMENT '收藏数',
+                     is_delete INT DEFAULT 0 COMMENT '博客是否删除',
                      gmt_create DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客创建时间',
                      gmt_modified DATETIME(0) DEFAULT CURRENT_TIMESTAMP COMMENT '博客修改时间',
                      PRIMARY KEY (blog_id) USING BTREE,

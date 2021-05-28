@@ -50,6 +50,10 @@ public class Blog implements Serializable {
      * 收藏数
      */
     private Integer collectionNum;
+    /**
+     * 标记博客是否被删除
+     */
+    private Integer isDelete;
 
     private Date gmtCreate;
     private Date gmtModified;

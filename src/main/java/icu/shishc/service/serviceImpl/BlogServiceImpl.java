@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -82,22 +83,6 @@ public class BlogServiceImpl implements BlogService {
     }
 
 
-//    @Override
-//    public List<Blog> getBlogByStatus(BlogStatus blogStatus, Long userId) throws CustomException {
-//        if(userService.getUserById(userId) == null) {
-//            log.warn("【BlogService】getBlogByStatus::user == null");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-//        }
-//        if(blogStatus.getKey() != 0 && blogStatus.getKey() != 1) {
-//            log.warn("【BlogService】getBlogByStatus::bad blog status");
-//            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-//        }
-//        List<Blog> list = blogMapper.getBlogByStatus(blogStatus.getKey(), userId);
-//        log.info("【BlogService】getBlogByStatus::return list");
-//        return list;
-//    }
-
-
     @Override
     public Blog getPrevious(Long bid, Long userId) throws CustomException {
         if(userService.getUserById(userId) == null) {
@@ -149,7 +134,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Boolean checkBid(Long bid) {
-        if(bid < 0) {
+        if(blogMapper.getBlogByBID(bid) == null) {
             log.warn("【BlogService】checkBid:: bid <= 0, bid = {}", bid);
             return false;
         }
@@ -162,15 +147,16 @@ public class BlogServiceImpl implements BlogService {
         blogMapper.updateBlogNum(bid, commentNum, collectionNum);
     }
 
-
     @Override
     public Blog insert(Blog blog) throws CustomException {
         // 博客实体检查
-        if(!checkBlog(blog)) {
-            log.warn("【BlogService】insert::bad blog entity");
+        String title = blog.getTitle().trim();
+        String content = blog.getContent().trim();
+        Long userId = blog.getUserId();
+        if("".equals(title) || "".equals(content) || userService.getUserById(userId) == null) {
+            log.warn("【BlogService】checkBlog: bad blog entity!");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        String title = blog.getTitle().trim();
         Blog blog1 = blogMapper.getBlogByTitle(title);
         if(blog1 != null) {
             log.warn("【BlogService】insert::the blog has exist! blogTitle = {}", blog.getTitle());
@@ -185,32 +171,30 @@ public class BlogServiceImpl implements BlogService {
         return blog2;
     }
 
-
+    //  TODO
     @Override
-    public Integer delete(Long bid) throws CustomException {
-        if(!checkBid(bid)) {
+    @Transactional
+    public Integer delete(Long uid, Long bid) throws CustomException {
+        if(!checkBid(bid) || uid.equals(blogMapper.getUserByBid(bid))) {
             log.warn("【BlogService】delete::bad bid, bid = {}", bid);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
-        Integer num = blogMapper.delete(bid);
-        if(num == 1) {
-            likeService.deleteBlogLikes(bid);
-            // 删除收藏该博客的记录
-            collectionService.deleteBlogCollection(bid);
-            // 删除该博客的所有评论
-            commentService.deleteBlogComments(bid);
-            // 更新该博客所属用户的信息
-            User user = userService.getUserById(blogMapper.getUserByBid(bid));
-            userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
-        }
-        return num;
+        User user = userService.getUserById(blogMapper.getUserByBid(bid));
+        likeService.deleteBlogLikes(bid);
+        // 删除收藏该博客的记录
+        collectionService.deleteBlogCollection(bid);
+        // 删除该博客的所有评论
+        commentService.deleteBlogComments(bid);
+        // 更新该博客所属用户的信息
+        userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
+        return blogMapper.delete(bid);
     }
 
 
     @Override
-    public Blog update(Blog blog) throws CustomException {
-        if(!checkBlog(blog)) {
+    public Blog update(Long uid, Blog blog) throws CustomException {
+        if(!checkBlog(blog) || !uid.equals(blog.getUserId())) {
             log.warn("【BlogService】update::bad blog entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }

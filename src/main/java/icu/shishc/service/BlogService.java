@@ -62,7 +62,7 @@ public interface BlogService{
      * @return 1 or 0
      * @throws CustomException .
      */
-    Integer delete(Long id) throws CustomException;
+    Integer delete(Long uid, Long id) throws CustomException;
 
 
     /**
@@ -71,7 +71,7 @@ public interface BlogService{
      * @return 更新后的博客实体
      * @throws CustomException .
      */
-    Blog update(Blog blog) throws CustomException;
+    Blog update(Long uid, Blog blog) throws CustomException;
 
 
     /**

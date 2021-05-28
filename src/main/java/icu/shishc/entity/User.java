@@ -68,6 +68,10 @@ public class User implements Serializable {
      * 关注他的
      */
     private Integer followed;
+    /**
+     * 标记用户是否被注销
+     */
+    private Integer isDelete;
 
     private Date gmtCreate;
     private Date gmtLastLogin;

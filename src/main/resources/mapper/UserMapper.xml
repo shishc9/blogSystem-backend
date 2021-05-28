@@ -14,6 +14,7 @@
         <result column="avatar" property="avatar"/>
         <result column="following" property="following"/>
         <result column="followed" property="followed"/>
+        <result column="is_delete" property="isDelete"/>
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_last_login" property="gmtLastLogin"/>
     </resultMap>
@@ -83,9 +84,9 @@
         UPDATE user SET gmt_last_login = NOW() WHERE email = '${email}'
     </update>
 
-    <delete id="delete">
-        DELETE FROM user WHERE user_id = ${id}
-    </delete>
+    <update id="delete">
+        UPDATE user SET is_delete = 1 WHERE user.user_id = ${id}
+    </update>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM user WHERE user_id = ${userId}
@@ -100,7 +101,7 @@
     </select>
 
     <select id="getAllUsers" resultMap="BaseResultMap">
-        SELECT * FROM user WHERE user_identity = 0
+        SELECT * FROM user WHERE user_identity = 0 AND is_delete = 0
     </select>
 
     <select id="getPasswordByUid" resultType="java.lang.String">
@@ -108,7 +109,7 @@
     </select>
 
     <select id="getUserByList" resultMap="BaseResultMap">
-        SELECT * FROM user WHERE user_id in
+        SELECT * FROM user WHERE  is_delete = 0 AND user_id in
         <foreach item="item" collection="list" index="index"
                  open="(" separator="," close=")">
             #{item}

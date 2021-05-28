@@ -9,6 +9,7 @@ import icu.shishc.entity.Pager;
 import icu.shishc.service.BlogService;
 import icu.shishc.util.PagerUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -158,10 +159,11 @@ public class BlogController {
      */
     @RequestMapping(value = "/blog", method = RequestMethod.PUT)
     public MyDTO updateBlog(
-        @RequestBody Blog blog
+            @RequestParam("uid") Long currentUserid,
+            @RequestBody Blog blog
     ) throws CustomException {
         log.info("【BlogController】updateBlog::before blog = {}", blog);
-        Blog blog2 = blogService.update(blog);
+        Blog blog2 = blogService.update(currentUserid, blog);
         log.info("【BlogController】updateBlog::after blog = {}", blog2);
         return MyDTO.successDTO(blog2);
     }
@@ -174,10 +176,14 @@ public class BlogController {
      */
     @RequestMapping(value = "/blog", method = RequestMethod.DELETE)
     public MyDTO deleteBlog(
+            @RequestParam("uid") Long currentUserid,
             @RequestParam("bid") Long bid
     ) throws CustomException {
         log.info("【Controller】Blog::delete：bid = {}", bid);
-        Integer status = blogService.delete(bid);
+        Integer status = blogService.delete(currentUserid, bid);
+        if(status == 0) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "DELETE_FAILED!BLOG_MAYBE_NOT_EXIST");
+        }
         return MyDTO.successDTO(status);
     }
 }
