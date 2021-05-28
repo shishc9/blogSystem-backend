@@ -30,6 +30,7 @@ DROP TABLE IF EXISTS blog;
 CREATE TABLE blog(
                      blog_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
                      user_id BIGINT UNSIGNED NOT NULL COMMENT '博客所属用户id',
+                     username VARCHAR(64) NOT NULL COMMENT '用户名',
                      title VARCHAR(255) NOT NULL COMMENT '标题',
                      content LONGTEXT COMMENT '正文',
                      read_num INT UNSIGNED DEFAULT 0 COMMENT '博客阅读数',

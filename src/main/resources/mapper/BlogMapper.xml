@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="icu.shishc.entity.Blog">
         <result column="blog_id" property="blogId"/>
         <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="read_num" property="readNum"/>
@@ -16,8 +17,8 @@
     </resultMap>
 
     <insert id="insert">
-        INSERT INTO blog(user_id, title, content, gmt_create, gmt_modified)
-            VALUES (${userId}, '${title}', '${content}', now(), now())
+        INSERT INTO blog(user_id, username, title, content, gmt_create, gmt_modified)
+            VALUES (${userId}, '${username}', '${title}', '${content}', now(), now())
     </insert>
 
     <update id="update">

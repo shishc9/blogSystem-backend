@@ -19,6 +19,7 @@ public interface BlogMapper {
      * @return int
      */
     Integer insert(@Param("userId") Long userId,
+                   @Param("username") String username,
                    @Param("title") String title,
                    @Param("content") String content
     );

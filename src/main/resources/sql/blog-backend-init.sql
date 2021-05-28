@@ -13,14 +13,14 @@ INSERT INTO user(username, password, user_identity, email, user_site, avatar)
     VALUES('admin', 'db18a83510dbb5a3d38e5cec4ab1b047', 1, 'shishc9@126.com', 'https://github.com/shishc9', 'https://i.loli.net/2021/05/25/vowpYGb6ND1I3ET.jpg');
 
 # BLOG INIT
-INSERT INTO blog(user_id, title, content, comment_num) values (1, '第一篇博客', '应该能正常发出去吧', 6);
-INSERT INTO blog(user_id, title, content) values (1, 'Java基础', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, 'Java进阶', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, 'Java高级', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, 'JVM', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, '高并发', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, '分布式', '应该能正常发出去吧');
-INSERT INTO blog(user_id, title, content) values (1, 'test', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username, title, content, comment_num) values (1, 'user1', '第一篇博客', '应该能正常发出去吧', 6);
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','Java基础', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','Java进阶', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','Java高级', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','JVM', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','高并发', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1,'user1', '分布式', '应该能正常发出去吧');
+INSERT INTO blog(user_id, username,title, content) values (1, 'user1','test', '应该能正常发出去吧');
 
 # COMMENT INIT
 INSERT INTO comment(blog_id, username, content, parent_comment_id)
