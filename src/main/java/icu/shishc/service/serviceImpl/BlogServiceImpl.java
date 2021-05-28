@@ -171,23 +171,21 @@ public class BlogServiceImpl implements BlogService {
         return blog2;
     }
 
-    //  TODO
     @Override
-    @Transactional
     public Integer delete(Long uid, Long bid) throws CustomException {
-        if(!checkBid(bid) || uid.equals(blogMapper.getUserByBid(bid))) {
+        if(!checkBid(bid) || !uid.equals(blogMapper.getUserByBid(bid))) {
             log.warn("【BlogService】delete::bad bid, bid = {}", bid);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
-        User user = userService.getUserById(blogMapper.getUserByBid(bid));
-        likeService.deleteBlogLikes(bid);
-        // 删除收藏该博客的记录
-        collectionService.deleteBlogCollection(bid);
-        // 删除该博客的所有评论
-        commentService.deleteBlogComments(bid);
-        // 更新该博客所属用户的信息
-        userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
+//        User user = userService.getUserById(blogMapper.getUserByBid(bid));
+//        likeService.deleteBlogLikes(bid);
+//        // 删除收藏该博客的记录
+//        collectionService.deleteBlogCollection(bid);
+//        // 删除该博客的所有评论
+//        commentService.deleteBlogComments(bid);
+//        // 更新该博客所属用户的信息
+//        userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         return blogMapper.delete(bid);
     }
 

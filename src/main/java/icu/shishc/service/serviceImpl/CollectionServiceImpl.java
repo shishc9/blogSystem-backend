@@ -46,6 +46,9 @@ public class CollectionServiceImpl implements CollectionService {
         if(collectionOrNot(uid, bid) == 1) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "DON'T_COLLECT_AGAIN");
         }
+        if(blogService.getBlogByBID(bid).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "THE_BLOG_HAS_DELETED");
+        }
         User user = userService.getUserById(uid);
         Blog blog = blogService.getBlogByBID(bid);
         userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount(), user.getCollectionCount() + 1, user.getFollowing(), user.getFollowed());
@@ -57,6 +60,9 @@ public class CollectionServiceImpl implements CollectionService {
     public int cancelCollection(Long uid, Long bid) throws CustomException {
         if(collectionOrNot(uid, bid) == 0) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
+        if(blogService.getBlogByBID(bid).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "THE_BLOG_HAS_DELETED");
         }
         User user = userService.getUserById(uid);
         Blog blog = blogService.getBlogByBID(bid);

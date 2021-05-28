@@ -33,6 +33,9 @@ public class LikeServiceImpl implements LikeService {
         if(likeOrNot(bid, userId) == 1) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
         }
+        if(blogMapper.getBlogByBID(bid).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "THE_BLOG_HAS_DELETED");
+        }
         log.info("【LikeService】addLike");
         blogMapper.addALike(bid);
         Long uid = blogMapper.getUserByBid(bid);
@@ -45,6 +48,9 @@ public class LikeServiceImpl implements LikeService {
     public Integer cancelLike(Long bid, Long userId) throws CustomException {
         if(likeOrNot(bid, userId) == 0) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
+        if(blogMapper.getBlogByBID(bid).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "THE_BLOG_HAS_DELETED");
         }
         log.info("【LikeService】cancelLike");
         blogMapper.cancelLikes(bid, 1);

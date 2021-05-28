@@ -109,6 +109,9 @@ public class CommentServiceImpl implements CommentService {
             log.warn("【CommentService】saveComment::bad comment entity");
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
+        if(blogService.getBlogByBID(comment.getBlogId()).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "COMMIT_FORBIDDEN");
+        }
         log.info("【CommentService】saveComment::saveComment");
         int i = commentMapper.saveComment(comment.getBlogId(),
                 comment.getUsername(),
@@ -127,6 +130,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int deleteComment(Long cid) throws CustomException {
+        if(blogService.getBlogByBID(commentMapper.findCommentById(cid).getBlogId()).getIsDelete() == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "COMMIT_FORBIDDEN");
+        }
         List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
         count += commentMapper.deleteCommentById(cid);
         if(toDeleteId.size() > 0) {
@@ -143,10 +149,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-    @Override
-    public int deleteBlogComments(Long bid) {
-        return commentMapper.deleteBlogComments(bid);
-    }
+//    @Override
+//    public int deleteBlogComments(Long bid) {
+//        return commentMapper.deleteBlogComments(bid);
+//    }
 
     private void help(Long cid) {
         List<Long> toDeleteId = commentMapper.toDeleteComments(cid);
