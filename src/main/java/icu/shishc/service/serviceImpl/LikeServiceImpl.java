@@ -30,31 +30,27 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Integer addLike(Long bid, Long userId) throws CustomException {
+        if(likeOrNot(bid, userId) == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
         log.info("【LikeService】addLike");
-        if(userService.getUserById(userId) == null) {
-            log.warn("【LikeService】addLike::bad userid, userid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
-        if(blogMapper.getBlogByBID(bid) == null) {
-            log.warn("【LikeService】addLike::bad blogId, blogId = {}", bid);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
         blogMapper.addALike(bid);
+        Long uid = blogMapper.getUserByBid(bid);
+        User user = userService.getUserById(uid);
+        userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount() + 1, user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         return likeMapper.addLike(bid, userId);
     }
 
     @Override
     public Integer cancelLike(Long bid, Long userId) throws CustomException {
+        if(likeOrNot(bid, userId) == 0) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
         log.info("【LikeService】cancelLike");
-        if(userService.getUserById(userId) == null) {
-            log.warn("【LikeService】cancelLike::bad userid, userid = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
-        if(blogMapper.getBlogByBID(bid) == null) {
-            log.warn("【LikeService】cancelLike::bad blogId, blogId = {}", bid);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
         blogMapper.cancelLikes(bid, 1);
+        Long uid = blogMapper.getUserByBid(bid);
+        User user = userService.getUserById(uid);
+        userService.updateUserNum(uid, user.getPostCount(), user.getLikeCount() - 1, user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         return likeMapper.cancelLike(bid, userId);
     }
 
@@ -66,7 +62,11 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Integer likeOrNot(Long bid, Long uid) {
+    public Integer likeOrNot(Long bid, Long uid) throws CustomException {
+        if(userService.getUserById(uid) == null || blogMapper.getBlogByBID(bid) == null) {
+            log.warn("【LikeService】cancelLike::bad userid, userid = {}", uid);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
         return likeMapper.likeOrNot(uid, bid);
     }
 }

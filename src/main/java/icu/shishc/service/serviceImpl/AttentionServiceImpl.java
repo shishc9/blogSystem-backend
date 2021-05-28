@@ -26,8 +26,8 @@ public class AttentionServiceImpl implements AttentionService {
 
     @Override
     public int addAttention(Long uid, Long uided) throws CustomException {
-        if(!userExistOrNot(uid) || ! userExistOrNot(uided)) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
+        if(!userExistOrNot(uid) || ! userExistOrNot(uided) || userMapper.isDelete(uided) == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_MAYBE_NOT_EXIST");
         }
         if(attentionOrNot(uid, uided) == 1) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "DON'T_ATTENTION_AGAIN");
@@ -44,10 +44,15 @@ public class AttentionServiceImpl implements AttentionService {
         if(!userExistOrNot(uid) || ! userExistOrNot(uided)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "USER_NOT_EXIST");
         }
+        if(attentionOrNot(uid, uided) == 0) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_REQUEST");
+        }
         User user1 = userMapper.getUserById(uid);
         User user2 = userMapper.getUserById(uided);
         userMapper.updateNum(uid, user1.getPostCount(), user1.getLikeCount(), user1.getCollectionCount(),user1.getFollowing() - 1, user1.getFollowed());
-        userMapper.updateNum(uided, user2.getPostCount(), user2.getLikeCount(), user2.getCollectionCount(), user2.getFollowing(), user2.getFollowed() - 1);
+        if(userMapper.isDelete(uided) != 1) {
+            userMapper.updateNum(uided, user2.getPostCount(), user2.getLikeCount(), user2.getCollectionCount(), user2.getFollowing(), user2.getFollowed() - 1);
+        }
         return attentionMapper.cancelAttention(uid, uided);
     }
 

@@ -84,6 +84,9 @@ public interface UserMapper {
     Integer delete(@Param("id") Long id);
 
 
+    Integer isDelete(@Param("uid") Long uid);
+
+
     /**
      * 更新用户基本信息（除了密码）
      * @param userId 用户id

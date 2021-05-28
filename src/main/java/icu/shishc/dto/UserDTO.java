@@ -25,6 +25,7 @@ public class UserDTO {
     Integer likeCount;
     Integer following;
     Integer followed;
+    Integer isDelete;
 
 
     public UserDTO(User user) {
@@ -39,5 +40,6 @@ public class UserDTO {
         this.likeCount = user.getLikeCount();
         this.following = user.getFollowing();
         this.followed = user.getFollowed();
+        this.isDelete = user.getIsDelete();
     }
 }

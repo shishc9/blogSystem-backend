@@ -71,11 +71,11 @@
     </update>
 
     <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &lt; ${bid} AND is_delete = 0 ORDER BY blog_id DESC LIMIT 1
+        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
     </select>
 
     <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &gt; ${bid} AND is_delete = 0 ORDER BY blog_id LIMIT 1
+        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
     </select>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
@@ -83,15 +83,15 @@
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE user_id = ${userId} AND is_delete = 0 ORDER BY gmt_modified DESC
+        SELECT * FROM blog WHERE user_id = ${userId} ORDER BY gmt_modified DESC
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE title = '${title}' AND is_delete = 0
+        SELECT * FROM blog WHERE title = '${title}'
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE blog_id = ${bid} AND is_delete = 0
+        SELECT * FROM blog WHERE blog_id = ${bid}
     </select>
     
     <select id="getBlogByList" resultMap="BaseResultMap">

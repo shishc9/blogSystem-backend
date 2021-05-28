@@ -57,6 +57,8 @@ INSERT INTO perms(user_identity, entity, perm)
 INSERT INTO perms(user_identity, entity, perm)
     VALUES(0, 'LIKE', 'DELETE');
 INSERT INTO perms(user_identity, entity, perm)
+    VALUES(0, 'LIKE', 'READ');
+INSERT INTO perms(user_identity, entity, perm)
     VALUES(0, 'CHANGE', 'UPDATE');
 INSERT INTO perms(user_identity, entity, perm)
     VALUES(0, 'ATTENTION', 'CREATE');

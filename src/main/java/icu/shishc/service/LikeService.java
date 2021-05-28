@@ -41,5 +41,5 @@ public interface LikeService {
      * @param uid
      * @return
      */
-    Integer likeOrNot(Long bid, Long uid);
+    Integer likeOrNot(Long bid, Long uid) throws CustomException;
 }

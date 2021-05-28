@@ -120,4 +120,8 @@
         SELECT user_id FROM user WHERE username = '${username}'
     </select>
 
+    <select id="isDelete" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user WHERE user_id = ${uid} AND is_delete = 1
+    </select>
+
 </mapper>
