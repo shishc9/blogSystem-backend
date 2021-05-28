@@ -31,6 +31,16 @@ public class LoginServiceImpl implements LoginService {
     public Long authLogin(String username, String password) throws CustomException {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        User user;
+        if(userService.regexMatch(username)) {
+            user = userService.getUserByEmail(username);
+        } else {
+            user = userService.getUserByName(username);
+        }
+        if(user.getIsDelete() == 1) {
+            log.info("【LoginService】authLogin::the user has deleted!");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "USER_HAS_DELETED");
+        }
         try {
             currentUser.login(token);
             userService.updateLoginTime(username);
