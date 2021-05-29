@@ -25,19 +25,19 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    @RequestMapping(value = "/like", method = RequestMethod.POST)
+    @RequestMapping(value = "/like", method = RequestMethod.GET)
     public MyDTO addLike(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
         log.info("【LikeController】addLike");
         return MyDTO.successDTO(likeService.addLike(bid, uid));
     }
 
-    @RequestMapping(value = "/like", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/unlike", method = RequestMethod.GET)
     public MyDTO cancelLike(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
         log.info("【LikeController】cancelLike");
         return MyDTO.successDTO(likeService.cancelLike(bid, uid));
     }
 
-    @RequestMapping(value = "/like", method = RequestMethod.GET)
+    @RequestMapping(value = "/liked", method = RequestMethod.GET)
     public MyDTO likeOrNot(@RequestParam Long bid, @RequestParam Long uid) throws CustomException {
         Integer i = likeService.likeOrNot(bid, uid);
         return MyDTO.successDTO(i);
