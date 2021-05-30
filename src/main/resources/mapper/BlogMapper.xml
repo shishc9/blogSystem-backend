@@ -18,19 +18,19 @@
 
     <insert id="insert">
         INSERT INTO blog(user_id, username, title, content, gmt_create, gmt_modified)
-            VALUES (${userId}, '${username}', '${title}', '${content}', now(), now())
+            VALUES (#{userId},  #{username} ,  #{title} ,  #{content} , now(), now())
     </insert>
 
     <update id="update">
-        UPDATE blog SET title = '${title}',
-                content = '${content}',
+        UPDATE blog SET title =  #{title} ,
+                content =  #{content} ,
                 gmt_modified = now()
-        where blog_id = ${blog_id}
+        where blog_id = #{blog_id}
     </update>
 
     <update id="addALike" parameterType="java.lang.Long">
         UPDATE blog SET like_num = like_num + 1
-            WHERE blog_id = ${bid}
+            WHERE blog_id = #{bid}
     </update>
 
     <update id="addComment">
@@ -50,33 +50,33 @@
     </update>
 
     <update id="cancelComment">
-        UPDATE blog SET comment_num = comment_num - ${count}
+        UPDATE blog SET comment_num = comment_num - #{count}
     </update>
 
     <update id="delete">
-        UPDATE blog SET is_delete = 1 WHERE blog_id = ${bid}
+        UPDATE blog SET is_delete = 1 WHERE blog_id = #{bid}
     </update>
 
     <update id="deleteByUser">
-        UPDATE blog SET is_delete = 1 WHERE user_id = ${uid}
+        UPDATE blog SET is_delete = 1 WHERE user_id = #{uid}
     </update>
 
     <update id="cancelLikes">
-        UPDATE blog SET like_num = like_num - ${count} WHERE blog_id = ${bid}
+        UPDATE blog SET like_num = like_num - #{count} WHERE blog_id = #{bid}
     </update>
 
     <update id="updateBlogNum">
-        UPDATE blog SET collection_num = ${collectionNum},
-                        comment_num = ${commentNum}
-            WHERE blog_id = ${bid}
+        UPDATE blog SET collection_num = #{collectionNum},
+                        comment_num = #{commentNum}
+            WHERE blog_id = #{bid}
     </update>
 
     <select id="getPrevious" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &lt; ${bid} ORDER BY blog_id DESC LIMIT 1
+        SELECT * FROM blog WHERE blog.user_id = #{userId} AND blog_id &lt; #{bid} ORDER BY blog_id DESC LIMIT 1
     </select>
 
     <select id="getNext" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM blog WHERE blog.user_id = ${userId} AND blog_id &gt; ${bid} ORDER BY blog_id LIMIT 1
+        SELECT * FROM blog WHERE blog.user_id = #{userId} AND blog_id &gt; #{bid} ORDER BY blog_id LIMIT 1
     </select>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
@@ -84,15 +84,15 @@
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE user_id = ${userId} ORDER BY gmt_modified DESC
+        SELECT * FROM blog WHERE user_id = #{userId} ORDER BY gmt_modified DESC
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE title = '${title}'
+        SELECT * FROM blog WHERE title =  #{title}
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE blog_id = ${bid}
+        SELECT * FROM blog WHERE blog_id = #{bid}
     </select>
     
     <select id="getBlogByList" resultMap="BaseResultMap">
@@ -104,10 +104,10 @@
     </select>
 
     <select id="getUserByBid" resultType="java.lang.Long">
-        SELECT user_id FROM blog WHERE blog_id = ${bid}
+        SELECT user_id FROM blog WHERE blog_id = #{bid}
     </select>
 
-    <select id="getBlogSquareByTime" resultType="icu.shishc.entity.Blog">
+    <select id="getBlogSquareByTime" resultMap="BaseResultMap">
         SELECT * FROM blog WHERE is_delete = 0 ORDER BY gmt_create DESC
     </select>
 

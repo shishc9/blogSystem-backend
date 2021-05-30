@@ -8,7 +8,7 @@
     </resultMap>
 
     <select id="getUserPerms" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * FROM perms WHERE user_identity = ${identity}
+        SELECT * FROM perms WHERE user_identity = #{identity}
     </select>
 
 </mapper>

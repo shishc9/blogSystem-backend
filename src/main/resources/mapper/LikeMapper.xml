@@ -3,27 +3,27 @@
 <mapper namespace="icu.shishc.mapper.LikeMapper">
 
     <insert id="addLike" parameterType="java.lang.Long">
-        INSERT INTO blike(blog_id, user_id) VALUES(${bid}, ${uid})
+        INSERT INTO blike(blog_id, user_id) VALUES(#{bid}, #{uid})
     </insert>
 
     <delete id="cancelLike" parameterType="java.lang.Long">
-        DELETE FROM blike WHERE blog_id = ${bid} AND user_id = ${uid}
+        DELETE FROM blike WHERE blog_id = #{bid} AND user_id = #{uid}
     </delete>
 
     <delete id="deleteBlogAllLike">
-        DELETE FROM blike WHERE blog_id = ${bid}
+        DELETE FROM blike WHERE blog_id = #{bid}
     </delete>
 
     <select id="getUserAllLike" resultType="java.lang.Long">
-        SELECT blog_id FROM blike WHERE user_id = ${uid}
+        SELECT blog_id FROM blike WHERE user_id = #{uid}
     </select>
 
     <select id="getBlogAllLike" resultType="java.lang.Integer">
-        SELECT count(*) FROM blike WHERE blog_id = ${bid}
+        SELECT count(*) FROM blike WHERE blog_id = #{bid}
     </select>
 
     <select id="likeOrNot" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM blike WHERE blog_id = ${bid} AND user_id = ${uid}
+        SELECT COUNT(*) FROM blike WHERE blog_id = #{bid} AND user_id = #{uid}
     </select>
 
 </mapper>

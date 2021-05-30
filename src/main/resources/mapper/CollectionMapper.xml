@@ -7,31 +7,31 @@
     </resultMap>
 
     <insert id="userAddBlogCollection">
-        INSERT INTO collection(uid, bid) VALUES (${uid}, ${bid})
+        INSERT INTO collection(uid, bid) VALUES (#{uid}, #{bid})
     </insert>
 
     <insert id="userCancelBlogCollection">
-        DELETE FROM collection WHERE uid = ${uid} AND bid = ${bid}
+        DELETE FROM collection WHERE uid = #{uid} AND bid = #{bid}
     </insert>
 
     <delete id="deleteUserCollections">
-        DELETE FROM collection WHERE uid = ${uid}
+        DELETE FROM collection WHERE uid = #{uid}
     </delete>
 
     <delete id="deleteBlogCollection">
-        DELETE FROM collection WHERE bid = ${bid}
+        DELETE FROM collection WHERE bid = #{bid}
     </delete>
 
     <select id="getCollections" resultType="java.lang.Long">
-        SELECT bid FROM collection WHERE uid = ${uid}
+        SELECT bid FROM collection WHERE uid = #{uid}
     </select>
 
     <select id="collectionOrNot" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM collection WHERE uid = ${uid} AND bid = ${bid}
+        SELECT COUNT(*) FROM collection WHERE uid = #{uid} AND bid = #{bid}
     </select>
 
     <select id="getUidByBid" resultType="java.lang.Long">
-        SELECT uid FROM collection WHERE bid = ${bid}
+        SELECT uid FROM collection WHERE bid = #{bid}
     </select>
 
 </mapper>

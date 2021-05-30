@@ -14,49 +14,49 @@
 
     <insert id="saveComment">
         INSERT INTO comment(blog_id, username, content, gmt_create, parent_comment_id)
-            VALUES (${bid}, '${username}', '${content}', NOW(), ${parentCommentId})
+            VALUES (#{bid},  #{username} ,  #{content} , NOW(), #{parentCommentId})
     </insert>
 
 
     <select id="findFirstComments" resultMap="BaseResultMap">
         SELECT * FROM comment c
-            WHERE blog_id = ${bid} AND parent_comment_id = ${parentId}
+            WHERE blog_id = #{bid} AND parent_comment_id = #{parentId}
             ORDER BY c.gmt_create DESC
     </select>
 
 
     <select id="findByParentIdNotNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM comment c
-            WHERE parent_comment_id = ${id}
+            WHERE parent_comment_id = #{id}
             ORDER BY c.gmt_create DESC
     </select>
 
 
     <select id="findByReplyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM comment c
-            WHERE parent_comment_id = ${childId}
+            WHERE parent_comment_id = #{childId}
             ORDER BY c.gmt_create DESC
     </select>
 
 
     <select id="findCommentById" resultMap="BaseResultMap">
         SELECT * FROM comment c
-            WHERE comment_id = ${commentId}
+            WHERE comment_id = #{commentId}
     </select>
 
 
     <delete id="deleteCommentById" parameterType="java.lang.Long">
-        DELETE FROM comment WHERE comment_id = ${commentId}
+        DELETE FROM comment WHERE comment_id = #{commentId}
     </delete>
 
 
     <delete id="deleteBlogComments">
-        DELETE FROM comment WHERE blog_id = ${bid}
+        DELETE FROM comment WHERE blog_id = #{bid}
     </delete>
 
 
     <select id="toDeleteComments" resultType="java.lang.Long" parameterType="java.lang.Long">
-        SELECT c.comment_id FROM comment c WHERE parent_comment_id = ${commentId}
+        SELECT c.comment_id FROM comment c WHERE parent_comment_id = #{commentId}
     </select>
 
 

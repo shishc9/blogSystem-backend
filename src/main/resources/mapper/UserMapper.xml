@@ -21,83 +21,83 @@
 
     <insert id="insert">
         INSERT INTO user(username, password, email, gmt_create, gmt_last_login)
-        VALUES ('${username}', '${password}', '${email}', now(), now())
+        VALUES ( #{username} ,  #{password} ,  #{email} , now(), now())
     </insert>
 
     <update id="update">
-        UPDATE user SET username = '${username}',
-                        email = '${email}',
-                        user_site = '${site}',
-                        avatar = '${avatar}'
-        WHERE user_id = ${userId}
+        UPDATE user SET username =  #{username} ,
+                        email =  #{email} ,
+                        user_site =  #{site} ,
+                        avatar =  #{avatar}
+        WHERE user_id = #{userId}
     </update>
 
     <update id="updatePassword">
-        UPDATE user SET password = '${pwd}' WHERE user_id = ${uid}
+        UPDATE user SET password =  #{pwd}  WHERE user_id = #{uid}
     </update>
 
     <update id="addPostCount">
-        UPDATE user SET post_count = post_count + 1 WHERE user_id = ${uid}
+        UPDATE user SET post_count = post_count + 1 WHERE user_id = #{uid}
     </update>
 
     <update id="addLikeCount">
-        UPDATE user SET like_count = user.like_count + 1 WHERE user_id = ${uid}
+        UPDATE user SET like_count = user.like_count + 1 WHERE user_id = #{uid}
     </update>
 
     <update id="addFollowingCount">
-        UPDATE user SET following = user.following + 1 WHERE user_id = ${uid}
+        UPDATE user SET following = user.following + 1 WHERE user_id = #{uid}
     </update>
     <update id="addFollowedCount">
-        UPDATE user SET followed = user.followed + 1 WHERE user_id = ${uid}
+        UPDATE user SET followed = user.followed + 1 WHERE user_id = #{uid}
     </update>
 
     <update id="cancelPostCount">
-        UPDATE user SET post_count = post_count - 1 WHERE user_id = ${uid}
+        UPDATE user SET post_count = post_count - 1 WHERE user_id = #{uid}
     </update>
 
     <update id="cancelLikeCount">
-        UPDATE user SET like_count = like_count - 1 WHERE user_id = ${uid}
+        UPDATE user SET like_count = like_count - 1 WHERE user_id = #{uid}
     </update>
 
     <update id="cancelFollowingCount">
-        UPDATE user SET following = user.following - 1 WHERE user_id = ${uid}
+        UPDATE user SET following = user.following - 1 WHERE user_id = #{uid}
     </update>
 
     <update id="cancelFollowedCount">
-        UPDATE user SET followed = user.followed - 1 WHERE user_id = ${uid}
+        UPDATE user SET followed = user.followed - 1 WHERE user_id = #{uid}
     </update>
 
     <update id="updateLoginTimeUsername">
-        UPDATE user SET gmt_last_login = NOW() WHERE username = '${username}'
+        UPDATE user SET gmt_last_login = NOW() WHERE username =  #{username}
     </update>
 
     <update id="updateNum">
-        UPDATE user SET post_count = ${postCount},
-                        like_count = ${likeCount},
-                        following = ${following},
-                        collection_count = ${collectionCount},
-                        followed = ${followed}
-                WHERE user_id = ${uid}
+        UPDATE user SET post_count = #{postCount},
+                        like_count = #{likeCount},
+                        following = #{following},
+                        collection_count = #{collectionCount},
+                        followed = #{followed}
+                WHERE user_id = #{uid}
     </update>
 
     <update id="updateLoginTimeEmail">
-        UPDATE user SET gmt_last_login = NOW() WHERE email = '${email}'
+        UPDATE user SET gmt_last_login = NOW() WHERE email =  #{email}
     </update>
 
     <update id="delete">
-        UPDATE user SET is_delete = 1 WHERE user.user_id = ${id}
+        UPDATE user SET is_delete = 1 WHERE user.user_id = #{id}
     </update>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        SELECT * FROM user WHERE user_id = ${userId}
+        SELECT * FROM user WHERE user_id = #{userId}
     </select>
 
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT * FROM user WHERE username = '${username}'
+        SELECT * FROM user WHERE username =  #{username}
     </select>
 
     <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT * FROM user WHERE email = '${email}'
+        SELECT * FROM user WHERE email =  #{email}
     </select>
 
     <select id="getAllUsers" resultMap="BaseResultMap">
@@ -105,7 +105,7 @@
     </select>
 
     <select id="getPasswordByUid" resultType="java.lang.String">
-        SELECT password FROM user WHERE user_id = ${uid}
+        SELECT password FROM user WHERE user_id = #{uid}
     </select>
 
     <select id="getUserByList" resultMap="BaseResultMap">
@@ -117,11 +117,11 @@
     </select>
 
     <select id="getUserId" resultType="java.lang.Long">
-        SELECT user_id FROM user WHERE username = '${username}'
+        SELECT user_id FROM user WHERE username =  #{username}
     </select>
 
     <select id="isDelete" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM user WHERE user_id = ${uid} AND is_delete = 1
+        SELECT COUNT(*) FROM user WHERE user_id = #{uid} AND is_delete = 1
     </select>
 
 </mapper>

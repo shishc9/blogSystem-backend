@@ -8,27 +8,27 @@
 
     <insert id="addAttention">
         INSERT INTO attention(uid, uided)
-            VALUES(${uid}, ${uided})
+            VALUES(#{uid}, #{uided})
     </insert>
 
     <delete id="cancelAttention">
-        DELETE FROM attention WHERE uid = ${uid} AND uided = ${uided}
+        DELETE FROM attention WHERE uid = #{uid} AND uided = #{uided}
     </delete>
 
     <select id="getAttentions" resultType="java.lang.Long">
-        SELECT uided FROM attention WHERE uid = ${uid}
+        SELECT uided FROM attention WHERE uid = #{uid}
     </select>
 
     <select id="countAttentions" resultType="java.lang.Long">
-        SELECT uid FROM attention WHERE uided = ${uid}
+        SELECT uid FROM attention WHERE uided = #{uid}
     </select>
 
     <select id="attentionOrNot" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM attention WHERE uid = ${uid} AND uided = ${uided}
+        SELECT COUNT(*) FROM attention WHERE uid = #{uid} AND uided = #{uided}
     </select>
 
     <select id="getAttentioned" resultType="java.lang.Long">
-        SELECT uid FROM attention WHERE uided = ${uid}
+        SELECT uid FROM attention WHERE uided = #{uid}
     </select>
 
 </mapper>
