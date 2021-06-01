@@ -35,6 +35,15 @@ public interface BlogService{
     Blog getBlogByTitle(String title) throws CustomException;
 
 
+    /**
+     * blog fuzzy query
+     * @param title
+     * @return
+     * @throws CustomException
+     */
+    List<Blog> fuzzyQueryBlog(String title) throws CustomException;
+
+
     List<Blog> getBlogByList(List<Long> list);
 
 

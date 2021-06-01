@@ -88,6 +88,8 @@ public interface BlogMapper {
     Blog getBlogByTitle(@Param("title") String title);
 
 
+    List<Blog> fuzzyQueryBlog(@Param("title") String title);
+
     /**
      * 博客id查找
      * @param bid 博客id

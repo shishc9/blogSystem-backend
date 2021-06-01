@@ -66,6 +66,16 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public List<Blog> fuzzyQueryBlog(String title) throws CustomException {
+        title = title.trim();
+        if("".equals(title)) {
+            log.warn("【BlogService】getBlogByTitle::bad title, title = {}", title);
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
+        return blogMapper.fuzzyQueryBlog(title);
+    }
+
+    @Override
     public List<Blog> getBlogByList(List<Long> list) {
         return blogMapper.getBlogByList(list);
     }

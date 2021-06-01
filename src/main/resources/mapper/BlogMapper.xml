@@ -88,7 +88,7 @@
     </select>
 
     <select id="getBlogByTitle" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE title =  #{title}
+        SELECT * FROM blog WHERE title = #{title}
     </select>
 
     <select id="getBlogByBID" resultMap="BaseResultMap">
@@ -109,6 +109,10 @@
 
     <select id="getBlogSquareByTime" resultMap="BaseResultMap">
         SELECT * FROM blog WHERE is_delete = 0 ORDER BY gmt_create DESC
+    </select>
+
+    <select id="fuzzyQueryBlog" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE title like concat('%', #{title}, '%')
     </select>
 
 </mapper>

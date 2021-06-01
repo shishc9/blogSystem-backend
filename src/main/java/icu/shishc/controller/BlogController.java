@@ -101,6 +101,14 @@ public class BlogController {
         return MyDTO.successDTO(blog);
     }
 
+    @GetMapping("/fuzzy")
+    public MyDTO fuzzyQueryBlog(
+            @RequestParam("title") String title
+    ) throws CustomException {
+        List<Blog> blog = blogService.fuzzyQueryBlog(title);
+        log.info("【Controller】Blog::fuzzyQueryBlog, title = {}", title);
+        return MyDTO.successDTO(blog);
+    }
 
     /**
      * 废弃的方法
