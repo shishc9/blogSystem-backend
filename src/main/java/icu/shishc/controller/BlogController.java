@@ -121,6 +121,7 @@ public class BlogController {
     ) throws CustomException {
         log.info("【Controller】getById::get-by-id(bid = {})", bid);
         Blog blog = blogService.getBlogByBID(bid);
+        blogMapper.addRead(bid);
         return MyDTO.successDTO(blog);
     }
 

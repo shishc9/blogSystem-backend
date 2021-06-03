@@ -88,7 +88,7 @@ public class BlogServiceImpl implements BlogService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
         Blog blog = blogMapper.getBlogByBID(bid);
-        blogMapper.addRead(bid);
+//        blogMapper.addRead(bid);
         log.info("【BlogService】getBlogByBID::blog exist ? {}", blog == null ? 0 : 1);
         return blog;
     }
