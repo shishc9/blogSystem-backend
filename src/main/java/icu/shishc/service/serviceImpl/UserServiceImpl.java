@@ -176,15 +176,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws CustomException {
-        if(!userCheck(user)) {
+        String email = user.getEmail();
+        if(!regexMatch(email)) {
             log.warn("【UserService】update::bad user entity");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad email");
         }
         Long userId = user.getUserId();
         User user1 = userMapper.getUserById(userId);
         if(null == user1) {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "bad userid");
         }
         userMapper.update(userId, user.getUserSite(), user.getAvatar(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
