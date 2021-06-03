@@ -3,6 +3,7 @@ package icu.shishc.controller;
 import icu.shishc.exception.CustomException;
 import icu.shishc.dto.MyDTO;
 import icu.shishc.dto.UserDTO;
+import icu.shishc.dto.PasswordDTO;
 import icu.shishc.entity.User;
 import icu.shishc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -71,8 +72,10 @@ public class UserController {
      * @throws CustomException .
      */
     @RequestMapping(value = "/pass_change", method = RequestMethod.PUT)
-    public MyDTO updatePwd(@RequestParam String oldPassword, @RequestParam Long userId,
-            @RequestParam String newPassword) throws CustomException {
+    public MyDTO updatePwd(@RequestBody PasswordDTO password) throws CustomException {
+        String oldPassword = password.oldPassword;
+        Long userId = password.userId;
+        String newPassword = password.newPassword;
         return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword) ? 1 : 0);
     }
 
