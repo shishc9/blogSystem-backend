@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "bad userid");
         }
-        if(email != user1.getEmail() && userMapper.emailCheck(email) == 1) {
+        if(!email.equals(user1.getEmail()) && userMapper.emailCheck(email) == 1) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "email has been used.");
         }
         userMapper.update(userId, user.getUserSite(), user.getAvatar(), email);
