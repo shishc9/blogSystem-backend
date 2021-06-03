@@ -6,6 +6,6 @@
 .vscode/
 /log/
 /target/
-blogSystem-backend.iml
+*.iml
 application-dev.yml
 application-prod.yml

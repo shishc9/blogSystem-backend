@@ -52,19 +52,19 @@ public class CollectionController {
     }
 
 
-    @RequestMapping(value = "/collection", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public MyDTO addCollection(@RequestParam("uid") Long uid, @RequestParam("bid") Long bid) throws CustomException {
         int i = collectionService.addCollection(uid, bid);
         return MyDTO.successDTO(i);
     }
 
-    @RequestMapping(value = "/collection", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/cancel", method = RequestMethod.GET)
     public MyDTO cancelCollection(@RequestParam("uid") Long uid, @RequestParam("bid") Long bid) throws CustomException {
         int i = collectionService.cancelCollection(uid, bid) ;
         return MyDTO.successDTO(i);
     }
 
-    @RequestMapping(value = "/collection", method = RequestMethod.GET)
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
     public MyDTO collectionOrNot(@RequestParam("uid") Long uid, @RequestParam("bid") Long bid) throws CustomException {
         int i = collectionService.collectionOrNot(uid, bid);
         return MyDTO.successDTO(i);
