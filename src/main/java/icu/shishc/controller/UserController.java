@@ -73,9 +73,9 @@ public class UserController {
      */
     @RequestMapping(value = "/pass_change", method = RequestMethod.PUT)
     public MyDTO updatePwd(@RequestBody PasswordDTO password) throws CustomException {
-        String oldPassword = password.oldPassword;
-        Long userId = password.userId;
-        String newPassword = password.newPassword;
+        String oldPassword = password.getOldPassword();
+        Long userId = password.getUserId();
+        String newPassword = password.getNewPassword();
         return MyDTO.successDTO(userService.updatePassword(oldPassword, userId, newPassword) ? 1 : 0);
     }
 
