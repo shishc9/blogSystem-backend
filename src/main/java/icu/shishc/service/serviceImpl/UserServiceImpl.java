@@ -103,6 +103,9 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】insert::the user has exist, username = {}", username);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
+        if(userMapper.emailCheck(user.getEmail().trim()) == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "EMAIL_HAS_BEEN_USED");
+        }
         String pwd = MD5Utils.toMd5(user.getPassword().trim(), "shishc", 10);
         user.setPassword(pwd);
         userMapper.insert(username, pwd, USER_DEFAULT_AVATAR, user.getEmail());
@@ -176,17 +179,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws CustomException {
-        if(!userCheck(user)) {
-            log.warn("【UserService】update::bad user entity");
-            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
-        }
+//        if(!userCheck(user)) {
+//            log.warn("【UserService】update::bad user entity");
+//            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+//        }
         Long userId = user.getUserId();
         User user1 = userMapper.getUserById(userId);
         if(null == user1) {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        userMapper.update(userId, user.getUserSite(), user.getAvatar(), user.getEmail());
+        String email = user.getEmail().trim();
+        if(!regexMatch(email)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
+        }
+        if(userMapper.emailCheck(email) == 1) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "EMAIL_HAS_BEEN_USED");
+        }
+        userMapper.update(userId, user.getUserSite(), user.getAvatar(), email);
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
     }

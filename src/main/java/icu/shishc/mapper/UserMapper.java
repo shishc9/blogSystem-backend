@@ -157,4 +157,7 @@ public interface UserMapper {
 
     int updateLoginTimeEmail(@Param("email") String email);
 
+
+    int emailCheck(@Param("email") String email);
+
 }

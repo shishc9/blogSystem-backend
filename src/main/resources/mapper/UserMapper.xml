@@ -123,4 +123,8 @@
         SELECT COUNT(*) FROM user WHERE user_id = #{uid} AND is_delete = 1
     </select>
 
+    <select id="emailCheck" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user WHERE email = #{email}
+    </select>
+
 </mapper>
