@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
             log.warn("【UserService】:update:: the user doesn't exist! userId = {}", userId);
             throw new CustomException(HttpStatus.BAD_REQUEST, "BAD_PARAM");
         }
-        userMapper.update(userId, user.getUsername(), user.getUserSite(), user.getAvatar(), user.getEmail());
+        userMapper.update(userId, user.getUserSite(), user.getAvatar(), user.getEmail());
         log.info("【Service】UserService::update: update successfully! userId = {}", userId);
         return userMapper.getUserById(userId);
     }

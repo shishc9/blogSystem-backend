@@ -25,8 +25,7 @@
     </insert>
 
     <update id="update">
-        UPDATE user SET username =  #{username} ,
-                        email =  #{email} ,
+        UPDATE user SET email =  #{email} ,
                         user_site =  #{site} ,
                         avatar =  #{avatar}
         WHERE user_id = #{userId}

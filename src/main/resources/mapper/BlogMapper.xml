@@ -38,7 +38,7 @@
     </update>
 
     <update id="addRead">
-        UPDATE blog SET read_num = read_num + 1
+        UPDATE blog SET read_num = read_num + 1 WHERE blog_id = #{bid}
     </update>
 
     <update id="addCollection">
@@ -80,7 +80,7 @@
     </select>
 
     <select id="getBlogSquare" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE is_delete = 0 ORDER BY read_num
+        SELECT * FROM blog WHERE is_delete = 0 ORDER BY read_num DESC
     </select>
 
     <select id="getBlogByUserId" resultMap="BaseResultMap">

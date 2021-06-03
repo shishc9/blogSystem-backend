@@ -90,13 +90,11 @@ public interface UserMapper {
     /**
      * 更新用户基本信息（除了密码）
      * @param userId 用户id
-     * @param username 用户名
      * @param email 邮件
      * @param avatar 头像
      * @return int
      */
     Integer update(@Param("userId") Long userId,
-                   @Param("username") String username,
                    @Param("site") String userSite,
                    @Param("avatar") String avatar,
                    @Param("email") String email);
