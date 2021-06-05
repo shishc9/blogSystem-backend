@@ -141,10 +141,11 @@ public class CommentServiceImpl implements CommentService {
                 count += commentMapper.deleteCommentById(id);
             }
         }
-        if(count > 0) {
-            Blog blog = blogService.getBlogByBID(commentMapper.findCommentById(cid).getBlogId());
-            blogService.updateBlogNum(blog.getBlogId(), blog.getCommentNum() - count, blog.getCollectionNum());
-        }
+        // TODO
+        //if(count > 0) {
+        //    Blog blog = blogService.getBlogByBID(commentMapper.findCommentById(cid).getBlogId());
+        //    blogService.updateBlogNum(blog.getBlogId(), blog.getCommentNum() - count, blog.getCollectionNum());
+        //}
         return count;
     }
 
