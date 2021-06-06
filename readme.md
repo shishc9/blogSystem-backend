@@ -8,12 +8,6 @@
 
 3. 安装数据库，MySQL或PostgreSQL
     - 如果使用MySQL，执行 `src/main/resources/sql/` 里的 `blog-backend.sql` 和 `blog-backend-init.sql` 脚本（大概）
-    - 如果使用PostgreSQL，在命令行输入 `psql -h 你的数据库地址 -U 数据库用户名 -d postgres` ，并执行以下命令
-
-        ```psql
-        \i src/main/resources/sql/pg-backend.sql
-        \i src/main/resources/sql/pg-backend-init.sql
-        ```
 
 5. 用 `mvn -q exec:java -Dexec.mainClass=md5.hash.Main -Dexec.args="<password> shishc 10"` 生成密码并替换初始密码。
 
