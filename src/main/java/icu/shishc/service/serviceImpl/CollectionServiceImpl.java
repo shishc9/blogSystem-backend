@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +80,12 @@ public class CollectionServiceImpl implements CollectionService {
         }
         List<Long> list = collectionMapper.getCollections(uid);
         if(list.size() > 0) {
-            return blogService.getBlogByList(list);
+            ArrayList<Blog> list1 = new ArrayList<>();
+            for(Long id : list) {
+                Blog blog = blogService.getBlogByBID(id);
+                list1.add(blog);
+            }
+            return list1;
         }
         return null;
     }
