@@ -85,4 +85,7 @@ public interface CommentMapper {
      * @return .
      */
     int deleteBlogComments(@Param("bid") Long bid);
+
+
+    int deleteUserComments(@Param("username") String username);
 }

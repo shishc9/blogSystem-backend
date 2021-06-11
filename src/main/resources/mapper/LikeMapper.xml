@@ -14,6 +14,10 @@
         DELETE FROM blike WHERE blog_id = #{bid}
     </delete>
 
+    <delete id="deleteUserLike">
+        DELETE FROM blike WHERE user_id = #{uid}
+    </delete>
+
     <select id="getUserAllLike" resultType="java.lang.Long">
         SELECT blog_id FROM blike WHERE user_id = #{uid}
     </select>

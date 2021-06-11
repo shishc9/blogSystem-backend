@@ -36,11 +36,11 @@ public interface CommentService {
      */
     int deleteComment(Long cid) throws CustomException;
 
-//    /**
-//     * 删除一篇博客的所有评论
-//     * @param bid bid
-//     * @return .
-//     */
-//    int deleteBlogComments(Long bid);
+    /**
+     * 删除一篇博客的所有评论
+     * @param bid bid
+     * @return .
+     */
+    int deleteBlogComments(Long bid);
 
 }

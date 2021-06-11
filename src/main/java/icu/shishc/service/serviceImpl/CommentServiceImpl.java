@@ -150,10 +150,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-//    @Override
-//    public int deleteBlogComments(Long bid) {
-//        return commentMapper.deleteBlogComments(bid);
-//    }
+    @Override
+    public int deleteBlogComments(Long bid) {
+        return commentMapper.deleteBlogComments(bid);
+    }
 
     private void help(Long cid) {
         List<Long> toDeleteId = commentMapper.toDeleteComments(cid);

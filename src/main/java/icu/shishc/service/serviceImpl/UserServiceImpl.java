@@ -36,6 +36,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     BlogService blogService;
     @Autowired
+    CommentMapper commentMapper;
+    @Autowired
     CollectionMapper collectionMapper;
     @Autowired
     AttentionMapper attentionMapper;
@@ -43,6 +45,8 @@ public class UserServiceImpl implements UserService {
     LikeService likeService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    LikeMapper likeMapper;
 
 
     @Override
@@ -129,6 +133,10 @@ public class UserServiceImpl implements UserService {
         for(Blog blog : list) {
             blogService.delete(userId, blog.getBlogId());
         }
+        User user = userMapper.getUserById(userId);
+        commentMapper.deleteUserComments(user.getUsername());
+        collectionMapper.deleteUserCollections(userId);
+        likeMapper.deleteUserLike(userId);
         return userMapper.delete(userId);
     }
 

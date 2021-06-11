@@ -190,11 +190,11 @@ public class BlogServiceImpl implements BlogService {
         }
         log.info("【BlogService】delete::delete blog, bid = {}", bid);
 //        User user = userService.getUserById(blogMapper.getUserByBid(bid));
-//        likeService.deleteBlogLikes(bid);
-//        // 删除收藏该博客的记录
-//        collectionService.deleteBlogCollection(bid);
-//        // 删除该博客的所有评论
-//        commentService.deleteBlogComments(bid);
+        likeService.deleteBlogLikes(bid);
+        // 删除收藏该博客的记录
+        collectionService.deleteBlogCollection(bid);
+        // 删除该博客的所有评论
+        commentService.deleteBlogComments(bid);
 //        // 更新该博客所属用户的信息
 //        userService.updateUserNum(user.getUserId(), user.getPostCount() - 1, user.getLikeCount(), user.getCollectionCount(), user.getFollowing(), user.getFollowed());
         return blogMapper.delete(bid);

@@ -60,4 +60,7 @@ public interface LikeMapper {
 
     int likeOrNot(@Param("uid") Long uid, @Param("bid") Long bid);
 
+
+    int deleteUserLike(@Param("uid") Long uid);
+
 }
