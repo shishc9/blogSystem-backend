@@ -83,9 +83,10 @@
         UPDATE user SET gmt_last_login = NOW() WHERE email =  #{email}
     </update>
 
-    <update id="delete">
-        UPDATE user SET is_delete = 1 WHERE user.user_id = #{id}
-    </update>
+    <delete id="delete">
+        DELETE FROM user WHERE user_id = #{id}
+#         UPDATE user SET is_delete = 1 WHERE user.user_id = #{id}
+    </delete>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT * FROM user WHERE user_id = #{userId}

@@ -53,13 +53,13 @@
         UPDATE blog SET comment_num = comment_num - #{count}
     </update>
 
-    <update id="delete">
-        UPDATE blog SET is_delete = 1 WHERE blog_id = #{bid}
-    </update>
+    <delete id="delete">
+        DELETE FROM blog WHERE bid = #{bid}
+    </delete>
 
-    <update id="deleteByUser">
-        UPDATE blog SET is_delete = 1 WHERE user_id = #{uid}
-    </update>
+    <delete id="deleteByUser">
+        DELETE FROM blog WHERE user_id = #{uid}
+    </delete>
 
     <update id="cancelLikes">
         UPDATE blog SET like_num = like_num - #{count} WHERE blog_id = #{bid}
@@ -96,7 +96,7 @@
     </select>
     
     <select id="getBlogByList" resultMap="BaseResultMap">
-        SELECT * FROM blog WHERE is_delete = 0 AND blog_id in
+        SELECT * FROM blog AND blog_id in
             <foreach item="item" collection="list" index="index"
                 open="(" separator="," close=")">
                 #{item}

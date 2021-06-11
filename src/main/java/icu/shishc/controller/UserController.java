@@ -63,12 +63,8 @@ public class UserController {
     }
 
     /**
-     * 用户修改新密码接口
-     * 
-     * @param oldPassword 旧密码
-     * @param userId      用户id
-     * @param newPassword 新密码
-     * @return .
+     * @param password pwd
+     * @return MyDTO
      * @throws CustomException .
      */
     @RequestMapping(value = "/pass_change", method = RequestMethod.PUT)
@@ -90,7 +86,7 @@ public class UserController {
         long param = Long.parseLong(uid);
         Integer status = userService.delete(param);
         if(status == 1) {
-            userService.deleteUserData(param);
+//            userService.deleteUserData(param);
             log.info("【UserController】delete:: delete {}'s all data", uid);
         }
         log.info("【UserController】delete:: delete uid = {}", uid);

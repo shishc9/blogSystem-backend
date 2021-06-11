@@ -125,6 +125,10 @@ public class UserServiceImpl implements UserService {
 //        log.info("【UserService】delete::delete user, userId = {}", userId);
 //        deleteUserData(userId);
         log.info("【UserService】delete::delete user's all data successfully!");
+        List<Blog> list = blogService.getBlogByUserId(userId);
+        for(Blog blog : list) {
+            blogService.delete(userId, blog.getBlogId());
+        }
         return userMapper.delete(userId);
     }
 
